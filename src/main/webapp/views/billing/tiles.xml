@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!-- * tiles.xml * Copyright (C) 2017 Universidad de Sevilla * Author (A) 
+	2012 Rafael Corchuelo (corchu@us.es) * * The use of this project is hereby 
+	constrained to the conditions of the * TDG Licence, a copy of which you may 
+	download from * http://www.tdg-seville.info/License.html -->
+
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+       "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+
+<tiles-definitions>
+
+	<definition name="incidencia/user/create" extends="master.page">
+		<put-attribute name="title" value="New incidencia" />
+		<put-attribute name="body" value="/views/incidencia/create.jsp" />
+	</definition>
+
+	<definition name="incidencia/user/register" extends="master.page">
+		<put-attribute name="title" value="New incidencia" />
+		<put-attribute name="body" value="/views/incidencia/create.jsp" />
+	</definition>
+
+	<definition name="incidencia/user/edit" extends="master.page">
+		<put-attribute name="title" value="Edit Rendevous" />
+		<put-attribute name="body" value="/views/incidencia/create.jsp" />
+	</definition>	
+	<definition name="incidencia/user/list" extends="master.page">
+		<put-attribute name="title" value="Incidencia List" />
+		<put-attribute name="body" value="/views/incidencia/list.jsp" />
+	</definition>	
+	
+	<definition name="incidencia/user/editForm" extends="master.page">
+		<put-attribute name="title" value="Edit Rendevous" />
+		<put-attribute name="body" value="/views/incidencia/editForm.jsp" />
+	</definition>	
+	<definition name="incidencia/display" extends="master.page">
+		<put-attribute name="title" value="Display Rendevous" />
+		<put-attribute name="body" value="/views/incidencia/display.jsp" />
+	</definition>	
+	<definition name="incidencia/list" extends="master.page">
+		<put-attribute name="title" value="incidenciaes" />
+		<put-attribute name="body" value="/views/incidencia/list.jsp" />
+	</definition>
+	<definition name="incidencia/listCategory" extends="master.page">
+		<put-attribute name="title" value="incidencia by categories" />
+		<put-attribute name="body" value="/views/incidencia/list.jsp" />
+	</definition>
+	<definition name="incidencia/listSimilar" extends="master.page">
+		<put-attribute name="title" value="Similar incidenciaes" />
+		<put-attribute name="body" value="/views/incidencia/list.jsp" />
+	</definition>
+	<definition name="incidencia/user/listSimilar" extends="master.page">
+		<put-attribute name="title" value="Edit similar incidencia" />
+		<put-attribute name="body" value="/views/incidencia/list.jsp" />
+	</definition>
+	<definition name="incidencia/user/listReserved" extends="master.page">
+		<put-attribute name="title" value="My reserved incidenciaes" />
+		<put-attribute name="body" value="/views/incidencia/list.jsp" />
+	</definition>
+	<definition name="incidencia/administrator/edit" extends="master.page">
+		<put-attribute name="title" value="Edit Rendevous" />
+		<put-attribute name="body" value="/views/incidencia/create.jsp" />
+	</definition>	
+	
+
+</tiles-definitions>
