@@ -12,7 +12,7 @@ package utilities;
 
 public interface DatabaseConfig {
 
-	public final String	PersistenceUnit				= "sg-info";
+	public final String	PersistenceUnit				= "acme-crm";
 
 	public final String	entitySpecificationFilename	= "./src/main/resources/PopulateDatabase.xml";
 	public final String	entityMapFilename			= "./src/main/resources/Entities.map";
