@@ -27,12 +27,19 @@
 
 <%@ attribute name="css" required="false"%>
 <%@ attribute name="id" required="false"%>
+<%@ attribute name="confirmation" required="false"%>
 
 <jstl:if test="${css == null}">
 	<jstl:set var="cssVar" value="formButton toLeft" />
 </jstl:if>
 <jstl:if test="${css != null}">
 	<jstl:set var="cssVar" value="${css}" />
+</jstl:if>
+<jstl:if test="${confirmation != null}">
+	<jstl:set var="js" value="javascript: showConfirmationAlert('${url}')" />
+</jstl:if>
+<jstl:if test="${confirmation == null}">
+	<jstl:set var="js" value="javascript: relativeRedir('${url}')" />
 </jstl:if>
 
 <%-- Definition --%>

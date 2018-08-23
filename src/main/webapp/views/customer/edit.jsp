@@ -23,16 +23,8 @@
 <jstl:set var="readonly"
 	value="${(display || !owns) && customerForm.id != 0}" />
 
-<jstl:out value=" ·Actor: ${actor.name}"></jstl:out>
-<jstl:if test="${rol=='responsable'}">
-	<jstl:out value=" ·Actor-Customer: ${actor.customer.id}"></jstl:out>
-</jstl:if>
-<jstl:out value=" ·Customer: ${customerForm.id}"></jstl:out>
-<jstl:out value=" ·owns: ${owns}"></jstl:out>
-<jstl:out value=" ·display: ${display}"></jstl:out>
-<jstl:out value=" ·readonly: ${readonly}"></jstl:out>
 
-<div class="seccion w3-light-grey">
+<div class="seccion w3-light-green">
 	<form:form action="${requestUri}" modelAttribute="customerForm">
 
 		<form:hidden path="id" />
@@ -88,6 +80,7 @@
 		<div class="row">
 			<div class="col-100">
 				<jstl:if test="${!readonly}">
+					<hr>
 					<acme:submit name="save" code="rendezvous.save"
 						css="formButton toLeft" />
 				</jstl:if>

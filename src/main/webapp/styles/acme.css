@@ -24,6 +24,13 @@ body {
 	height: 12em;
 }
 
+.sombra{
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
+		rgba(0, 0, 0, 0.19);
+	
+	
+}
+
 .header {
 	width: 100%;
 	position: fixed;
@@ -542,8 +549,12 @@ to {
 	margin-right: 1em;
 	margin-bottom: 1em;
 	padding: 1em;
-	border: 1px solid;
+	/*border: 1px solid;*/
 	border-color: #6d8292;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
+		rgba(0, 0, 0, 0.19);
+	box-sizing: border-box;
+	
 	border-radius: 5px;
 }
 
@@ -742,6 +753,12 @@ to {
 	flex: 25%;
 }
 
+
+.col-33 {
+	-ms-flex: 33%; /* IE10 */
+	flex: 33%;
+}
+
 .col-50 {
 	-ms-flex: 50%; /* IE10 */
 	flex: 50%;
@@ -757,7 +774,7 @@ to {
 	flex: 100%;
 }
 
-.col-25, .col-50, .col-75, .col-100 {
+.col-25, .col-33, .col-50, .col-75, .col-100 {
 	padding: 0 16px;
 }
 
@@ -803,6 +820,10 @@ input[type=datetime-local] {
 	padding: 8px;
 	border: 1px solid #ccc;
 	border-radius: 3px;
+}
+
+input {
+	color: black;
 }
 
 label {

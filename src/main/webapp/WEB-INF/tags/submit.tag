@@ -25,6 +25,7 @@
 <%@ attribute name="name" required="true"%>
 <%@ attribute name="code" required="true"%>
 <%@ attribute name="css" required="false"%>
+<%@ attribute name="onclick" required="false"%>
 
 <jstl:if test="${css == null}">
 	<jstl:set var="cssVar" value="formButton toLeft" />
@@ -36,6 +37,6 @@
 
 <%-- Definition --%>
 
-<button type="submit" name="${name}" class="${cssVar}">
+<button type="submit" onclick="${onclick}" name="${name}" class="${cssVar}">
 	<spring:message code="${code}" />
 </button>

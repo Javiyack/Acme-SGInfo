@@ -18,7 +18,7 @@
 		<form:hidden path="id" />
 		<br>
 
-		<div class="seccion w3-light-grey">
+		<div class="seccion w3-light-green">
 			<legend>
 				<spring:message code="actor.personal.data" />
 			</legend>
@@ -56,7 +56,7 @@
 			</jstl:if>
 		</div>
 		<jstl:if test="${edition}">
-			<div class="seccion w3-light-grey">
+			<div class="seccion w3-light-green">
 
 
 				<jstl:if test="${creation}">
@@ -134,10 +134,10 @@
 
 				</jstl:if>
 			</div>
-			<div class="seccion w3-light-grey">
+			<div class="seccion w3-light-green">
 				<security:authorize access="isAnonymous()">
-					<p class="terminos">
-						<spring:message code="term.registration" />
+					<p class="terminos w3-text-red">
+						<spring:message code="term.registration"/>
 					</p>
 				</security:authorize>
 				<div class="row">

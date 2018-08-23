@@ -128,7 +128,7 @@ public class CustomerController extends AbstractController {
 				this.customerService.save(incidencia);
 				result = new ModelAndView("redirect:/customer/list.do");
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(customer, "manager.commit.error");
+				result = this.createEditModelAndView(customer, "msg.commit.error");
 			}
 		return result;
 	}

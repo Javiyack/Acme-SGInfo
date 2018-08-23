@@ -34,9 +34,9 @@
 	<jstl:set var="rol" value="${fn:toLowerCase(permiso)}/" />
 </security:authorize>
 <jstl:set var="rol" value="${fn:toLowerCase(permiso)}" />
-<div class="seccion w3-light-grey">
-	<div class="row">
-		<div class="col-100">
+<div class="seccion w3-light-green">
+	<div class="w3-row-padding w3-margin-top">
+					<div class="w3-padding">
 
 			<jstl:if test="${pageSize == null}">
 				<jstl:set value="20" var="pageSize" />
@@ -50,7 +50,7 @@
 			</form:form>
 
 
-			<display:table pagesize="${pageSize}" class="displaytag"
+			<display:table pagesize="${pageSize}" class="displaytag w3-text-black"
 				name="customers" requestURI="${requestUri}" id="row">
 
 

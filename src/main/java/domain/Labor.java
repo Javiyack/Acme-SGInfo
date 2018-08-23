@@ -5,21 +5,87 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
 public class Labor extends DomainEntity {
 
-	public Date momment;
+	private Date moment;
 
-	public String title;
+	private String title;
 
-	public String description;
+	private String description;
 
-	public Double time;
+	private Date time;
 
 	private Incidence incidence;
 
 	private IncidenceBill incidenceBill;
+
+	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+	public Date getMoment() {
+		return moment;
+	}
+
+	public void setMoment(Date momment) {
+		this.moment = momment;
+	}
+
+	@NotBlank
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	@NotNull
+	@Temporal(TemporalType.TIME)
+	@DateTimeFormat(pattern = "HH:mm")
+	public Date getTime() {
+		return time;
+	}
+
+	public void setTime(Date time) {
+		this.time = time;
+	}
+
+	@NotNull
+	@ManyToOne(optional = false)
+	public Incidence getIncidence() {
+		return incidence;
+	}
+
+	public void setIncidence(Incidence incidence) {
+		this.incidence = incidence;
+	}
+
+	
+	@ManyToOne(optional = true)
+	public IncidenceBill getIncidenceBill() {
+		return incidenceBill;
+	}
+
+	public void setIncidenceBill(IncidenceBill incidenceBill) {
+		this.incidenceBill = incidenceBill;
+	}
 
 }

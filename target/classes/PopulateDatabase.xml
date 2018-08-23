@@ -301,7 +301,7 @@
 		<property name="name" value="Acme-CRM" />
 		<property name="description"
 			value="Sistemas y Gestión informática" />
-		<property name="webSite" value="www.sg-info.es" />
+		<property name="webSite" value="www.acme-crm.es" />
 		<property name="email" value="sginfo@sginfo.es" />
 		<property name="fechaAlta" value="19/08/2018 14:10" />
 		<property name="passKey" value="CUS-190818-06986414" />

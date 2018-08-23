@@ -22,22 +22,22 @@
 
 	<!-- Repository packages -->
 
-	<jpa:repositories query-lookup-strategy="use-declared-query" base-package="repositories" />
+	<jpa:repositories base-package="repositories" />
 	<jpa:repositories base-package="security" />
 
 	<!-- Data source -->
 
 	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
 		<property name="driverClass" value="com.mysql.jdbc.Driver" />
-		<property name="jdbcUrl" value="jdbc:mysql://db4free.net:3306/acmecrm" />
-		<property name="user" value="acmeuser" />
-		<property name="password" value="-str0nG-" />
+		<property name="jdbcUrl" value="jdbc:mysql://localhost:3306/Acme-CRM" />
+		<property name="user" value="acme-user" />
+		<property name="password" value="ACME-Us3r-P@ssw0rd" />
 	</bean>
 
 	<!-- JPA -->
 
 	<bean id="persistenceUnit" class="java.lang.String">
-		<constructor-arg value="acme-crm" />
+		<constructor-arg value="Acme-CRM" />
 	</bean>
 
 	<bean id="sqlDialect" class="java.lang.String">
@@ -49,8 +49,7 @@
 		<prop key="hibernate.format_sql">true</prop>		
 		<!-- <prop key="hibernate.hbm2ddl.auto">verify</prop> -->
 		<prop key="hibernate.cglib.use_reflection_optimizer">true</prop>
-		<prop key="hibernate.ejb.entitymanager_factory_name">entity-manager</prop>	
-		<prop key="spring.jpa.database">mysql</prop>		
+		<prop key="hibernate.ejb.entitymanager_factory_name">entity-manager</prop>		
 	</util:properties>
 
 </beans>

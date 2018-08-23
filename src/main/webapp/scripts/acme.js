@@ -246,9 +246,25 @@ function showUserAccount(){
 	}
 }
 
+function showMsg(){
+	alert("alert!");
+	
+}
+
 function showConfirmationAlert(element, msg, url){
 	var fullMsg = element + " " + msg;
 	if(confirm(fullMsg)){
 		relativeRedir(url);
 	}
+}
+
+function showConditionalAlert(msg, id, url){
+	
+	if(id!='0'){
+
+		relativeRedir(url);
+	}else{
+		alert(msg);
+	}
+	
 }

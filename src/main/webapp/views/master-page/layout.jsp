@@ -38,6 +38,8 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-flat.css">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-colors-metro.css">
 <link rel="stylesheet" href="styles/common.css" type="text/css">
 <link rel="stylesheet" href="styles/displaytag.css" type="text/css">
 <link rel="stylesheet" href="styles/cookie.css" type="text/css">
@@ -46,7 +48,7 @@
 
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 
-<body class="w3-white">
+<body class="w3-flat-midnight-blue">
 	<tiles:insertAttribute name="header" />
 	<tiles:insertAttribute name="menu" />
 

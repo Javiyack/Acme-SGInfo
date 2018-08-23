@@ -81,7 +81,7 @@ public class ManagerServantController extends AbstractController {
 				this.servantService.save(inidencia);
 				result = new ModelAndView("redirect:/service/user/list.do");
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(inidencia, "manager.commit.error");
+				result = this.createEditModelAndView(inidencia, "msg.commit.error");
 			}
 		return result;
 	}
@@ -112,7 +112,7 @@ public class ManagerServantController extends AbstractController {
 					this.servantService.save(service);
 					result = new ModelAndView("redirect:/");
 				} catch (final Throwable oops) {
-					result = this.createEditModelAndView(inidenciaForm, "manager.commit.error");
+					result = this.createEditModelAndView(inidenciaForm, "msg.commit.error");
 				}
 			return result;
 		}

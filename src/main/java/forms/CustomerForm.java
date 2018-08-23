@@ -38,8 +38,7 @@ public class CustomerForm {
 	
 	private String email;
 	
-	@Email
-	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getEmail() {
 		return this.email;
 	}
@@ -103,7 +102,6 @@ public class CustomerForm {
 		this.description = description;
 	}
 
-	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	public Date getFechaAlta() {

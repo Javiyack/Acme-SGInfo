@@ -115,7 +115,7 @@ public class ActorController extends AbstractController {
 					if (oops.getCause().getCause() != null && oops.getCause().getCause().getMessage().startsWith("Duplicate"))
 						result = this.createEditModelAndView(actorForm, "msg.duplicate.username");
 					else
-						result = this.createEditModelAndView(actorForm, "actor.commit.error");
+						result = this.createEditModelAndView(actorForm, "msg.commit.error");
 				}
 
 		} catch (final Throwable oops) {

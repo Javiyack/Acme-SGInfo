@@ -30,8 +30,10 @@
 		<value>/views/customer/messages</value>
 		<value>/views/dashboard/messages</value>
 		<value>/views/incidence/messages</value>
+		<value>/views/labor/messages</value>
 		<value>/views/payment/messages</value>
 		<value>/views/servant/messages</value>
+		<value>/views/attachment/messages</value>
 		
 		
 	</util:list>

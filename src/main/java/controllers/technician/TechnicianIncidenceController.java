@@ -106,7 +106,7 @@ public class TechnicianIncidenceController extends AbstractController {
 						this.incidenceService.save(incidencia);
 						result = new ModelAndView("redirect:/incidence/technician/list.do");
 					} catch (final Throwable oops) {
-						result = this.createEditModelAndView(incidence, "manager.commit.error", incidencia.getUser().getCustomer().getId());
+						result = this.createEditModelAndView(incidence, "msg.commit.error", incidencia.getUser().getCustomer().getId());
 					}
 				return result;
 			}

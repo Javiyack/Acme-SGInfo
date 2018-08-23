@@ -28,8 +28,10 @@
 		<value>/views/billing/tiles.xml</value>
 		<value>/views/customer/tiles.xml</value>
 		<value>/views/incidence/tiles.xml</value>
+		<value>/views/labor/tiles.xml</value>
 		<value>/views/payment/tiles.xml</value>
 		<value>/views/servant/tiles.xml</value>
+		<value>/views/attachment/tiles.xml</value>
 		
 
 		

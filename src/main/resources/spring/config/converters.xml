@@ -28,11 +28,13 @@
 		<bean class="converters.TecnicianToStringConverter" />
 		<bean class="converters.ServantToStringConverter" />
 		<bean class="converters.IncidenceToStringConverter" />
+		<bean class="converters.LaborToStringConverter" />
 		<bean class="converters.SaleToStringConverter" />
 		<bean class="converters.RequestToStringConverter" />
 		<bean class="converters.LocationToStringConverter" />
 		<bean class="converters.EquipmentToStringConverter" />
 		<bean class="converters.CustomerToStringConverter" />
+		<bean class="converters.AttachmentToStringConverter" />
 		
 		<bean class="converters.StringToActorConverter" />
 		<bean class="converters.StringToAdministratorConverter" />
@@ -43,11 +45,13 @@
 		<bean class="converters.StringToTecnicianConverter" />
 		<bean class="converters.StringToServantConverter" />	
 		<bean class="converters.StringToIncidenceConverter" />		
+		<bean class="converters.StringToLaborConverter" />		
 		<bean class="converters.StringToSaleConverter" />		
 		<bean class="converters.StringToRequestConverter" />		
 		<bean class="converters.StringToLocationConverter" />		
 		<bean class="converters.StringToEquipmentConverter" />		
 		<bean class="converters.StringToCustomerConverter" />		
+		<bean class="converters.StringToAttachmentConverter" />		
 			
 	</util:list>
 	

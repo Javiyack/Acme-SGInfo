@@ -5,23 +5,92 @@ import java.util.Date;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Access(AccessType.PROPERTY)
 public class Attachment extends DomainEntity {
 
-	public String name;
+	private String name;
 
-	public Date uploadDate;
+	private Date uploadDate;
 
-	public byte[] data;
+	private byte[] data;
 
-	public String[] mineType;
+	private String[] mineType;
 
-	public long size;
+	private long size;
 
 	private Message message;
 
 	private Incidence incidence;
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@NotNull
+	@Temporal(TemporalType.TIMESTAMP)
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+	public Date getUploadDate() {
+		return uploadDate;
+	}
+
+	public void setUploadDate(Date uploadDate) {
+		this.uploadDate = uploadDate;
+	}
+
+	public byte[] getData() {
+		return data;
+	}
+
+	public void setData(byte[] data) {
+		this.data = data;
+	}
+
+	public String[] getMineType() {
+		return mineType;
+	}
+
+	public void setMineType(String[] mineType) {
+		this.mineType = mineType;
+	}
+
+	public long getSize() {
+		return size;
+	}
+
+	public void setSize(long size) {
+		this.size = size;
+	}
+
+	@NotNull
+	@ManyToOne(optional = false)
+	public Message getMessage() {
+		return message;
+	}
+
+	public void setMessage(Message message) {
+		this.message = message;
+	}
+
+	@NotNull
+	@ManyToOne(optional = false)
+	public Incidence getIncidence() {
+		return incidence;
+	}
+
+	public void setIncidence(Incidence incidence) {
+		this.incidence = incidence;
+	}
 
 }

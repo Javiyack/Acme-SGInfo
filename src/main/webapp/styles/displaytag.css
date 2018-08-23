@@ -11,6 +11,7 @@ table.displaytag {
 	width: 100%;
 	margin: 5px 0 10px 0 !important;
 	border-bottom: 1px solid #223850;	
+	color: black;
 }
 
 .displaytag th, .displaytag td {
@@ -22,10 +23,9 @@ table.displaytag {
 }
 
 .displaytag thead tr th {
-	text-align: center !important;
 	vertical-align: middle;
 	border-bottom: 1px solid #223850;
-	text-align: center;
+	text-align: left!important;
 	
 	background-color: #223850;
 	color: white;

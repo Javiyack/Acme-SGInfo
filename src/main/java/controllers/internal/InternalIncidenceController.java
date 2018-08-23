@@ -13,10 +13,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import controllers.AbstractController;
 import domain.Incidence;
+import domain.Labor;
 import domain.Technician;
 import domain.User;
 import forms.IncidenceForm;
 import services.IncidenceService;
+import services.LaborService;
 import services.TechnicianService;
 import services.UserService;
 
@@ -24,6 +26,8 @@ import services.UserService;
 @RequestMapping("/incidence/internal")
 public class InternalIncidenceController extends AbstractController {
 
+	
+	
 	// Services
 	@Autowired
 	private IncidenceService incidenceService;
@@ -31,6 +35,8 @@ public class InternalIncidenceController extends AbstractController {
 	private TechnicianService technicianService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private LaborService laborService;
 
 	// Constructor
 
@@ -55,13 +61,16 @@ public class InternalIncidenceController extends AbstractController {
 	// Create incidence
 	// ---------------------------------------------------------------
 	@RequestMapping("/create")
-	public ModelAndView create(@Valid final int customerId) {
+	public ModelAndView create(@Valid final Integer customerId) {
 		ModelAndView result;
+		if(customerId!=null) {
 		final Incidence incidencia = this.incidenceService.create();
 		final IncidenceForm incidence = new IncidenceForm(incidencia);
 
 		result = this.createEditModelAndView(incidence, customerId);
-
+		}else {
+			result = new ModelAndView("redirect:/customer/list.do");
+		}
 		return result;
 	}
 
@@ -74,6 +83,8 @@ public class InternalIncidenceController extends AbstractController {
 
 		final IncidenceForm incidence = new IncidenceForm(incidencia);
 		result = this.createEditModelAndView(incidence, incidencia.getUser().getCustomer().getId());
+		Collection<Labor> labors = laborService.findByIncidence(id);
+		result.addObject("labors", labors);
 
 		return result;
 	}
@@ -88,6 +99,8 @@ public class InternalIncidenceController extends AbstractController {
 		final IncidenceForm incidence = new IncidenceForm(incidencia);
 		result = this.createEditModelAndView(incidence, incidencia.getUser().getCustomer().getId());
 		result.addObject("display", true);
+		Collection<Labor> labors = laborService.findByIncidence(id);
+		result.addObject("labors", labors);
 
 		return result;
 	}
