@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import controllers.LaborController;
 
 @Controller
-@RequestMapping("/labor/manager")
+@RequestMapping("/labor/technician")
 public class TechnicianLaborController extends LaborController {
 	
 	// Constructor

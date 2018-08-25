@@ -40,8 +40,7 @@
 <!-- Sidebar/menu -->
 
 <nav
-	class="w3-sidebar w3-collapse w3-flat-pomegranate
- w3-animate-left sombra"
+	class="w3-sidebar w3-collapse w3-flat-midnight-blue w3-animate-left sombra"
 	style="z-index: 3; width: 300px;" id="mySidebar">
 
 	<br>

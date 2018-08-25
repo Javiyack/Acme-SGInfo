@@ -48,7 +48,7 @@
 
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 
-<body class="w3-flat-midnight-blue">
+<body class="w3-flat-wet-asphalt">
 	<tiles:insertAttribute name="header" />
 	<tiles:insertAttribute name="menu" />
 

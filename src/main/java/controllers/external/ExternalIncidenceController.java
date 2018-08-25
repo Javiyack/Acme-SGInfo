@@ -13,10 +13,12 @@ import org.springframework.web.servlet.ModelAndView;
 
 import controllers.AbstractController;
 import domain.Incidence;
+import domain.Labor;
 import domain.Technician;
 import domain.User;
 import forms.IncidenceForm;
 import services.IncidenceService;
+import services.LaborService;
 import services.TechnicianService;
 import services.UserService;
 
@@ -31,6 +33,8 @@ public class ExternalIncidenceController extends AbstractController {
 	private TechnicianService technicianService;
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private LaborService laborService;
 
 	// Constructor
 
@@ -74,7 +78,8 @@ public class ExternalIncidenceController extends AbstractController {
 
 		final IncidenceForm incidence = new IncidenceForm(incidencia);
 		result = this.createEditModelAndView(incidence);
-
+		Collection<Labor> labors = laborService.findByIncidence(id);
+		result.addObject("labors", labors);
 		return result;
 	}
 
@@ -88,7 +93,8 @@ public class ExternalIncidenceController extends AbstractController {
 		final IncidenceForm incidence = new IncidenceForm(incidencia);
 		result = this.createEditModelAndView(incidence);
 		result.addObject("display", true);
-
+		Collection<Labor> labors = laborService.findByIncidence(id);
+		result.addObject("labors", labors);
 		return result;
 	}
 
@@ -136,9 +142,9 @@ public class ExternalIncidenceController extends AbstractController {
 		}
 		return result;
 	}
-	
-	// Métodos auxiliares	
-	//----------------------------------------------------------
+
+	// Métodos auxiliares
+	// ----------------------------------------------------------
 
 	protected ModelAndView createEditModelAndView(final IncidenceForm inidence) {
 		final ModelAndView result;

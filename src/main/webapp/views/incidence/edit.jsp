@@ -28,20 +28,9 @@
 
 
 	<form:form action="${requestUri}" modelAttribute="incidenceForm">
+
+
 		<div class="seccion w3-light-green">
-			<div class="w3-row-padding w3-margin-top">
-				<acme:cancelButton url="/incidence/${rol}/list.do"
-					code="rendezvous.cancel" css="formButton toLeft" />
-				<jstl:if test="${!readonly}">
-					<jstl:if test="${incidence.id!=0 }">
-						<acme:submit name="delete" code="label.delete"
-							css="formButton toLeft" />
-					</jstl:if>
-					<acme:submit name="save" code="rendezvous.save" 
-						css="formButton toLeft"/>
-				</jstl:if>
-			</div>
-		</div><div class="seccion w3-light-green">
 
 			<form:hidden path="id" />
 			<form:hidden path="version" />
@@ -97,16 +86,29 @@
 			</div>
 
 		</div>
-
-		<div class="titulo" style="padding-left:0.5em;padding-top:0px;">
+		<div class="seccion w3-light-green">
+			<div class="w3-row-padding w3-margin-top">
+				<acme:cancelButton url="/incidence/${rol}/list.do"
+					code="rendezvous.cancel" css="formButton toLeft" />
+				<jstl:if test="${!readonly}">
+					<jstl:if test="${incidence.id!=0 }">
+						<acme:submit name="delete" code="label.delete"
+							css="formButton toLeft" />
+					</jstl:if>
+					<acme:submit name="save" code="rendezvous.save"
+						css="formButton toLeft" />
+				</jstl:if>
+			</div>
+		</div>
+		<div class="titulo" style="padding-left: 0.5em; padding-top: 0px;">
 			<strong><spring:message code="label.labors" /></strong>
 		</div>
 		<%@ include file="/views/labor/list.jsp"%>
-		<div class="titulo" style="padding-left:0.5em;padding-top:0px;">
+		<div class="titulo" style="padding-left: 0.5em; padding-top: 0px;">
 			<strong><spring:message code="file.files" /></strong>
 		</div>
 		<%@ include file="/views/attachment/list.jsp"%>
 
-		
+
 	</form:form>
 </security:authorize>

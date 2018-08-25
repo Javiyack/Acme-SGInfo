@@ -34,6 +34,7 @@ import services.IncidenceService;
 import services.LaborService;
 
 @Controller
+@RequestMapping("/labor")
 public class LaborController extends AbstractController {
 
 	// Supporting services -----------------------------------------------------
@@ -203,7 +204,7 @@ public class LaborController extends AbstractController {
 		else
 			try {
 				this.laborService.save(incidencia);
-				result = new ModelAndView("redirect:/labor/list.do");
+				result = new ModelAndView("redirect:/incidence/internal/edit.do?id=" + labor.getIncidence().getId());
 			} catch (final Throwable oops) {
 				result = this.createEditModelAndView(labor, "msg.commit.error");
 			}
@@ -222,7 +223,7 @@ public class LaborController extends AbstractController {
 
 			try {
 				this.laborService.delete(labor);
-				result = new ModelAndView("redirect:/labor/list.do");
+				result = new ModelAndView("redirect:/incidence/internal/edit.do?id=" + labor.getIncidence().getId());
 
 			} catch (final Throwable ooops) {
 				if (ooops.getMessage().equals("msg.not.loged.block"))
@@ -236,19 +237,17 @@ public class LaborController extends AbstractController {
 		}
 		// Delete ---------------------------------------------------------------
 		@RequestMapping(value = "/delete", method = RequestMethod.GET)
-		public ModelAndView delete(@RequestParam(required = false) final Integer id) {
+		public ModelAndView delete(@RequestParam(required = false) final Integer id, int incidenceId) {
 			ModelAndView result;
 
 			Assert.notNull(id);
 			final Labor labor = this.laborService.findOne(id);
+			result = new ModelAndView("redirect:/incidence/internal/edit.do?id=" + incidenceId  );
 
 			try {
-				this.laborService.delete(labor);
-				result = new ModelAndView("redirect: listWithTabooWord.do");
-
+				this.laborService.delete(labor);				
 			} catch (final Throwable ooops) {
-				result = new ModelAndView("redirect: listWithTabooWord.do");
-				result.addObject("message", "tabooWord.commit.error");
+				result.addObject("message", "msg.commit.error");
 			}
 			return result;
 		}

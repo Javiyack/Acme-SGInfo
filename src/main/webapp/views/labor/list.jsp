@@ -84,7 +84,7 @@
 				<display:column class="${classTd}">
 					<jstl:if test="${owns}">
 						<div>
-							<a href="labor/${rol}/delete.do?id=${row.id}"> <i
+							<a href="labor/${rol}/delete.do?id=${row.id}&incidenceId=${row.incidence.id}"> <i
 								class="fa fa-remove w3-xlarge"></i>
 							</a>
 						</div>

@@ -26,8 +26,6 @@ import services.UserService;
 @RequestMapping("/incidence/internal")
 public class InternalIncidenceController extends AbstractController {
 
-	
-	
 	// Services
 	@Autowired
 	private IncidenceService incidenceService;
@@ -63,12 +61,12 @@ public class InternalIncidenceController extends AbstractController {
 	@RequestMapping("/create")
 	public ModelAndView create(@Valid final Integer customerId) {
 		ModelAndView result;
-		if(customerId!=null) {
-		final Incidence incidencia = this.incidenceService.create();
-		final IncidenceForm incidence = new IncidenceForm(incidencia);
+		if (customerId != null) {
+			final Incidence incidencia = this.incidenceService.create();
+			final IncidenceForm incidence = new IncidenceForm(incidencia);
 
-		result = this.createEditModelAndView(incidence, customerId);
-		}else {
+			result = this.createEditModelAndView(incidence, customerId);
+		} else {
 			result = new ModelAndView("redirect:/customer/list.do");
 		}
 		return result;

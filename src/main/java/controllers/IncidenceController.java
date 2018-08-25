@@ -23,6 +23,7 @@ import services.TechnicianService;
 import services.UserService;
 
 @Controller
+@RequestMapping("/incidence")
 public class IncidenceController extends AbstractController {
 
 	// Services
