@@ -10,6 +10,10 @@ body {
 	background-color: #ddd;
 }
 
+li.menuItem:hover{
+	color: white;
+}
+
 .logo {
 	margin-top: 3em;
 	height: 15em;

@@ -33,7 +33,14 @@
 		<value>/views/labor/messages</value>
 		<value>/views/payment/messages</value>
 		<value>/views/servant/messages</value>
-		<value>/views/attachment/messages</value>
+		<value>/views/file/messages</value>
+		
+		
+		<value>/views/folder/messages</value>
+		<value>/views/message/messages</value>
+		<value>/views/curriculum/messages</value>
+		<value>/views/configuration/messages</value>
+		<value>/views/tabooWord/messages</value>
 		
 		
 	</util:list>

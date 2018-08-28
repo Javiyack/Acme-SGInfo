@@ -76,11 +76,12 @@
 						css="formTextArea" readonly="${readonly}" />
 					<br>
 
+					<div onclick="togleDisabled('reason')">
 					<acme:checkBox code="incidencia.cancelled" path="cancelled" css=""
-						readonly="${readonly}" />
+						readonly="${readonly}" /></div>
 					<acme:textarea code="empty" path="cancelationReason"
-						css="formTextArea" placeholder="Cancelation reason..."
-						readonly="${readonly}" />
+						css="formTextArea" disabled="true" placeholder="Cancelation reason..."
+						readonly="${readonly}" id="reason"/>
 				</div>
 
 			</div>
@@ -107,7 +108,7 @@
 		<div class="titulo" style="padding-left: 0.5em; padding-top: 0px;">
 			<strong><spring:message code="file.files" /></strong>
 		</div>
-		<%@ include file="/views/attachment/list.jsp"%>
+		<%@ include file="/views/file/list.jsp"%>
 
 
 	</form:form>

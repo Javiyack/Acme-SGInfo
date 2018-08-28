@@ -62,7 +62,7 @@
 				<a href="actor/create.do" class=""><i
 					class="fa fa-user-plus w3-bar-item w3-large"></i></a>
 			</security:authorize>
-			<a href="#"><i class="fa fa-envelope w3-bar-item w3-large"></i></a>
+			<a href="folder/list.do"><i class="fa fa-envelope w3-bar-item w3-large"></i></a>
 			<security:authorize access="isAuthenticated()">
 				<a href="actor/edit.do"><i
 					class="fa fa-user w3-bar-item w3-large"></i></a>

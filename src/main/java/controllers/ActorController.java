@@ -82,14 +82,18 @@ public class ActorController extends AbstractController {
 		ModelAndView result;
 		ActorForm model;
 
-		final Actor actor = this.actorService.findByPrincipal();
 		try {
+			final Actor actor = this.actorService.findByPrincipal();
 			model = new ActorForm(actor);
 			result = this.createEditModelAndView(model, null);
-		}catch (Throwable oops) {
-			result = this.createMessageModelAndView("panic.message.text", "/");
+		} catch (Throwable oops) {
+			if (oops.getMessage().startsWith("msg.")) {
+				return createMessageModelAndView(oops.getLocalizedMessage(), "/");
+			} else {
+				return this.createMessageModelAndView("panic.message.text", "/");
+			}
 		}
-		
+
 		return result;
 	}
 
@@ -112,7 +116,8 @@ public class ActorController extends AbstractController {
 					else
 						result = new ModelAndView("redirect:/");
 				} catch (final Throwable oops) {
-					if (oops.getCause().getCause() != null && oops.getCause().getCause().getMessage().startsWith("Duplicate"))
+					if (oops.getCause().getCause() != null
+							&& oops.getCause().getCause().getMessage().startsWith("Duplicate"))
 						result = this.createEditModelAndView(actorForm, "msg.duplicate.username");
 					else
 						result = this.createEditModelAndView(actorForm, "msg.commit.error");
@@ -121,7 +126,8 @@ public class ActorController extends AbstractController {
 		} catch (final Throwable oops) {
 			if (oops.getLocalizedMessage().startsWith("msg."))
 				result = this.createEditModelAndView(actorForm, oops.getLocalizedMessage());
-			else if (oops.getCause().getCause() != null && oops.getCause().getCause().getMessage().startsWith("Duplicate"))
+			else if (oops.getCause().getCause() != null
+					&& oops.getCause().getCause().getMessage().startsWith("Duplicate"))
 				result = this.createEditModelAndView(actorForm, "msg.duplicate.username");
 			else
 				result = this.createEditModelAndView(actorForm, "actor.reconstruct.error");

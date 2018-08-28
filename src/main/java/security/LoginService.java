@@ -66,7 +66,7 @@ public class LoginService implements UserDetailsService {
 		authentication = context.getAuthentication();
 		Assert.notNull(authentication);
 		principal = authentication.getPrincipal();
-		Assert.isTrue(principal instanceof UserAccount);
+		Assert.isTrue(principal instanceof UserAccount, "msg.not.loged.block" );
 		result = (UserAccount) principal;
 		Assert.notNull(result);
 		Assert.isTrue(result.getId() != 0);

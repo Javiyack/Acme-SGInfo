@@ -1,16 +1,20 @@
 
 package domain;
 
+import java.util.Collection;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.Valid;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 
 import security.UserAccount;
@@ -26,7 +30,7 @@ public abstract class Actor extends DomainEntity {
 	private String 		phone; 			// Optional
 	private String 		address; 		// Optional
 	private Customer	customer; 		// Optional
-	
+
 	//Relationships
 	private UserAccount userAccount;
 
@@ -38,6 +42,7 @@ public abstract class Actor extends DomainEntity {
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
+	
 	
 	@NotBlank
 	@SafeHtml

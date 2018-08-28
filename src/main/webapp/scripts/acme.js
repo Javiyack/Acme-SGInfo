@@ -12,8 +12,18 @@ $(document).ready(function() {
 	var slideIndex = 1;
 
 	showDivs(1);
-
+	
 });
+
+
+function togleDisabled(element) {
+	document.getElementById(element).disabled=!document.getElementById(element).disabled;
+}
+
+function togleVisible(element) {
+	document.getElementById(element).visible=!document.getElementById(element).visible;
+}
+
 
 //Toggle between showing and hiding the sidebar, and add overlay effect
 function w3_open() {
@@ -99,7 +109,6 @@ function askSubmission(msg, form) {
 	if (confirm(msg))
 		form.submit();
 }
-
 function relativeRedir(loc) {
 	var b = document.getElementsByTagName('base');
 	if (b && b[0] && b[0].href) {
@@ -108,6 +117,16 @@ function relativeRedir(loc) {
 		loc = b[0].href + loc;
 	}
 	window.location.replace(loc);
+}
+
+
+
+function overEffect(elemento) {
+	elemento.classList.toggle("w3-text-white");
+}
+
+function setTexTColor(elemento, color) {
+	elemento.classList.toggle("w3-text-white");
 }
 
 function ellipsis(elemento) {

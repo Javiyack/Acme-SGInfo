@@ -25,6 +25,7 @@
 <%@ attribute name="path" required="true"%>
 <%@ attribute name="code" required="true"%>
 <%@ attribute name="readonly" required="false"%>
+<%@ attribute name="disabled" required="false"%>
 <%@ attribute name="css" required="false"%>
 <%@ attribute name="id" required="false"%>
 <%@ attribute name="visible" required="false"%>
@@ -49,7 +50,7 @@
 	<form:label path="${path}">
 		<spring:message code="${code}" />
 	</form:label>
-	<form:textarea path="${path}" readonly="${readonly}" id="${id}"
+	<form:textarea disabled="${disabled}" path="${path}" readonly="${readonly}" id="${id}"
 		class="${css}" style="display:${visible}" placeholder="${placeholder}" />
 	<form:errors path="${path}" cssClass="error" />
 </div>

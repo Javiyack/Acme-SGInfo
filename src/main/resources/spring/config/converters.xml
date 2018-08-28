@@ -34,7 +34,15 @@
 		<bean class="converters.LocationToStringConverter" />
 		<bean class="converters.EquipmentToStringConverter" />
 		<bean class="converters.CustomerToStringConverter" />
-		<bean class="converters.AttachmentToStringConverter" />
+		<bean class="converters.FileToStringConverter" />
+		
+		<bean class="converters.MessageToStringConverter" />
+		<bean class="converters.FolderToStringConverter" />
+		<bean class="converters.TabooWordToStringConverter" />
+		<bean class="converters.ConfigurationToStringConverter" />
+		<bean class="converters.CurriculumToStringConverter" />
+		
+		
 		
 		<bean class="converters.StringToActorConverter" />
 		<bean class="converters.StringToAdministratorConverter" />
@@ -51,7 +59,15 @@
 		<bean class="converters.StringToLocationConverter" />		
 		<bean class="converters.StringToEquipmentConverter" />		
 		<bean class="converters.StringToCustomerConverter" />		
-		<bean class="converters.StringToAttachmentConverter" />		
+		<bean class="converters.StringToFileConverter" />		
+			
+		<bean class="converters.StringToMessageConverter" />	
+		<bean class="converters.StringToFolderConverter" />
+		<bean class="converters.StringToTabooWordConverter" />	
+		<bean class="converters.StringToConfigurationConverter" />
+		<bean class="converters.StringToCurriculumConverter" />
+			
+			
 			
 	</util:list>
 	

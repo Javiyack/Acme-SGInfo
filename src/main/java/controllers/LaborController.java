@@ -53,86 +53,31 @@ public class LaborController extends AbstractController {
 		super();
 	}
 
-	// List All labors 
-		// ---------------------------------------------------------------
-		@RequestMapping("/list")
-		public ModelAndView list(final Integer pageSize) {
-			ModelAndView result;
-			final Collection<Labor> labors = this.laborService.findAll();
-			Actor actor = this.actorService.findByPrincipal();
-
-			result = new ModelAndView("labor/list");
-			result.addObject("labors", labors);
+	// List All labors
+	// ---------------------------------------------------------------
+	@RequestMapping("/list")
+	public ModelAndView list(final Integer pageSize) {
+		ModelAndView result;
+		final Collection<Labor> labors = this.laborService.findAll();
+		result = new ModelAndView("labor/list");
+		result.addObject("labors", labors);
+		try {
+			Actor actor;
+			actor = this.actorService.findByPrincipal();
 			if (actor != null && actor instanceof Responsable) {
 				result.addObject("logedCustomerId", actor.getCustomer().getId());
 			} else {
 				result.addObject("logedCustomerId", -1);
-
 			}
-			result.addObject("requestUri", "labor/list.do");
-			result.addObject("pageSize", (pageSize != null) ? pageSize : 20);
-			return result;
-		}
 
-		// List All labors listByIncidence
-		// ---------------------------------------------------------------
-		@RequestMapping("/listByIncidence")
-		public ModelAndView listByIncidence(Integer incidenceId, final Integer pageSize) {
-			ModelAndView result;
-			final Collection<Labor> labors = this.laborService.findByIncidence(incidenceId);
-			Actor actor = this.actorService.findByPrincipal();
-
-			result = new ModelAndView("labor/list");
-			result.addObject("labors", labors);
-			if (actor != null && actor instanceof Responsable) {
-				result.addObject("logedCustomerId", actor.getCustomer().getId());
+		} catch (Throwable oops) {
+			if (oops.getMessage().startsWith("msg.")) {
+				return createMessageModelAndView(oops.getLocalizedMessage(), "folder/list.do");
 			} else {
-				result.addObject("logedCustomerId", -1);
-
+				return this.createMessageModelAndView("msg.commit.error", "folder/list.do");
 			}
-			result.addObject("incidenceId", incidenceId);
-			result.addObject("requestUri", "labor/list.do");
-			result.addObject("pageSize", (pageSize != null) ? pageSize : 20);
-			return result;
 		}
 
-		// List All listByUser
-	// ---------------------------------------------------------------
-	@RequestMapping("/listByUser")
-	public ModelAndView listByUser(Integer userId, final Integer pageSize) {
-		ModelAndView result;
-		final Collection<Labor> labors = this.laborService.findByUser(userId);
-		Actor actor = this.actorService.findByPrincipal();
-
-		result = new ModelAndView("labor/list");
-		result.addObject("labors", labors);
-		if (actor != null && actor instanceof Responsable) {
-			result.addObject("logedCustomerId", actor.getCustomer().getId());
-		} else {
-			result.addObject("logedCustomerId", -1);
-
-		}
-		result.addObject("requestUri", "labor/list.do");
-		result.addObject("pageSize", (pageSize != null) ? pageSize : 20);
-		return result;
-	}
-
-	// List All labors listByTechnician
-	// ---------------------------------------------------------------
-	@RequestMapping("/listByTech")
-	public ModelAndView listByTechnician(Integer techId, final Integer pageSize) {
-		ModelAndView result;
-		final Collection<Labor> labors = this.laborService.findByTechnician(techId);
-		Actor actor = this.actorService.findByPrincipal();
-
-		result = new ModelAndView("labor/list");
-		result.addObject("labors", labors);
-		if (actor != null && actor instanceof Responsable) {
-			result.addObject("logedCustomerId", actor.getCustomer().getId());
-		} else {
-			result.addObject("logedCustomerId", -1);
-
-		}
 		result.addObject("requestUri", "labor/list.do");
 		result.addObject("pageSize", (pageSize != null) ? pageSize : 20);
 		return result;
@@ -152,13 +97,13 @@ public class LaborController extends AbstractController {
 			result.addObject("incidenceId", incidenceId);
 		} catch (Throwable oops) {
 			if (oops.getMessage().startsWith("msg.")) {
-				result = this.createMessageModelAndView(oops.getLocalizedMessage(),			
-					"incidence/internal/edit.do?id=" + incidenceId);
-			}else {
-				result = this.createMessageModelAndView("msg.commit.error",					
+				result = this.createMessageModelAndView(oops.getLocalizedMessage(),
+						"incidence/internal/edit.do?id=" + incidenceId);
+			} else {
+				result = this.createMessageModelAndView("msg.commit.error",
 						"incidence/internal/edit.do?id=" + incidenceId);
 			}
-	}
+		}
 
 		return result;
 	}
@@ -198,16 +143,17 @@ public class LaborController extends AbstractController {
 		Labor incidencia;
 		try {
 			incidencia = laborService.recontruct(labor, binding);
-		
-		if (binding.hasErrors())
-			result = this.createEditModelAndView(labor);
-		else
-			try {
-				this.laborService.save(incidencia);
-				result = new ModelAndView("redirect:/incidence/internal/edit.do?id=" + labor.getIncidence().getId());
-			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(labor, "msg.commit.error");
-			}
+
+			if (binding.hasErrors())
+				result = this.createEditModelAndView(labor);
+			else
+				try {
+					this.laborService.save(incidencia);
+					result = new ModelAndView(
+							"redirect:/incidence/internal/edit.do?id=" + labor.getIncidence().getId());
+				} catch (final Throwable oops) {
+					result = this.createEditModelAndView(labor, "msg.commit.error");
+				}
 		} catch (final Throwable oops) {
 			result = this.createEditModelAndView(labor, "msg.reconstruct.error");
 		}
@@ -216,42 +162,42 @@ public class LaborController extends AbstractController {
 	}
 
 	// Delete labor
-		// ---------------------------------------------------------------
-		@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
-		public ModelAndView delete(@Valid final LaborForm labor, final BindingResult binding) {
-			ModelAndView result;
+	// ---------------------------------------------------------------
+	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
+	public ModelAndView delete(@Valid final LaborForm labor, final BindingResult binding) {
+		ModelAndView result;
 
-			try {
-				this.laborService.delete(labor);
-				result = new ModelAndView("redirect:/incidence/internal/edit.do?id=" + labor.getIncidence().getId());
+		try {
+			this.laborService.delete(labor);
+			result = new ModelAndView("redirect:/incidence/internal/edit.do?id=" + labor.getIncidence().getId());
 
-			} catch (final Throwable ooops) {
-				if (ooops.getMessage().equals("msg.not.loged.block"))
-					result = this.createEditModelAndView(labor, "msg.not.loged.block");
-				else if (ooops.getMessage().equals("msg.not.owned.block"))
-					result = this.createEditModelAndView(labor, "msg.not.owned.block");
-				else
-					result = this.createEditModelAndView(labor, "msg.commit.error");
-			}
-			return result;
+		} catch (final Throwable ooops) {
+			if (ooops.getMessage().equals("msg.not.loged.block"))
+				result = this.createEditModelAndView(labor, "msg.not.loged.block");
+			else if (ooops.getMessage().equals("msg.not.owned.block"))
+				result = this.createEditModelAndView(labor, "msg.not.owned.block");
+			else
+				result = this.createEditModelAndView(labor, "msg.commit.error");
 		}
-		// Delete ---------------------------------------------------------------
-		@RequestMapping(value = "/delete", method = RequestMethod.GET)
-		public ModelAndView delete(@RequestParam(required = false) final Integer id, int incidenceId) {
-			ModelAndView result;
+		return result;
+	}
 
-			Assert.notNull(id);
-			final Labor labor = this.laborService.findOne(id);
-			result = new ModelAndView("redirect:/incidence/internal/edit.do?id=" + incidenceId  );
+	// Delete ---------------------------------------------------------------
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam(required = false) final Integer id, int incidenceId) {
+		ModelAndView result;
 
-			try {
-				this.laborService.delete(labor);				
-			} catch (final Throwable ooops) {
-				result.addObject("message", "msg.commit.error");
-			}
-			return result;
+		Assert.notNull(id);
+		final Labor labor = this.laborService.findOne(id);
+		result = new ModelAndView("redirect:/incidence/internal/edit.do?id=" + incidenceId);
+
+		try {
+			this.laborService.delete(labor);
+		} catch (final Throwable ooops) {
+			result.addObject("message", "msg.commit.error");
 		}
-
+		return result;
+	}
 
 	protected ModelAndView createEditModelAndView(final LaborForm inidence) {
 		final ModelAndView result;

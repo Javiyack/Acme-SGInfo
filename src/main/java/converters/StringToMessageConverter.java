@@ -1,4 +1,3 @@
-
 package converters;
 
 import org.apache.commons.lang.StringUtils;
@@ -7,29 +6,27 @@ import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import domain.Attachment;
-import domain.Incidence;
-import repositories.AttachmentRepository;
-import repositories.IncidenceRepository;
+import domain.Message;
+import repositories.MessageRepository;
 
 @Component
 @Transactional
-public class StringToAttachmentConverter implements Converter<String, Attachment> {
+public class StringToMessageConverter implements Converter<String, Message> {
 
 	@Autowired
-	private AttachmentRepository	attachmentRepository;
+	private MessageRepository	messageRepository;
 
 
 	@Override
-	public Attachment convert(final String str) {
-		Attachment result;
+	public Message convert(final String str) {
+		Message result;
 		Integer id;
 		try {
 			if (StringUtils.isEmpty(str))
 				result = null;
 			else {
 				id = Integer.valueOf(str);
-				result = this.attachmentRepository.findOne(id);
+				result = this.messageRepository.findOne(id);
 			}
 
 		} catch (final Throwable oops) {

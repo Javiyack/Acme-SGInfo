@@ -63,7 +63,7 @@ public class CustomerController extends AbstractController {
 
 		result = new ModelAndView("customer/list");
 		result.addObject("customers", customers);
-		if (actor != null && actor instanceof Responsable) {
+		if (actor != null && (actor instanceof Responsable || actor instanceof Responsable) ) {
 			result.addObject("logedCustomerId", actor.getCustomer().getId());
 		} else {
 			result.addObject("logedCustomerId", -1);
@@ -175,7 +175,7 @@ public class CustomerController extends AbstractController {
 				result.addObject("actor", (Responsable) actor);
 				result.addObject("owns", true);
 			}
-		} else if (actor instanceof Manager) {
+		} else if (actor != null && actor instanceof Manager) {
 			result.addObject("actor", actor);
 			result.addObject("owns", true);
 		}

@@ -67,13 +67,13 @@
 					<jstl:set var="classTd" value="" />
 				</jstl:if>
 				<jstl:if test="${row.cancelled == true}">
-					<jstl:set var="classTd" value="${classTd} w3-red" />
+					<jstl:set var="classTd" value="${classTd} w3-gray" />
 				</jstl:if>
 				<spring:message code="incidencia.ticker" var="title" />
 				<display:column sortable="true" property="ticker" title="${title}"
 					class="${classTd}" />
 				<acme:column title="label.customer" property="user.customer.name"
-					sortable="true" />
+					sortable="true" css="${classTd}"/>
 				<spring:message code="incidencia.name" var="title" />
 				<display:column property="title" title="${title}" class="${classTd}" />
 

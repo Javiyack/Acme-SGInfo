@@ -14,9 +14,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import domain.Actor;
-import domain.Responsable;
-import domain.Administrator;
 import domain.Manager;
+import domain.Responsable;
 import domain.Technician;
 import domain.User;
 import forms.ActorForm;
@@ -40,6 +39,9 @@ public class ActorService {
 
 	@Autowired
 	private Validator validator;
+
+	@Autowired
+	private FolderService folderService;
 
 	// Constructors -----------------------------------------------------------
 	public ActorService() {
@@ -72,12 +74,16 @@ public class ActorService {
 		Assert.notNull(actor);
 		Actor result;
 
-		if (actor.getId() != 0)
+		if (actor.getId() == 0)
 			actor.getUserAccount().setActive(false);
 		if (actor.getId() != 0)
 				Assert.isTrue(actor.equals(this.findByPrincipal()), "not.allowed.action");
 
 		result = this.actorRepository.save(actor);
+		this.flush();
+		if(actor.getId()==0) {
+			this.folderService.createSystemFolders(result);			
+		}
 
 		return result;
 	}
@@ -109,12 +115,10 @@ public class ActorService {
 
 		try {
 			userAccount = LoginService.getPrincipal();
-			Assert.notNull(userAccount);
+			Assert.notNull(userAccount, "msg.not.loged.block");
 			result = this.findByUserAccount(userAccount);
-			Assert.notNull(result);
-
-		} catch (final Exception e) {
-			
+			Assert.notNull(result, "msg.not.loged.block");
+		} catch (final Throwable oops) {
 		}
 
 		return result;
@@ -179,7 +183,6 @@ public class ActorService {
 			logedActor.getUserAccount().setPassword(encoder.encodePassword(actorForm.getPassword(), null));
 			// Al registrarse, el usuario esta desactivado. El admin debe de activarlo.
 			useraccount.setActive(false);
-			//this.folderService.createSystemFolders(logedActor);
 			if(actorForm.getCustomer()!=null)
 				Assert.isTrue(actorForm.getPassKey().equals(actorForm.getCustomer().getPassKey()),
 					"msg.customer.passkey.mismatch");
