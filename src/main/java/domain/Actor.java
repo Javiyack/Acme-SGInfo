@@ -29,7 +29,7 @@ public abstract class Actor extends DomainEntity {
 	private String 		email;
 	private String 		phone; 			// Optional
 	private String 		address; 		// Optional
-	private Customer	customer; 		// Optional
+	private Customer	customer; 		
 
 	//Relationships
 	private UserAccount userAccount;

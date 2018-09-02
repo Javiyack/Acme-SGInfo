@@ -3,21 +3,64 @@ package domain;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 @Entity
 @Access(AccessType.PROPERTY)
 public class Contact extends DomainEntity {
 
-	public String name;
+	private String name;
 
-	public String cargo;
+	private String cargo;
 
-	public String email;
+	private String email;
 
-	public String[] phone;
+	private String[] phone;
 
-	private Customer customer;
 
 	private Location location;
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getCargo() {
+		return cargo;
+	}
+
+	public void setCargo(String cargo) {
+		this.cargo = cargo;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String[] getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String[] phone) {
+		this.phone = phone;
+	}
+
+
+	@ManyToOne(optional = false)
+	public Location getLocation() {
+		return location;
+	}
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
 
 }

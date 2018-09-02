@@ -9,8 +9,6 @@
  --%>
 <%@page import="org.apache.commons.lang.time.DateUtils"%>
 <%@page import="org.hibernate.engine.spi.RowSelection"%>
-<%@page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
 <%@ page import="java.util.Date"%>
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -36,11 +34,11 @@
 	</security:authorize>
 	<jstl:set var="rol" value="${fn:toLowerCase(permiso)}" />
 	<jstl:if test="${rol == 'user' or rol == 'responsable'}">
-		<jstl:set value="external" var="rol" />
+		<jstl:set value="external" var="accesscontrol" />
 	</jstl:if>
 	<jstl:if
 		test="${rol == 'technician' or rol == 'manager' or rol == 'administrator'}">
-		<jstl:set value="internal" var="rol" />
+		<jstl:set value="internal" var="accesscontrol" />
 	</jstl:if>
 	<div class="seccion w3-light-green">
 		<div class="w3-row-padding w3-margin-top">
@@ -57,23 +55,40 @@
 			</form:form>
 
 
-			<display:table pagesize="${pageSize}" class="displaytag"
+			<display:table pagesize="${pageSize}" class="displaytag w3-text-black"
 				name="incidences" requestURI="${requestUri}" id="row">
-
-				<jstl:if test="${row.publicationDate < date}">
-					<jstl:set var="classTd" value="passed" />
+				<jstl:set var="classTd" value="w3-flat-pomegranate" />				
+				<jstl:if test="${row.startingDate < date}">
+					<jstl:set var="classTd" value="w3-flat-sun-flower" />
 				</jstl:if>
-				<jstl:if test="${row.publicationDate > date}">
-					<jstl:set var="classTd" value="" />
+				<jstl:if test="${row.endingDate < date}">
+					<jstl:set var="classTd" value="w3-green" />
 				</jstl:if>
 				<jstl:if test="${row.cancelled == true}">
-					<jstl:set var="classTd" value="${classTd} w3-gray" />
+					<jstl:set var="classTd" value="w3-flat-asbestos w3-text-grey" />
 				</jstl:if>
 				<spring:message code="incidencia.ticker" var="title" />
 				<display:column sortable="true" property="ticker" title="${title}"
 					class="${classTd}" />
 				<acme:column title="label.customer" property="user.customer.name"
 					sortable="true" css="${classTd}"/>
+				<spring:message code="incidencia.user" var="userTitle" />
+				<display:column title="${userTitle}" class="${classTd}">
+					<div>
+						<a href="actor/display.do?actorId=${row.user.id}"> <jstl:out
+								value="${row.user.userAccount.username}" />
+						</a>
+					</div>
+				</display:column>
+				<spring:message code="incidencia.technician" var="title" />
+				<display:column title="${title}" class="${classTd}" sortable="true">
+					<div>
+						<a href="actor/display.do?actorId=${row.technician.id}"> <jstl:out
+								value="${row.technician.userAccount.username}" />
+						</a>
+					</div>
+				</display:column>
+				
 				<spring:message code="incidencia.name" var="title" />
 				<display:column property="title" title="${title}" class="${classTd}" />
 
@@ -88,28 +103,24 @@
 				<spring:message code="incidencia.publication.moment"
 					var="momentTilte" />
 				<display:column property="publicationDate" title="${momentTilte}"
-					format="${momentFormat}" class="${classTd}" />
+					format="${momentFormat}" class="${classTd}" sortable="true"/>
 
 
-				<spring:message code="incidencia.user" var="userTitle" />
-				<display:column title="${userTitle}" class="${classTd}">
-					<div>
-						<a href="actor/display.do?actorId=${row.user.id}"> <jstl:out
-								value="${row.user.name}" />
-						</a>
-					</div>
-				</display:column>
+				<spring:message code="moment.format" var="momentFormat" />
+				<spring:message code="incidencia.publication.moment"
+					var="momentTilte" />
+				<display:column property="startingDate" title="${momentTilte}"
+					format="${momentFormat}" class="${classTd}" sortable="true"/>
+
+<spring:message code="moment.format" var="momentFormat" />
+				<spring:message code="incidencia.publication.moment"
+					var="momentTilte" />
+				<display:column property="endingDate" title="${momentTilte}"
+					format="${momentFormat}" class="${classTd}" sortable="true"/>
 
 
-				<spring:message code="incidencia.technician" var="title" />
-				<display:column title="${title}" class="${classTd}" sortable="true">
-					<div>
-						<a href="actor/display.do?actorId=${row.technician.id}"> <jstl:out
-								value="${row.technician.name}" />
-						</a>
-					</div>
-				</display:column>
-
+				
+				
 
 				<security:authorize access="isAnonymous()">
 
@@ -130,14 +141,14 @@
 
 					<jstl:if test="${owns}">
 						<div>
-							<a href="incidence/${rol}/edit.do?id=${row.id}"> <i
+							<a href="incidence/${accesscontrol}/edit.do?id=${row.id}"> <i
 								class="fa fa-edit w3-xlarge"></i>
 							</a>
 						</div>
 					</jstl:if>
 					<jstl:if test="${!owns}">
 						<div>
-							<a href="incidence/${rol}/display.do?id=${row.id}"> <i
+							<a href="incidence/${accesscontrol}/display.do?id=${row.id}"> <i
 								class="fa fa-eye w3-xlarge"></i>
 							</a>
 						</div>
@@ -145,9 +156,9 @@
 				</display:column>
 
 			</display:table>
-
+			<hr>
 			<acme:backButton text="label.back" css="formButton toLeft" />
-			<acme:button url="/incidence/${rol}/create.do" text="label.new" />
+			<acme:button url="/incidence/${accesscontrol}/create.do" text="incidencia.new" />
 			<br />
 		</div>
 	</div>

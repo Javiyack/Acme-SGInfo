@@ -14,6 +14,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 
 import domain.Actor;
+import domain.Bill;
 import domain.Customer;
 import domain.Manager;
 import domain.Responsable;
@@ -29,8 +30,6 @@ public class CustomerService {
 	// Services
 	@Autowired
 	private ActorService actorService;
-	@Autowired
-	private TechnicianService technicianService;
 	@Autowired
 	private Validator validator;
 
@@ -78,6 +77,7 @@ public class CustomerService {
 			result.setDescription(form.getDescription());
 			result.setAddress(form.getAddress());
 			result.setBillingAddress(form.getBillingAddress());
+			result.setNif(form.getNif());
 			result.setFechaAlta(form.getFechaAlta());
 			result.setActive(form.getActive());
 			result.setEmail(form.getEmail());
@@ -89,6 +89,7 @@ public class CustomerService {
 			result.setDescription(form.getDescription());
 			result.setAddress(form.getAddress());
 			result.setBillingAddress(form.getBillingAddress());
+			result.setNif(form.getNif());
 			result.setFechaAlta(form.getFechaAlta());
 			result.setActive(form.getActive());
 			result.setEmail(form.getEmail());
@@ -135,5 +136,9 @@ public class CustomerService {
 		this.customerRepository.delete(customer.getId());
 
 		return null;
+	}
+
+	public Customer findByBill(Bill bill) {		
+		return this.customerRepository.findByBillId(bill.getId());
 	}
 }

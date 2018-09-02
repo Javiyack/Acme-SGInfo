@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 
 package repositories;
 
@@ -16,12 +19,9 @@ public interface ConfigurationRepository extends JpaRepository<Configuration, In
 	@Query("select c.welcomeMessageEn from Configuration c")
 	String findWelcomeMessageEn();
 
-	@Query("select c.banner from Configuration c")
-	String findBanner();
+	@Query("select c.logo from Configuration c")
+	String findLogo();
 
-	@Query("select c.companyName from Configuration c")
-	String findCompanyName();
-
-	@Query("select c.benefitsPercentage from Configuration c")
-	Double findBenefitsPercentage();
+	@Query("select c.name from Configuration c")
+	String findName();
 }

@@ -27,7 +27,7 @@ public class Labor extends DomainEntity {
 
 	private Incidence incidence;
 
-	private IncidenceBill incidenceBill;
+	private Bill	bill;
 
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
@@ -80,12 +80,12 @@ public class Labor extends DomainEntity {
 
 	
 	@ManyToOne(optional = true)
-	public IncidenceBill getIncidenceBill() {
-		return incidenceBill;
+	public Bill getBill() {
+		return bill;
 	}
 
-	public void setIncidenceBill(IncidenceBill incidenceBill) {
-		this.incidenceBill = incidenceBill;
+	public void setBill(Bill Bill) {
+		this.bill = Bill;
 	}
 
 }

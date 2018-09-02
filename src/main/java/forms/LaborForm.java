@@ -1,7 +1,6 @@
 
 package forms;
 
-import java.sql.Time;
 import java.util.Date;
 
 import javax.persistence.Temporal;
@@ -11,6 +10,7 @@ import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import domain.Bill;
 import domain.Incidence;
 import domain.IncidenceBill;
 import domain.Labor;
@@ -31,7 +31,7 @@ public class LaborForm {
 
 	private Incidence incidence;
 
-	private IncidenceBill incidenceBill;
+	private Bill bill;
 
 	public LaborForm() {
 		super();
@@ -48,7 +48,7 @@ public class LaborForm {
 		this.setIncidence(labor.getIncidence());
 		this.setMoment(labor.getMoment());
 		this.setTime(labor.getTime());
-		this.setIncidenceBill(labor.getIncidenceBill());
+		this.setBill(labor.getBill());
 	}
 
 	public int getId() {
@@ -113,12 +113,12 @@ public class LaborForm {
 		this.incidence = incidence;
 	}
 
-	public IncidenceBill getIncidenceBill() {
-		return incidenceBill;
+	public Bill getBill() {
+		return bill;
 	}
 
-	public void setIncidenceBill(IncidenceBill incidenceBill) {
-		this.incidenceBill = incidenceBill;
+	public void setBill(Bill bill) {
+		this.bill = bill;
 	}
 
 }

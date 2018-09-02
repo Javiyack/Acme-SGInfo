@@ -3,9 +3,11 @@ package forms;
 
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
@@ -34,6 +36,8 @@ public class CustomerForm {
 
 	private String passKey;
 	
+	private String nif;
+	
 	private Boolean active;	
 	
 	private String email;
@@ -61,6 +65,7 @@ public class CustomerForm {
 		this.setDescription(cust.getDescription());
 		this.setAddress(cust.getAddress());
 		this.setBillingAddress(cust.getBillingAddress());
+		this.setNif(cust.getNif());
 		this.setFechaAlta(cust.getFechaAlta());
 		this.setActive(cust.isActive());
 		this.setEmail(cust.getEmail());
@@ -154,6 +159,16 @@ public class CustomerForm {
 
 	public void setActive(Boolean active) {
 		this.active = active;
+	}
+
+	@NotBlank
+	@Pattern(regexp = "(^(\\d{8})([A-Z])$)|(^([ABCDEFGHJKLMNPQRSUVW])(\\d{7})([0-9A-J])$)|(^[XYZ]\\d{7,8}[A-Z]$)") // Identificaciop fiscal
+	public String getNif() {
+		return nif;
+	}
+
+	public void setNif(String nif) {
+		this.nif = nif;
 	}
 
 }

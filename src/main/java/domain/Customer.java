@@ -31,6 +31,8 @@ public class Customer extends DomainEntity {
 	private String address;
 
 	private String billingAddress;
+	
+	private String nif;
 
 	private String passKey;
 	
@@ -123,6 +125,21 @@ public class Customer extends DomainEntity {
 
 	public void setActive(Boolean active) {
 		this.active = active;
+	}
+
+	/* 	DNI_REGEX = /^(\d{8})([A-Z])$/;
+  		CIF_REGEX = /^([ABCDEFGHJKLMNPQRSUVW])(\d{7})([0-9A-J])$/;
+  	 	NIE_REGEX = /^[XYZ]\d{7,8}[A-Z]$/;	 */
+	
+	@NotBlank
+	@Column(unique = true)
+	@Pattern(regexp = "(^(\\d{8})([A-Z])$)|(^([ABCDEFGHJKLMNPQRSUVW])(\\d{7})([0-9A-J])$)|(^[XYZ]\\d{7,8}[A-Z]$)") // Identificaciop fiscal
+	public String getNif() {
+		return nif;
+	}
+
+	public void setNif(String nif) {
+		this.nif = nif;
 	}
 
 	

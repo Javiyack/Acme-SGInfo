@@ -26,10 +26,19 @@
 	<acme:textbox code="configuration.companyName" path="companyName" />
 	<br />
 	
-	<acme:textbox code="configuration.banner" path="banner" />
+	<acme:textbox code="configuration.companyName" path="passKey" />
+	<br />
+	
+	<acme:textbox code="configuration.banner" path="logo" />
 	<br />
 
-	<acme:textbox code="configuration.benefitsPercentage" path="benefitsPercentage" />
+	<acme:textbox code="configuration.benefitsPercentage" path="iva" />
+	<br />
+	<acme:textbox code="configuration.benefitsPercentage" path="hourPrice" />
+	<br />
+	<acme:textbox code="configuration.benefitsPercentage" path="iva" />
+	<br />
+	<acme:textbox code="configuration.benefitsPercentage" path="iva" />
 	<br />
 	
 	<acme:textarea code="configuration.welcomeMessageEs" path="welcomeMessageEs" />

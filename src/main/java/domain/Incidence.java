@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.NotBlank;
@@ -70,6 +71,7 @@ public class Incidence extends DomainEntity {
 		this.description = description;
 	}
 
+	@Past
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
@@ -97,6 +99,7 @@ public class Incidence extends DomainEntity {
 		this.cancelationReason = cancelationReason;
 	}
 
+	@Past
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	public Date getStartingDate() {
@@ -107,6 +110,7 @@ public class Incidence extends DomainEntity {
 		this.startingDate = startingDay;
 	}
 
+	@Past
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	public Date getEndingDate() {

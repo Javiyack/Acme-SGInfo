@@ -1,6 +1,7 @@
 package repositories;
 
 import java.util.Collection;
+import java.util.Date;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,5 +20,16 @@ public interface LaborRepository extends JpaRepository<Labor, Integer> {
 
 	@Query("select l from Labor l where l.incidence.id= ?1")
 	Collection<Labor> findByIncidenceId(int incidenceId);
+	
+	@Query("select l from Labor l where l.incidence.id= ?1")
+	Collection<Labor> findByCustomerId(int customerId);
+	
+	@Query("select l from Labor l where l.incidence.user.customer.id= ?1 and l.bill=null and l.incidence.endingDate<?2")
+	Collection<Labor> findFacturablesByCustomerId(int customerId, Date limit);
+
+	@Query("select l from Labor l where l.bill.id= ?1")
+	Collection<Labor> findByBillId(int billId);
+	
+	
 
 }

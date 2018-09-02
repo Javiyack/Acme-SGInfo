@@ -5,7 +5,10 @@ import java.util.Date;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 
+import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -26,6 +29,7 @@ public class IncidenceForm {
 	private Servant		Servant;
 	private Technician	technician;
 	private User		user;
+	private Integer		customerId;
 	private boolean		cancelled;
 	private String		cancelationReason;
 	private int			id;
@@ -63,6 +67,7 @@ public class IncidenceForm {
 		return ticker;
 	}
 	
+	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getTitle() {
 		return title;
@@ -73,18 +78,22 @@ public class IncidenceForm {
 		return this.description;
 	}
 	
+	@Past
+	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	public Date getPublicationDate() {
 		return this.publicationDate;
 	}
 
+	@Past
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	public Date getStartingDate() {
 		return startingDate;
 	}	
 
+	@Past
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
 	public Date getEndingDate() {
@@ -170,6 +179,14 @@ public class IncidenceForm {
 
 	public void setCancelationReason(String cancelationReason) {
 		this.cancelationReason = cancelationReason;
+	}
+
+	public Integer getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(Integer customerId) {
+		this.customerId = customerId;
 	}
 	
 	

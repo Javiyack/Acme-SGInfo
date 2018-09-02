@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
@@ -29,11 +28,12 @@
 
 		<form:hidden path="id" />
 		<form:hidden path="version" />
+		<form:hidden path="customerId" />
 
 		<div class="row">
 			<div class="col-50">
 				<acme:textbox code="label.name" path="name" readonly="${readonly}" />
-
+				<acme:textbox code="label.customer" path="customerId" readonly="${readonly}" />		
 				<acme:textbox code="customer.address" path="address"
 					readonly="${readonly}" />
 				<acme:textbox code="customer.website" path="webSite"
@@ -53,6 +53,7 @@
 
 				<jstl:if test="${!readonly}">
 					<acme:textbox code="label.passkey" path="passKey" readonly="true" />
+					<acme:textbox code="label.nif" path="nif" readonly="${readonly}" />
 
 					<acme:textbox code="customer.billing.address" path="billingAddress"
 						readonly="${readonly}" />
@@ -60,9 +61,10 @@
 				</jstl:if>
 				<div class="row w3-margin-top">
 					<div class="col-100 w3-padding">
-						<div class="w3-card">
+						<div class="w3-card imgCentered"
+							style="max-height: 22em; max-width: 20em;">
 							<img src="https://www.w3schools.com/w3images/avatar2.png"
-								class="imgCentered">
+								class="imgCentered" style="max-height: 20em; max-width: 20em;">
 							<div class="w3-container w3-white">
 								<h4>
 									<jstl:out value="${customerForm.name}"></jstl:out>

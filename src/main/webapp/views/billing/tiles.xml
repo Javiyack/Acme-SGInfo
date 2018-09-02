@@ -11,56 +11,23 @@
 
 <tiles-definitions>
 
-	<definition name="incidencia/user/create" extends="master.page">
-		<put-attribute name="title" value="New incidencia" />
-		<put-attribute name="body" value="/views/incidencia/create.jsp" />
+	<definition name="billing/create" extends="master.page">
+		<put-attribute name="title" value="Invoice" />
+		<put-attribute name="body" value="/views/billing/create.jsp" />
 	</definition>
 
-	<definition name="incidencia/user/register" extends="master.page">
-		<put-attribute name="title" value="New incidencia" />
-		<put-attribute name="body" value="/views/incidencia/create.jsp" />
+	<definition name="billing/display" extends="master.page">
+		<put-attribute name="title" value="Invoice" />
+		<put-attribute name="body" value="/views/billing/create.jsp" />
 	</definition>
 
-	<definition name="incidencia/user/edit" extends="master.page">
-		<put-attribute name="title" value="Edit Rendevous" />
-		<put-attribute name="body" value="/views/incidencia/create.jsp" />
+	<definition name="billing/edit" extends="master.page">
+		<put-attribute name="title" value="Invoice" />
+		<put-attribute name="body" value="/views/billing/create.jsp" />
 	</definition>	
-	<definition name="incidencia/user/list" extends="master.page">
-		<put-attribute name="title" value="Incidencia List" />
-		<put-attribute name="body" value="/views/incidencia/list.jsp" />
-	</definition>	
-	
-	<definition name="incidencia/user/editForm" extends="master.page">
-		<put-attribute name="title" value="Edit Rendevous" />
-		<put-attribute name="body" value="/views/incidencia/editForm.jsp" />
-	</definition>	
-	<definition name="incidencia/display" extends="master.page">
-		<put-attribute name="title" value="Display Rendevous" />
-		<put-attribute name="body" value="/views/incidencia/display.jsp" />
-	</definition>	
-	<definition name="incidencia/list" extends="master.page">
-		<put-attribute name="title" value="incidenciaes" />
-		<put-attribute name="body" value="/views/incidencia/list.jsp" />
-	</definition>
-	<definition name="incidencia/listCategory" extends="master.page">
-		<put-attribute name="title" value="incidencia by categories" />
-		<put-attribute name="body" value="/views/incidencia/list.jsp" />
-	</definition>
-	<definition name="incidencia/listSimilar" extends="master.page">
-		<put-attribute name="title" value="Similar incidenciaes" />
-		<put-attribute name="body" value="/views/incidencia/list.jsp" />
-	</definition>
-	<definition name="incidencia/user/listSimilar" extends="master.page">
-		<put-attribute name="title" value="Edit similar incidencia" />
-		<put-attribute name="body" value="/views/incidencia/list.jsp" />
-	</definition>
-	<definition name="incidencia/user/listReserved" extends="master.page">
-		<put-attribute name="title" value="My reserved incidenciaes" />
-		<put-attribute name="body" value="/views/incidencia/list.jsp" />
-	</definition>
-	<definition name="incidencia/administrator/edit" extends="master.page">
-		<put-attribute name="title" value="Edit Rendevous" />
-		<put-attribute name="body" value="/views/incidencia/create.jsp" />
+	<definition name="billing/list" extends="master.page">
+		<put-attribute name="title" value="Invoices" />
+		<put-attribute name="body" value="/views/billing/list.jsp" />
 	</definition>	
 	
 

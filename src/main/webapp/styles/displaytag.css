@@ -9,7 +9,7 @@
  */
 table.displaytag {
 	width: 100%;
-	margin: 5px 0 10px 0 !important;
+	margin: 5px 0 32px 0 !important;
 	border-bottom: 1px solid #223850;	
 	color: black;
 }
@@ -22,6 +22,9 @@ table.displaytag {
 
 }
 
+.displaytag tr:hover {
+	color: #008cbb;
+}
 .displaytag thead tr th {
 	vertical-align: middle;
 	border-bottom: 1px solid #223850;

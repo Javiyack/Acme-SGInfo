@@ -19,12 +19,18 @@
 		<security:authentication property="principal.authorities[0]"
 			var="permiso" />
 		<jstl:set var="rol" value="${fn:toLowerCase(permiso)}" />
+		<jstl:if test="${rol == 'user' || rol == 'responsable'}">
+			<jstl:set var="accesscontrol" value="external" />
+		</jstl:if>
+		<jstl:if test="${rol == 'technician' || rol == 'manager'}">
+			<jstl:set var="accesscontrol" value="internal" />
+		</jstl:if>
 	</security:authorize>
 	<jstl:set var="owns"
 		value="${logedActor.id == incidenceForm.user.userAccount.id or logedActor.id == incidenceForm.technician.userAccount.id}" />
 
 	<jstl:set var="readonly"
-		value="${(display || !owns) && incidenceForm.id != 0}" />
+		value="${(display || !owns || closed) && incidenceForm.id != 0}" />
 
 
 	<form:form action="${requestUri}" modelAttribute="incidenceForm">
@@ -34,6 +40,7 @@
 
 			<form:hidden path="id" />
 			<form:hidden path="version" />
+			<form:hidden path="customerId" />
 
 			<div class="w3-row-padding w3-margin-top">
 				<div class="w3-third">
@@ -62,10 +69,10 @@
 						readonly="true" />
 					<acme:moment code="incidencia.starting.moment" path="startingDate"
 						placeholder="dd-MM-yyyyTHH:mm" css="formInput"
-						readonly="${rol == 'user' || readonly}" />
+						readonly="${rol == 'user' || rol == 'responsable' || readonly}" />
 					<acme:moment code="incidencia.ending.moment" path="endingDate"
 						placeholder="dd-MM-yyyyTHH:mm" css="formInput"
-						readonly="${rol == 'user' || readonly}" />
+						readonly="${rol == 'user' || rol == 'responsable' || readonly}" />
 					<acme:select items="${technicians}" itemLabel="name"
 						code="incidencia.technician" path="technician"
 						readonly="${rol == 'user' || rol == 'responsable' || readonly}"
@@ -77,30 +84,64 @@
 					<br>
 
 					<div onclick="togleDisabled('reason')">
-					<acme:checkBox code="incidencia.cancelled" path="cancelled" css=""
-						readonly="${readonly}" /></div>
+						<acme:checkBox code="incidencia.cancelled" path="cancelled" css=""
+							readonly="${readonly}" />
+					</div>
 					<acme:textarea code="empty" path="cancelationReason"
-						css="formTextArea" disabled="true" placeholder="Cancelation reason..."
-						readonly="${readonly}" id="reason"/>
+						css="formTextArea" disabled="true"
+						placeholder="Cancelation reason..." readonly="${readonly}"
+						id="reason" />
 				</div>
 
 			</div>
 
 		</div>
 		<div class="seccion w3-light-green">
-			<div class="w3-row-padding w3-margin-top">
-				<acme:cancelButton url="/incidence/${rol}/list.do"
-					code="rendezvous.cancel" css="formButton toLeft" />
+			<div class="w3-row-padding">
+				<acme:cancelButton url="/incidence/${accesscontrol}/list.do" code="label.back"
+					css="formButton toLeft" />
+
+
+				<jstl:if test="${readonly && owns && (rol == 'manager' || rol == 'technician')}">
+				<jstl:if test="${closed}">
+							<acme:submit name="reopen" code="label.abrir"
+								css="formButton toLeft" />
+						</jstl:if>
+						<jstl:if test="${!closed}">
+							<acme:submit name="close" code="label.cerrar"
+								css="formButton toLeft" />
+						</jstl:if>
+				</jstl:if>
 				<jstl:if test="${!readonly}">
-					<jstl:if test="${incidence.id!=0 }">
+					<jstl:if test="${incidenceForm.id!=0}">
 						<acme:submit name="delete" code="label.delete"
 							css="formButton toLeft" />
+						<jstl:if test="${closed  && (rol == 'manager' || rol == 'technician')}">
+							<acme:submit name="reopen" code="label.abrir"
+								css="formButton toLeft" />
+						</jstl:if>
+						<jstl:if test="${!closed && (rol == 'manager' || rol == 'technician')}">
+							<acme:submit name="close" code="label.cerrar"
+								css="formButton toLeft" />
+						</jstl:if>
 					</jstl:if>
-					<acme:submit name="save" code="rendezvous.save"
-						css="formButton toLeft" />
+					<acme:submit name="save" code="label.save" css="formButton toLeft" />
+
 				</jstl:if>
+				<acme:button url="/incidence/${accesscontrol}/create.do?customerId=${incidenceForm.customerId}" text="label.new" />
 			</div>
 		</div>
+		<jstl:if test="false">
+		<div class="seccion w3-red">		<jstl:out value="(readonly)${readonly}"/>
+				<jstl:out value="(info)${info}"/>
+				<jstl:out value="(incidenceForm)${incidenceForm}"/>
+				<jstl:out value="(incidenceForm.id)${incidenceForm.id}"/>
+				<jstl:out value="(closed)${closed}"/>
+				<jstl:out value="(accesscontrol)${accesscontrol}"/>
+				<jstl:out value="(rol)${rol}"/>
+				<jstl:out value="(owns)${owns}"/>
+			</div>	
+			</jstl:if>
 		<div class="titulo" style="padding-left: 0.5em; padding-top: 0px;">
 			<strong><spring:message code="label.labors" /></strong>
 		</div>
@@ -109,7 +150,8 @@
 			<strong><spring:message code="file.files" /></strong>
 		</div>
 		<%@ include file="/views/file/list.jsp"%>
-
+		
+		
 
 	</form:form>
 </security:authorize>

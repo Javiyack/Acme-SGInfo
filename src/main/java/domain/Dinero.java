@@ -8,27 +8,32 @@ import javax.validation.constraints.Pattern;
 
 @Embeddable
 @Access(AccessType.PROPERTY)
-public class Coordinate {
+public class Dinero {
 
-	private String	longitude;
-	private String	latitude;
-
-
-	@Pattern(regexp = "^((\\+|-)?(?:180(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\\.[0-9]{1,6})?)))|()$")
-	public String getLongitude() {
-		return this.longitude;
+	private Double	cantidad;
+	private String	divisa;
+	public Dinero() {
+		super();
+		cantidad = 0.0;
+		divisa=Constant.CURRENCY_EURO;
 	}
-	public void setLongitude(final String longitude) {
+
+
+	public Double getCantidad() {
+		return this.cantidad;
+	}
+	
+	public void setCantidad(final Double cantidad) {
 		
-		this.longitude = longitude;
+		this.cantidad = cantidad;
 	}
 
 	@Pattern(regexp = "^((\\+|-)?(?:90(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-8][0-9])(?:(?:\\.[0-9]{1,6})?)))|()$")
-	public String getLatitude() {
-		return this.latitude;
+	public String getDivisa() {
+		return this.divisa;
 	}
-	public void setLatitude(final String latitude) {
-		this.latitude = latitude;
+	public void setDivisa(final String divisa) {
+		this.divisa = divisa;
 	}
 	
 //	@Pattern(regexp = "^((\\+|-)?(?:180(?:(?:\\.0{1,6})?)|(?:[0-9]|[1-9][0-9]|1[0-7][0-9])(?:(?:\\.[0-9]{1,6})?)))|()$")

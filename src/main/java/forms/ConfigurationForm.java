@@ -1,11 +1,8 @@
 
-package domain;
-
-import java.util.Collection;
+package forms;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
@@ -15,29 +12,16 @@ import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
-@Entity
-@Access(AccessType.PROPERTY)
-public class Configuration extends DomainEntity {
+import domain.DomainEntity;
+
+public class ConfigurationForm {
 
 	private String	companyName;
 	private String	passKey;
 	private String	logo;
-	private Collection<String> folderNames;
 	private String	welcomeMessageEs;
 	private String	welcomeMessageEn;
-	private double	iva;
-	private double	hourPrice;
-
-
-	@ElementCollection
-	@NotNull
-	public Collection<String> getFolderNames() {
-		return folderNames;
-	}
-
-	public void setFolderNames(Collection<String> folderNames) {
-		this.folderNames = folderNames;
-	}
+	private double	benefitsPercentage;
 
 	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
@@ -79,6 +63,16 @@ public class Configuration extends DomainEntity {
 		this.welcomeMessageEn = wecolmeMessageEn;
 	}
 
+	@Min(0)
+	@Max(100)
+	@NotNull
+	public double getBenefitsPercentage() {
+		return this.benefitsPercentage;
+	}
+
+	public void setBenefitsPercentage(final double benefitsPercentage) {
+		this.benefitsPercentage = benefitsPercentage;
+	}
 
 
 	@SafeHtml(whitelistType = WhiteListType.NONE)
@@ -89,28 +83,6 @@ public class Configuration extends DomainEntity {
 
 	public void setLogo(String logo) {
 		this.logo = logo;
-	}
-
-	@Min(0)
-	@Max(1)
-	@NotNull
-	public double getIva() {
-		return iva;
-	}
-
-	public void setIva(double iva) {
-		this.iva = iva;
-	}
-
-	@Min(0)
-	@Max(1000)
-	@NotNull
-	public double getHourPrice() {
-		return hourPrice;
-	}
-
-	public void setHourPrice(double hourPrice) {
-		this.hourPrice = hourPrice;
 	}
 
 }

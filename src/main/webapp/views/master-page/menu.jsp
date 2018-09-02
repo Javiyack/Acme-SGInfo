@@ -7,10 +7,6 @@
  * TDG Licence, a copy of which you may download from 
  * http://www.tdg-seville.info/License.html
  --%>
-
-<%@page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="security"
@@ -30,10 +26,10 @@
 
 
 <jstl:if test="${rol == 'user' or rol == 'responsable'}">
-	<jstl:set value="external" var="rol" />
+	<jstl:set value="external" var="accesscontrol" />
 </jstl:if>
 <jstl:if test="${rol == 'technician' or rol == 'manager' or rol == 'administrator'}">
-	<jstl:set value="internal" var="rol" />
+	<jstl:set value="internal" var="accesscontrol" />
 </jstl:if>
 
 <!-- Menu and banner usually + "$") -->
@@ -48,8 +44,8 @@
 	<div class="w3-container w3-row">
 		<div class="w3-col s4">
 			<security:authorize access="isAuthenticated()">
-				<img src="https://www.w3schools.com/w3images/avatar2.png"
-					class="w3-circle w3-margin-right" style="width: 46px">
+				<a href="security/login.do" class=""><img src="https://www.w3schools.com/w3images/avatar2.png"
+					class="w3-circle w3-margin-right" style="width: 46px"></a>
 			</security:authorize>
 			<security:authorize access="isAnonymous()">
 				<a href="security/login.do" class=""><i
@@ -57,7 +53,7 @@
 			</security:authorize>
 		</div>
 		<div class="w3-col s8 w3-bar">
-			<span><spring:message code="welcome.greeting.msg" />${colom}<strong>${username}</strong></span><br>
+			<span><spring:message code="welcome.greeting.msg"/>${colom}<strong>${username}</strong></span><br>
 			<security:authorize access="isAnonymous()">
 				<a href="actor/create.do" class=""><i
 					class="fa fa-user-plus w3-bar-item w3-large"></i></a>
@@ -74,7 +70,7 @@
 	<div class="w3-bar-block" style="padding-bottom: 60px">
 
 		<security:authorize access="isAuthenticated()">
-			<a href="incidence/${rol}/list.do"
+			<a href="incidence/${accesscontrol}/list.do"
 				class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
 				class="fa fa-ambulance fa-fw"></i>  <spring:message
 					code="label.incidences" />
@@ -86,8 +82,9 @@
 				code="label.customers" />
 		</a> <a href="#" class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
 			class="fa fa-eye fa-fw"></i>  Servicios
-		</a> <a href="#" class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-			class="fa fa-users fa-fw"></i>  Facturas
+		</a> <a href="billing/manager/list.do" class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
+			class="fa fa-users fa-fw"></i>  <spring:message
+				code="label.billing" />
 		</a> <a href="#" class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
 			class="fa fa-bullseye fa-fw"></i>  Equipos
 		</a> <a href="#" class="w3-bar-item w3-button w3-padding w3-xlarge"> <i

@@ -65,14 +65,14 @@
 					<jstl:set var="owns"
 						value="${rol=='manager' or logedActor.id==row.incidence.technician.userAccount.id}" />
 
-					<jstl:if test="${owns}">
+					<jstl:if test="${owns && !closed}">
 						<div>
 							<a href="labor/edit.do?id=${row.id}"> <i
 								class="fa fa-edit w3-xlarge"></i>
 							</a>
 						</div>
 					</jstl:if>
-					<jstl:if test="${!owns}">
+					<jstl:if test="${!owns || closed}">
 						<div>
 							<a href="labor/display.do?id=${row.id}"> <i
 								class="fa fa-eye w3-xlarge"></i>
@@ -82,7 +82,7 @@
 				</display:column>
 				
 				<display:column class="${classTd}">
-					<jstl:if test="${owns}">
+					<jstl:if test="${owns && !closed}">
 						<div>
 							<a href="labor/${rol}/delete.do?id=${row.id}&incidenceId=${row.incidence.id}"> <i
 								class="fa fa-remove w3-xlarge"></i>
@@ -104,7 +104,7 @@
 			<jstl:if test="${incidenceForm==null}">
 				<acme:backButton text="label.back" css="formButton toLeft" />
 			</jstl:if>
-			<jstl:if test="${incidenceForm!=null}">
+			<jstl:if test="${incidenceForm!=null && !closed}">
 				<spring:message var="msg" code="msg.save.incidence.first" />
 				<jstl:set var="url"
 					value="/labor/create.do?incidenceId=${incidenceForm.id}"></jstl:set>

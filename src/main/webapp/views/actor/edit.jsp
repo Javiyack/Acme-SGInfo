@@ -50,11 +50,16 @@
 						readonly="${!edition}" />
 				</div>
 			</div>
-
-			<jstl:if test="${!edition}">
-				<acme:backButton text="actor.back" css="formButton toLeft" />
-			</jstl:if>
 		</div>
+		<jstl:if test="${!edition}">
+			<div class="seccion w3-light-green">
+				<div class="row">
+					<div class="col-50">
+						<acme:backButton text="actor.back" css="formButton toLeft" />
+					</div>
+				</div>
+			</div>
+		</jstl:if>
 		<jstl:if test="${edition}">
 			<div class="seccion w3-light-green">
 
@@ -66,9 +71,8 @@
 					<div class="row">
 						<div class="col-50">
 							<acme:textbox code="actor.username" path="username" />
-							<acme:password code="label.userAccount.password"
-								path="password" id="password"
-								onkeyup="javascript: checkPassword();" />
+							<acme:password code="label.userAccount.password" path="password"
+								id="password" onkeyup="javascript: checkPassword();" />
 							<acme:password code="label.userAccount.repeatPassword"
 								path="confirmPassword" id="confirm_password"
 								onkeyup="javascript: checkPassword();" />
@@ -102,12 +106,14 @@
 					<div id="changePassword" style="display: none;">
 						<br>
 						<div class="row">
-							<div class="col-50">								
-								<acme:textbox code="label.customer" path="customer.name" css="formInput" readonly="true"/>
+							<div class="col-50">
+								<acme:textbox code="label.customer" path="customer.name"
+									css="formInput" readonly="true" />
 							</div>
 							<div class="col-50">
-								<acme:textbox code="actor.authority" path="authority" css="formInput" readonly="true"/>
-							
+								<acme:textbox code="actor.authority" path="authority"
+									css="formInput" readonly="true" />
+
 							</div>
 						</div>
 						<div class="row">
@@ -137,7 +143,7 @@
 			<div class="seccion w3-light-green">
 				<security:authorize access="isAnonymous()">
 					<p class="terminos w3-text-red">
-						<spring:message code="term.registration"/>
+						<spring:message code="term.registration" />
 					</p>
 				</security:authorize>
 				<div class="row">

@@ -2,16 +2,15 @@
 package services;
 
 import java.util.Collection;
-import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
+import repositories.ConfigurationRepository;
 import domain.Administrator;
 import domain.Configuration;
-import repositories.ConfigurationRepository;
 
 @Service
 @Transactional
@@ -40,7 +39,8 @@ public class ConfigurationService {
 	}
 
 	public Collection<Configuration> findAll() {
-		final Collection<Configuration> configurations = this.configurationRepository.findAll();
+		Collection<Configuration> configurations;
+		configurations = this.configurationRepository.findAll();
 		Assert.notNull(configurations);
 		return configurations;
 	}
@@ -59,10 +59,10 @@ public class ConfigurationService {
 
 	//Other methods -----------------------------------------------------
 
-	public String findWelcomeMessage(final Locale locale) {
+	public String findWelcomeMessage(final String locale) {
 		String result = null;
 
-		switch (locale.getLanguage()) {
+		switch (locale) {
 		case "es":
 			result = this.configurationRepository.findWelcomeMessageEs();
 			break;
@@ -70,22 +70,28 @@ public class ConfigurationService {
 			result = this.configurationRepository.findWelcomeMessageEn();
 			break;
 		}
+
 		return result;
 	}
 
-	public String findBanner() {
-		return this.configurationRepository.findBanner();
+	public String findLogo() {
+		String result;
+
+		result = this.configurationRepository.findLogo();
+
+		return result;
 	}
 
-	public String findCompanyName() {
-		return this.configurationRepository.findCompanyName();
-	}
+	public String findName() {
+		String result;
 
-	public Double findBenefitsPercentage() {
-		return this.configurationRepository.findBenefitsPercentage();
+		result = this.configurationRepository.findName();
+
+		return result;
 	}
 
 	public void flush() {
 		this.configurationRepository.flush();
+
 	}
 }

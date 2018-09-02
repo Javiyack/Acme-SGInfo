@@ -1,22 +1,26 @@
 package controllers.external;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import controllers.AbstractController;
+import domain.Actor;
 import domain.Incidence;
 import domain.Labor;
 import domain.Technician;
 import domain.User;
 import forms.IncidenceForm;
+import services.ActorService;
 import services.IncidenceService;
 import services.LaborService;
 import services.TechnicianService;
@@ -35,7 +39,8 @@ public class ExternalIncidenceController extends AbstractController {
 	private UserService userService;
 	@Autowired
 	private LaborService laborService;
-
+	@Autowired
+	private ActorService actorService;
 	// Constructor
 
 	public ExternalIncidenceController() {
@@ -63,6 +68,16 @@ public class ExternalIncidenceController extends AbstractController {
 		ModelAndView result;
 		final Incidence incidencia = this.incidenceService.create();
 		final IncidenceForm incidence = new IncidenceForm(incidencia);
+		try {
+			Actor actor = actorService.findByPrincipal();
+			Assert.notNull(actor, "msg.not.loged.block");
+			incidence.setCustomerId(actor.getCustomer().getId());
+		} catch (Throwable oops) {
+			if (oops.getMessage().startsWith("msg."))
+				result = this.createMessageModelAndView(oops.getLocalizedMessage(), "/customer/list.do");
+			else
+				result = this.createMessageModelAndView("msg.commit.error", "/");
+		}
 
 		result = this.createEditModelAndView(incidence);
 
@@ -78,8 +93,6 @@ public class ExternalIncidenceController extends AbstractController {
 
 		final IncidenceForm incidence = new IncidenceForm(incidencia);
 		result = this.createEditModelAndView(incidence);
-		Collection<Labor> labors = laborService.findByIncidence(id);
-		result.addObject("labors", labors);
 		return result;
 	}
 
@@ -93,8 +106,6 @@ public class ExternalIncidenceController extends AbstractController {
 		final IncidenceForm incidence = new IncidenceForm(incidencia);
 		result = this.createEditModelAndView(incidence);
 		result.addObject("display", true);
-		Collection<Labor> labors = laborService.findByIncidence(id);
-		result.addObject("labors", labors);
 		return result;
 	}
 
@@ -103,22 +114,26 @@ public class ExternalIncidenceController extends AbstractController {
 	@RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
 	public ModelAndView save(@Valid final IncidenceForm incidence, final BindingResult binding) {
 		ModelAndView result;
-		Incidence incidencia = incidenceService.recontruct(incidence, binding);
-
 		if (binding.hasErrors())
 			result = this.createEditModelAndView(incidence);
-		else
-			try {
-				this.incidenceService.save(incidencia);
-				result = new ModelAndView("redirect:/incidence/external/list.do");
-			} catch (final Throwable oops) {
-				if (oops.getMessage().equals("msg.not.loged.block"))
-					result = this.createEditModelAndView(incidence, "msg.not.loged.block");
-				else if (oops.getMessage().equals("msg.not.owned.block"))
-					result = this.createEditModelAndView(incidence, "msg.not.owned.block");
-				else
-					result = this.createEditModelAndView(incidence, "msg.commit.error");
-			}
+		else {
+			Incidence incidencia = incidenceService.recontruct(incidence, binding);
+
+			if (binding.hasErrors())
+				result = this.createEditModelAndView(incidence);
+			else
+				try {
+					incidencia = this.incidenceService.save(incidencia);
+					incidence.setId(incidencia.getId());
+					result = this.createEditModelAndView(incidence);
+					result.addObject("info", "msg.commit.ok");					
+				} catch (final Throwable oops) {
+					if (oops.getMessage().startsWith("msg."))
+						result = this.createEditModelAndView(incidence, oops.getLocalizedMessage());
+					else
+						result = this.createEditModelAndView(incidence, "msg.commit.error");
+				}
+		}
 		return result;
 	}
 
@@ -132,11 +147,9 @@ public class ExternalIncidenceController extends AbstractController {
 			this.incidenceService.delete(incidence);
 			result = new ModelAndView("redirect:/incidence/external/list.do");
 
-		} catch (final Throwable ooops) {
-			if (ooops.getMessage().equals("msg.not.loged.block"))
-				result = this.createEditModelAndView(incidence, "msg.not.loged.block");
-			else if (ooops.getMessage().equals("msg.not.owned.block"))
-				result = this.createEditModelAndView(incidence, "msg.not.owned.block");
+		} catch (final Throwable oops) {
+			if (oops.getMessage().startsWith("msg."))
+				result = this.createEditModelAndView(incidence, oops.getLocalizedMessage());
 			else
 				result = this.createEditModelAndView(incidence, "msg.commit.error");
 		}
@@ -157,13 +170,17 @@ public class ExternalIncidenceController extends AbstractController {
 
 		Collection<Technician> techs = technicianService.findAll();
 		Collection<User> users = userService.findAllByPrincipal();
+		Collection<Labor> labors = laborService.findByIncidence(incidence.getId());
 
 		result = new ModelAndView("incidence/edit");
 		result.addObject("incidenceForm", incidence);
 		result.addObject("technicians", techs);
 		result.addObject("users", users);
 		result.addObject("message", message);
+		result.addObject("closed",
+				(incidence.getEndingDate() != null) ? (new Date()).after(incidence.getEndingDate()) : false);
 		result.addObject("requestUri", "incidence/external/edit.do");
+		result.addObject("labors", labors);
 
 		return result;
 

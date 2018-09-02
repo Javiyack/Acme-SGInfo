@@ -3,6 +3,23 @@ package domain;
 
 public class Constant {
 
+	public enum currency {
+		EUR,
+		USD
+}
+	public enum requestStatus {
+		PENDING,
+		REJECTED,
+		ACCEPTED,
+		CANCELLED
+}
+
+	// Monedas
+	public static final String	CURRENCY_EURO						= "EUR";
+	public static final String	CURRENCY_DOLLAR						= "USD";
+	
+	
+	
 	// Offer states
 	public static final String	OFFER_CREATED						= "CREATED";
 	public static final String	OFFER_IN_DEVELOPMENT				= "IN_DEVELOPMENT";

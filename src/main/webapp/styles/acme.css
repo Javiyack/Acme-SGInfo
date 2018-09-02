@@ -112,6 +112,22 @@ li.menuItem:hover{
 	background-color: rgb(255, 255, 255);
 	box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 10px 0px, rgba(0, 0, 0, 0.19) 0px
 		4px 20px 0px;
+		
+}
+/* Dispplay bill */
+
+input.billHead{
+	border:none;
+}
+
+
+.billConcept{
+	
+}
+
+.billFooter{
+	
+	
 }
 
 /* Formularios */
@@ -234,10 +250,8 @@ select {
 	text-align: center;
 	cursor: pointer;
 	white-space: nowrap;
-	margin-left: 3px;
-	margin-right: 3px;
-	margin-top: 15px;
-	border-radius: 4px;
+	margin: 3px;
+	border-radius: 3px;
 }
 
 .formButton1 {
@@ -551,7 +565,7 @@ to {
 .seccion {
 	margin-left: 1em;
 	margin-right: 1em;
-	margin-bottom: 1em;
+	margin-bottom: 0.4em;
 	padding: 1em;
 	/*border: 1px solid;*/
 	border-color: #6d8292;
@@ -564,7 +578,7 @@ to {
 
 
 .titulo {
-	padding-top: 0.5em;
+	padding-top: 0em;
 	padding-left: 1em;
 	padding-right: 1em;
 	padding-bottom: 0em;

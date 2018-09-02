@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -53,14 +54,38 @@ public class ActorController extends AbstractController {
 	// Display user -----------------------------------------------------------
 	@RequestMapping(value = "/display", method = RequestMethod.GET)
 	public ModelAndView display(@RequestParam final int actorId) {
-		final ModelAndView result;
+		ModelAndView result;
 
 		final Actor actor;
-
+		try {
+			final Actor logedActor = this.actorService.findByPrincipal();
+			Assert.notNull(logedActor, "msg.not.loged.block");
+		} catch (Throwable oops) {
+			if (oops.getMessage().startsWith("msg.")) {
+				return createMessageModelAndView(oops.getLocalizedMessage(), "/");
+			} else {
+				return this.createMessageModelAndView("panic.message.text", "/");
+			}
+		}		
 		actor = this.actorService.findOne(actorId);
-
 		result = new ModelAndView("actor/display");
-		result.addObject("registerForm", actor);
+		result.addObject("actorForm", actor);
+		result.addObject("display", true);
+		return result;
+	}
+
+	private ModelAndView checkLoged() {
+		ModelAndView result = null;
+		try {
+			final Actor actor = this.actorService.findByPrincipal();
+			Assert.notNull(actor, "msg.not.loged.block");
+		} catch (Throwable oops) {
+			if (oops.getMessage().startsWith("msg.")) {
+				return createMessageModelAndView(oops.getLocalizedMessage(), "/");
+			} else {
+				return this.createMessageModelAndView("panic.message.text", "/");
+			}
+		}
 
 		return result;
 	}

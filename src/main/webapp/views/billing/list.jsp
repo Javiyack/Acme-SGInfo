@@ -9,91 +9,88 @@
  --%>
 <%@page import="org.apache.commons.lang.time.DateUtils"%>
 <%@page import="org.hibernate.engine.spi.RowSelection"%>
-<%@page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
-<%@ page import="java.util.Date" %>
+<%@page import="java.util.Date"%>
+
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<%@taglib prefix="security"	uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="security"
+	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
-<%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+<%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
 <jsp:useBean id="date" class="java.util.Date" />
-<div class="formForm">
-<display:table pagesize="5" class="displaytag" name="incidencias" requestURI="${requestUri}" id="row">
-
-	<jstl:if test="${row.publicationDate < date}">
-		<jstl:set var="classTd" value="passed" />
-	</jstl:if>
-	<jstl:if test="${row.publicationDate > date}">
-		<jstl:set var="classTd" value="" />
-	</jstl:if>
-	<jstl:if test="${row.cancelled == true}">
-		<jstl:set var="classTd" value="${classTd} adult" />
-	</jstl:if>
-	<spring:message code="incidencia.ticker" var="rendezvousName" />
-	<display:column property="ticker" title="${rendezvousName}" class="${classTd}"/>
-	<spring:message code="incidencia.name" var="rendezvousName" />
-	<display:column property="title" title="${rendezvousName}" class="${classTd}"/>
-	
-	
-	<spring:message code="incidencia.description" var="rendezvousDescription" />
-	<display:column property="description" title="${rendezvousDescription}" class="${classTd}"/>
 
 
+<ul class="w3-ul ">
+	<jstl:forEach items="${facturas}" var="facturas">
+		<li value="${facturas.key.name}" class="w3-display-container">
+			<div class="seccion w3-flat-green-sea">
+				<div class="w3-row">
+					<div class="w3-col m2 w3-center">
+						<jstl:out value="${facturas.key.name}" />
+					</div>
+				</div>
+				<div class="w3-row">
+					<div class="w3-col m1 w3-center">&nbsp;</div>
+					<div class="w3-col m3 w3-center"><strong><spring:message code="label.moment"/></strong></div>
+					<div class="w3-col m2 w3-center"><strong><spring:message code="label.year"/></strong></div>
+					<div class="w3-col m1 w3-center"><strong><spring:message code="label.month"/></strong></div>
+					<div class="w3-col m2 w3-center"><strong><spring:message code="label.amount"/></strong></div>
+					<div class="w3-col m1 w3-center"><strong><spring:message code="label.curency"/></strong></div>
+					<div class="w3-col m2 w3-center"><strong><spring:message code="label.view"/></strong></div>
+				</div>
 
-	<spring:message code="moment.format" var="momentFormat" />
-	<spring:message code="incidencia.publication.moment" var="momentTilte" />
-	<display:column property="publicationDate" title="${momentTilte}" format="${momentFormat}" class="${classTd}"/>	
-	
-	
-	<spring:message code="incidencia.user" var="userTitle" />
-	<display:column title="${userTitle}" class="${classTd}">
-		<div>
-			<a href="user/display.do?userId=${row.user.id}"> 
-				<jstl:out value="${row.user.name}"/>
-			</a>
-		</div>
-	</display:column>	
-	
-	
-	<spring:message code="incidencia.user" var="rendezvousUser" />
-	<display:column title="${rendezvousUser}" class="${classTd}">
-		<div>
-			<a href="technician/display.do?userId=${row.user.id}"> 
-				<jstl:out value="${row.technician.name}"/>
-			</a>
-		</div>
-	</display:column>	
-	
-	
-	<security:authorize access="isAnonymous()">	
+				<ul class="w3-ul">
+					<li><jstl:forEach items="${facturas.value}" var="row">
 
-	</security:authorize>	
-	
-	<security:authorize access="hasRole('USER')">
-	
-	</security:authorize>	
+							<jstl:if test="${row.moment < date}">
+								<jstl:set var="classTd" value="passed" />
+							</jstl:if>
+							<jstl:if test="${row.moment > date}">
+								<jstl:set var="classTd" value="" />
+							</jstl:if>
+							<spring:message code="moment.format" var="momentFormat" />
+							<spring:message code="date.pattern" var="datePattern" />
+							<spring:message code="incidencia.publication.moment"
+								var="momentTilte" />
+							<li><div class="w3-row">
+									<div class="w3-col m1 w3-center">&nbsp;</div>
+									<div class="w3-col m3 w3-center">
+										<fmt:formatDate pattern="${datePattern}" value="${row.moment}" />
+									</div>
+									<div class="w3-col m2 w3-center">
+										<jstl:out value="${row.year}" />
+									</div>
+									<div class="w3-col m1 w3-center">
+										<jstl:out value="${row.month}" />
+									</div>
+									<div class="w3-col m2 w3-center">
+										<fmt:formatNumber type="number" maxFractionDigits="2"
+											minFractionDigits="2" value="${row.amount.amount}" />
+									</div>
+									<div class="w3-col m1 w3-center">
+										<jstl:out value="${row.amount.currency}" />
+									</div>
+									<div class="w3-col m2 w3-center">
+										<a href="billing/manager/edit.do?id=${row.id}"> <i
+								class="fa fa-eye w3-xlarge"></i>
+										</a>
+									</div>
+								</div></li>
 
-	<security:authorize access="hasRole('ADMINISTRATOR')">
-		
-	</security:authorize>
-
-	
-	<display:column class="${classTd}">
-			<div>
-				<a href="incidencia/user/edit.do?id=${row.id}">
-					<spring:message code="label.view" />
-				</a>
+						</jstl:forEach>
+				</ul>
 			</div>
-		</display:column>
-
-</display:table>
-
-<acme:backButton text="label.back" />
-<acme:button url="/incidencia/user/create.do" text="label.new" />
+		</li>
+	</jstl:forEach>
+</ul>
 <br />
-</div>	
+<br />
+<acme:backButton text="label.back" css="formButton toLeft" />
+<acme:button url="/billing/manager/generate.do" text="label.new" />
+<br />
+<br />

@@ -17,19 +17,23 @@
 
 <tiles-definitions>
 
-	<definition name="incidencia/user/create" extends="master.page">
-		<put-attribute name="title" value="Nueva incidencia" />
-		<put-attribute name="body" value="/views/incidencia/create.jsp" />
+	<definition name="billing/create" extends="master.page">
+		<put-attribute name="title" value="Factura" />
+		<put-attribute name="body" value="/views/billing/create.jsp" />
 	</definition>
-	<definition name="incidencia/user/register" extends="master.page">
-		<put-attribute name="title" value="Nueva incidencia" />
-		<put-attribute name="body" value="/views/incidencia/create.jsp" />
+
+	<definition name="billing/display" extends="master.page">
+		<put-attribute name="title" value="Factura" />
+		<put-attribute name="body" value="/views/billing/create.jsp" />
 	</definition>
-	
-	<definition name="incidencia/user/list" extends="master.page">
-		<put-attribute name="title" value="Lista Incidencia" />
-		<put-attribute name="body" value="/views/incidencia/list.jsp" />
+
+	<definition name="billing/edit" extends="master.page">
+		<put-attribute name="title" value="Factura" />
+		<put-attribute name="body" value="/views/billing/create.jsp" />
 	</definition>	
-	
+	<definition name="billing/list" extends="master.page">
+		<put-attribute name="title" value="Facturas" />
+		<put-attribute name="body" value="/views/billing/list.jsp" />
+	</definition>	
 	
 </tiles-definitions>

@@ -21,6 +21,6 @@
 	<spring:message code="actor.authority.${permiso}" var="internationalizedAuth"/>
 </security:authorize>
 
-<p><spring:message code="welcome.greeting.prefix"/>${internationalizedAuth} <spring:message code="welcome.greeting.suffix" /></p>
+<p><spring:message code="welcome.greeting.prefix"/> ${internationalizedAuth}<spring:message code="welcome.greeting.suffix" /></p>
 
-<p><spring:message code="welcome.greeting.current.time" /> ${moment}</p> 
+<p><spring:message code="welcome.greeting.current.time" />${moment}</p> 

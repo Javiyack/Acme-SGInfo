@@ -46,7 +46,7 @@ public class PopulateDatabase {
 			System.out.println("---------------------");
 			System.out.println();
 
-			System.out.printf("Initialising persistence context `%s'.%n", DatabaseConfig.PersistenceUnit);
+			System.out.printf("Initialising persistence context '%s'.%n", DatabaseConfig.PersistenceUnit);
 			databaseUtil = new DatabaseUtil();
 			databaseUtil.initialise();
 
