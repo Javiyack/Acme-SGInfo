@@ -16,10 +16,28 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Access(AccessType.PROPERTY)
 public class Bill extends DomainEntity {
 
+	private Double currentIVA;
+	private Double currentHourPrice;
 	private Date moment;
 	private int month;
 	private int year;
 	private Money amount;
+
+	public Double getCurrentHourPrice() {
+		return currentHourPrice;
+	}
+
+	public void setCurrentHourPrice(Double currentHourPrice) {
+		this.currentHourPrice = currentHourPrice;
+	}
+
+	public Double getCurrentIVA() {
+		return currentIVA;
+	}
+
+	public void setCurrentIVA(Double currentIVA) {
+		this.currentIVA = currentIVA;
+	}
 
 	public Money getAmount() {
 		return amount;

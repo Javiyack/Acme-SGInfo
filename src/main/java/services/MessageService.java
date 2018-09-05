@@ -145,7 +145,9 @@ public class MessageService {
 
 	public void checkPrincipal(final Message message, final Actor actor) {
 		final Collection<Message> messages = this.messageRepository.findAllByActor(actor.getId());
-		Assert.isTrue(messages.contains(message),"msg.not.owned.block");
+		if(!message.getBroadcast()) {
+			Assert.isTrue(messages.contains(message),"msg.not.owned.block");
+		}
 	}
 
 	public Message reconstruct(final Message m, final BindingResult binding) {

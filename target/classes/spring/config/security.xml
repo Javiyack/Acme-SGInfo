@@ -22,8 +22,10 @@
 
 	<!-- Access control -->
 
-	<security:http auto-config="true" use-expressions="true">	
-	
+	<security:http auto-config="true" use-expressions="true">
+
+		<!-- Permit All -->
+		
 		<security:intercept-url pattern="/"
 			access="permitAll" />
 		<security:intercept-url pattern="/favicon.ico"
@@ -34,103 +36,91 @@
 			access="permitAll" />
 		<security:intercept-url pattern="/styles/**"
 			access="permitAll" />
-		<security:intercept-url	pattern="/views/misc/index.jsp" 
-			access="permitAll" />
-		<security:intercept-url	pattern="/security/login.do" 
-			access="permitAll" />
-		<security:intercept-url	pattern="/security/loginFailure.do"
-			access="permitAll" />
-		<security:intercept-url pattern="/welcome/index.do" 
-			access="permitAll" />
+		<security:intercept-url
+			pattern="/views/misc/index.jsp" access="permitAll" />
+		<security:intercept-url
+			pattern="/security/login.do" access="permitAll" />
+		<security:intercept-url
+			pattern="/security/loginFailure.do" access="permitAll" />
+		<security:intercept-url
+			pattern="/welcome/index.do" access="permitAll" />
 		<security:intercept-url pattern="/term/**"
 			access="permitAll" />
-		<security:intercept-url pattern="/user/list.do"
-			access="permitAll" />
-		<security:intercept-url	pattern="/user/listAttendants.do" 
-			access="permitAll" />
-		<security:intercept-url	pattern="/user/display.do" 
-			access="permitAll" />
-		<security:intercept-url	pattern="/announcement/list.do" 
-			access="permitAll" />
-		<security:intercept-url	pattern="/answer/list.do" 
-			access="permitAll" />
-		<security:intercept-url	pattern="/actor/create.do" 
-			access="permitAll" />		
-		<security:intercept-url	pattern="/**/**/**/**/**" 
-			access="permitAll" />
-		<security:intercept-url	pattern="/**/**/**/**" 
-			access="permitAll" />
-		<security:intercept-url	pattern="/**/**/**" 
-			access="permitAll" />
-		<security:intercept-url	pattern="/**/**" 
-			access="permitAll" />
-		<security:intercept-url	pattern="/**" 
-			access="permitAll" />
-			
-			
+		<security:intercept-url
+			pattern="/actor/create.do" access="permitAll" />
+		<security:intercept-url
+			pattern="/customer/list.do" access="permitAll" />
+		<security:intercept-url
+			pattern="/customer/display.do" access="permitAll" />
+		
+		
+		<!-- IS ANONYMOUS -->
+		
+
+		<!-- IS AUTHENTICATED -->
+
+		
+		<security:intercept-url pattern="/message/**"
+			access="isAuthenticated()" />
+
+		<security:intercept-url pattern="/folder/**"
+			access="isAuthenticated()" />
+		<security:intercept-url
+			pattern="/customer/displayOwn.do" access="isAuthenticated()" />
+		
+
+		<!-- external -->
+		<security:intercept-url
+			pattern="/incidence/external/**"
+			access="hasAnyRole('USER', 'RESPONSABLE')" />
+
 		<!-- User -->
+
+
+		<!-- Responsable -->
 		<security:intercept-url
-			pattern="/incidencia/user/**" access="hasRole('USER')" />
+			pattern="/customer/edit.do" access="hasRole('RESPONSABLE')" />		
+		
 		<security:intercept-url
-			pattern="/Servant/user/**" access="hasRole('USER')" />
+			pattern="/billing/responsable/list.do"
+			access="hasRole('RESPONSABLE')" />
 		<security:intercept-url
-			pattern="/request/user/**" access="hasRole('USER')" />
-			
+			pattern="/billing/responsable/display.do"
+			access="hasRole('RESPONSABLE')" />
+		
+
+		<!-- Internal -->
+		<security:intercept-url
+			pattern="/incidencia/internal/**"
+			access="hasAnyRole('TECHNICIAN', 'MANAGER')" />
+
+
+		<!-- Technician -->
+		<security:intercept-url
+			pattern="/labor/technician/**" access="hasRole('TECHNICIAN')" />
+
+		<!-- Manager -->
+		<security:intercept-url
+			pattern="/billing/manager/**" access="hasRole('MANAGER')" />
+		<security:intercept-url
+			pattern="/customer/edit.do" access="hasRole('MANAGER')" />		
+		
+
 		<!-- Admin -->
-		<security:intercept-url pattern="/dashboard/**"
-			access="hasRole('ADMINISTRATOR')" />
-		<security:intercept-url
-			pattern="/Servant/administrator/**"
-			access="hasRole('ADMINISTRATOR')" />
 		<security:intercept-url
 			pattern="/configuration/administrator/**"
 			access="hasRole('ADMINISTRATOR')" />
 
-		<!-- Manager -->
-		<security:intercept-url
-			pattern="/Servant/manager/**" access="hasRole('MANAGER')" />
-		<security:intercept-url
-			pattern="/incidencia/manager/**" access="hasRole('MANAGER')" />
-		<security:intercept-url
-			pattern="/request/manager/**" access="hasRole('MANAGER')" />
+		<!-- Login Logout -->
 		
-		<!-- PERMIT ALL -->
-
-
-
-		<!-- IS ANONYMOUS -->
-		<security:intercept-url
-			pattern="/user/create.do" access="isAnonymous()" />
-		<security:intercept-url
-			pattern="/user/register.do" access="isAnonymous()" />
-		<security:intercept-url
-			pattern="/manager/create.do" access="isAnonymous()" />
-		<security:intercept-url
-			pattern="/manager/register.do" access="isAnonymous()" />
-		<security:intercept-url
-			pattern="/manager/edit.do" access="isAnonymous()" />
-
-		<security:intercept-url
-			pattern="/category/list.do" access="isAnonymous()" />
-
-		<security:intercept-url
-			pattern="/category/browse.do" access="isAnonymous()" />
-
-		<!-- IS AUTHENTICATED -->
-		<security:intercept-url
-			pattern="/actor/edit.do" access="isAuthenticated()" />
-
-		
-
-
-
 		<security:form-login
 			login-page="/security/login.do" password-parameter="password"
 			username-parameter="username"
 			authentication-failure-url="/security/loginFailure.do" />
-
+			
 		<security:logout logout-success-url="/"
 			invalidate-session="true" />
+			
+			
 	</security:http>
-
 </beans>

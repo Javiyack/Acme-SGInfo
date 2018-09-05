@@ -93,9 +93,7 @@
 				<display:column property="title" title="${title}" class="${classTd}" />
 
 
-				<spring:message code="incidencia.description" var="descriptionTitle" />
-				<display:column property="description" title="${descriptionTitle}"
-					class="${classTd}" />
+				
 
 
 
@@ -107,14 +105,9 @@
 
 
 				<spring:message code="moment.format" var="momentFormat" />
-				<spring:message code="incidencia.publication.moment"
+				<spring:message code="incidencia.ending.moment"
 					var="momentTilte" />
-				<display:column property="startingDate" title="${momentTilte}"
-					format="${momentFormat}" class="${classTd}" sortable="true"/>
-
-<spring:message code="moment.format" var="momentFormat" />
-				<spring:message code="incidencia.publication.moment"
-					var="momentTilte" />
+								
 				<display:column property="endingDate" title="${momentTilte}"
 					format="${momentFormat}" class="${classTd}" sortable="true"/>
 

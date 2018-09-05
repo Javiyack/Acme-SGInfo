@@ -12,4 +12,7 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 	@Query("select distinct(l.incidence.user.customer) from Labor l where l.bill.id= ?1")
 	Customer findByBillId(int id);
 
+	@Query("select a.customer.id from Actor a where a.id=?1")
+	Integer findByPrincipalId(int id);
+
 }

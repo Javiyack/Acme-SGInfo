@@ -28,6 +28,7 @@
 <%@ attribute name="value" required="false"%>
 <%@ attribute name="readonly" required="false"%>
 <%@ attribute name="css" required="false"%>
+<%@ attribute name="onclick" required="false"%>
 
 <jstl:if test="${value == null}">
 	<jstl:set var="value" value="false" />
@@ -43,9 +44,9 @@
 <%-- Definition --%>
 
 <spring:message code="${code}" var="title" />
-<form:label  path="${path}" cssStyle="display: inline;">
-		<jstl:out value="${title}"></jstl:out>
-	</form:label>
-<form:checkbox path="${path}" disabled="${readonly}" 
-	placeholder="${placeholder}" class="${css}" value="true" cssStyle="float: left; margin-right: .5em; display: inline;"/>
+<form:checkbox id="check" path="${path}" disabled="${readonly}" onclick="${onclick}"
+	placeholder="${placeholder}" class="${css}" value="true" />
+<form:label for="check" path="${path}" cssStyle="display:inline; margin:0.5em;" >
+		<jstl:out value="${title}"/>
+	</form:label>	
 

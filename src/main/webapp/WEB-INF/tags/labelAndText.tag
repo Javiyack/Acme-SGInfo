@@ -45,6 +45,6 @@
 
 <div>
 	<label><spring:message code="${label}" /></label> 
-	<input value="${text}" readonly="${readonly}" placeholder="${placeholder}" 
+	<input type="text" value="${text}" readonly="${readonly}" placeholder="${placeholder}" 
 		class="${css}" title="${value}"/>
 </div>

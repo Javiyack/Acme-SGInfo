@@ -15,7 +15,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
-<div class="w3-panel w3-card w3-light-green w3-display-middle w3-padding">
+<div class="seccion w3-card w3-light-green w3-display-middle w3-padding">
 
 
 <form:form action="j_spring_security_check" modelAttribute="credentials" >

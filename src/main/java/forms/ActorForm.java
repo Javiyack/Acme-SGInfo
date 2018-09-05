@@ -1,8 +1,8 @@
 
 package forms;
 
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
@@ -14,29 +14,92 @@ import domain.Customer;
 
 public class ActorForm {
 
-	private String	name;
-	private String	surname;
-	private String	email;
-	private String	phone;							// Optional	
-	private String	address;				// Optional
-	private String	username;
-	private String	password;
-	private String	newPassword;
-	private String	confirmPassword;
-	private String	authority;
+	private String name;
+	private String surname;
+	private String email;
+	private String phone; // Optional
+	private String address; // Optional
+	private String username;
+	private String password;
+	private String newPassword;
+	private String confirmPassword;
+	private String authority;
 	private Customer customer;
 	private String passKey;
-	
-	private int		id;
-	private int		version;
+	private boolean agree;
+	private AccountForm account;
+	private int id;
+	private int version;
 
+	// Constructors -------------------------
 
-	//Constructors -------------------------
+	public String getAuthority() {
+		return authority;
+	}
+
+	public void setAuthority(String authority) {
+		this.authority = authority;
+		this.account.setAuthority(authority);
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+		this.account.setUsername(username);
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+		this.account.setPassword(password);
+	}
+
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+		this.account.setConfirmPassword(confirmPassword);
+	}
+
+	public String getNewPassword() {
+		return newPassword;
+	}
+
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
+		this.account.setNewPassword(newPassword);
+	}
+
+	public AccountForm getAccount() {
+		return account;
+	}
+
+	public void setAccount(AccountForm account) {
+		this.account = account;
+	}
+
+	@NotNull
+	public boolean isAgree() {
+		return agree;
+	}
+
+	public void setAgree(boolean agree) {
+		this.agree = agree;
+	}
 
 	public ActorForm() {
 		super();
 		this.id = 0;
 		this.version = 0;
+		this.account = new AccountForm();
 	}
 
 	public ActorForm(final Actor actor) {
@@ -47,13 +110,13 @@ public class ActorForm {
 		this.setEmail(actor.getEmail());
 		this.setPhone(actor.getPhone());
 		this.setAddress(actor.getAddress());
-		this.setUsername(actor.getUserAccount().getUsername());
 		this.setCustomer(actor.getCustomer());
-		this.setAuthority(actor.getUserAccount().getAuthorities().iterator().next().getAuthority());
+		this.setAccount(new AccountForm(actor));
+		this.setAuthority(this.getAccount().getAuthority());
+		this.setUsername(actor.getUserAccount().getUsername());
+
 	}
 
-	
-	@NotBlank
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	@Pattern(regexp = "^CUS-([012][1-9]|[3][01]|20)([0][1-9]|[1][0-2])\\d\\d-\\d{0,8}$") // "INC-MMDDYY-XXXXXXXX"
 	public String getPassKey() {
@@ -62,16 +125,6 @@ public class ActorForm {
 
 	public void setPassKey(String passKey) {
 		this.passKey = passKey;
-	}
-
-	@NotBlank
-	@SafeHtml(whitelistType = WhiteListType.NONE)
-	public String getAuthority() {
-		return this.authority;
-	}
-
-	public void setAuthority(final String authority) {
-		this.authority = authority;
 	}
 
 	@NotBlank
@@ -122,62 +175,6 @@ public class ActorForm {
 		this.address = address;
 	}
 
-	@SafeHtml(whitelistType = WhiteListType.NONE)
-	@NotBlank
-	@Size(min = 5, max = 32)
-	public String getUsername() {
-		return this.username;
-	}
-
-	public void setUsername(final String userName) {
-		this.username = userName;
-	}
-
-	@SafeHtml(whitelistType = WhiteListType.NONE)
-	@NotBlank
-	@Size(min = 5, max = 32)
-	public String getPassword() {
-		return this.password;
-	}
-
-	public void setPassword(final String pasword) {
-		this.password = pasword;
-	}
-
-	/**
-	 * @return the newPassword
-	 */
-	@SafeHtml(whitelistType = WhiteListType.NONE)
-	@Size(min = 5, max = 32)
-	public String getNewPassword() {
-		return this.newPassword;
-	}
-
-	/**
-	 * @param newPassword
-	 *            the newPassword to set
-	 */
-	public void setNewPassword(final String newPassword) {
-		this.newPassword = newPassword;
-	}
-
-	/**
-	 * @return the confirmPassword
-	 */
-	@SafeHtml(whitelistType = WhiteListType.NONE)
-	@Size(min = 5, max = 32)
-	public String getConfirmPassword() {
-		return this.confirmPassword;
-	}
-
-	/**
-	 * @param confirmPassword
-	 *            the confirmPassword to set
-	 */
-	public void setConfirmPassword(final String confirmPassword) {
-		this.confirmPassword = confirmPassword;
-	}
-
 	public int getId() {
 		return this.id;
 	}
@@ -201,6 +198,5 @@ public class ActorForm {
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
 	}
-	
-	
+
 }

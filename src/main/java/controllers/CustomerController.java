@@ -16,6 +16,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -100,19 +101,40 @@ public class CustomerController extends AbstractController {
 		return result;
 	}
 
-	// Edit customer
-	// ---------------------------------------------------------------
-	@RequestMapping("/display")
-	public ModelAndView display(@Valid final int id) {
-		ModelAndView result;
-		final Customer incidencia = this.customerService.findOne(id);
+	// Display/Edit customer
+		// ---------------------------------------------------------------
+		@RequestMapping("/displayOwn")
+		public ModelAndView display() {
+			ModelAndView result;
+			try {
+				Actor actor = actorService.findByPrincipal();
+				Assert.notNull(actor, "msg.not.loged.block");
+				final CustomerForm customerForm = new CustomerForm(actor.getCustomer());
+				result = this.createEditModelAndView(customerForm);
+				result.addObject("display", !(actor instanceof Responsable || actor instanceof Manager));
 
-		final CustomerForm customer = new CustomerForm(incidencia);
-		result = this.createEditModelAndView(customer);
-		result.addObject("display", true);
+			}  catch (final Throwable oops) {
+				if (oops.getMessage().startsWith("msg."))
+					result = this.createMessageModelAndView(oops.getLocalizedMessage(), "/");
+				else
+					result = this.createMessageModelAndView("msg.commit.error", "/");
+			}			
+			
+			return result;
+		}
+		// Display customer
+		// ---------------------------------------------------------------
+		@RequestMapping("/display")
+		public ModelAndView display(@Valid final int id) {
+			ModelAndView result;
+			final Customer incidencia = this.customerService.findOne(id);
 
-		return result;
-	}
+			final CustomerForm customer = new CustomerForm(incidencia);
+			result = this.createEditModelAndView(customer);
+			result.addObject("display", true);
+
+			return result;
+		}
 
 	// Save customer
 	// ---------------------------------------------------------------
@@ -128,7 +150,10 @@ public class CustomerController extends AbstractController {
 				this.customerService.save(incidencia);
 				result = new ModelAndView("redirect:/customer/list.do");
 			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(customer, "msg.commit.error");
+				if (oops.getMessage().startsWith("msg."))
+					result = this.createEditModelAndView(customer, oops.getLocalizedMessage());
+				else
+					result = this.createEditModelAndView(customer, "msg.commit.error");
 			}
 		return result;
 	}
@@ -143,11 +168,9 @@ public class CustomerController extends AbstractController {
 			this.customerService.delete(customer);
 			result = new ModelAndView("redirect:/customer/list.do");
 
-		} catch (final Throwable ooops) {
-			if (ooops.getMessage().equals("msg.not.loged.block"))
-				result = this.createEditModelAndView(customer, "msg.not.loged.block");
-			else if (ooops.getMessage().equals("msg.not.owned.block"))
-				result = this.createEditModelAndView(customer, "msg.not.owned.block");
+		} catch (final Throwable oops) {
+			if (oops.getMessage().startsWith("msg."))
+				result = this.createEditModelAndView(customer, oops.getLocalizedMessage());
 			else
 				result = this.createEditModelAndView(customer, "msg.commit.error");
 		}

@@ -31,21 +31,24 @@
 <jstl:if test="${rol == 'technician' or rol == 'manager' or rol == 'administrator'}">
 	<jstl:set value="internal" var="accesscontrol" />
 </jstl:if>
+<jstl:if test="${rol == 'administrator'}">
+	<jstl:set value="adminitrator" var="accesscontrol" />
+</jstl:if>
 
 <!-- Menu and banner usually + "$") -->
 <!-- Sidebar/menu -->
 
 <nav
 	class="w3-sidebar w3-collapse w3-flat-midnight-blue w3-animate-left sombra"
-	style="z-index: 3; width: 300px;" id="mySidebar">
+	style="z-index: 3; width: 260px;" id="mySidebar">
 
 	<br>
 
 	<div class="w3-container w3-row">
 		<div class="w3-col s4">
 			<security:authorize access="isAuthenticated()">
-				<a href="security/login.do" class=""><img src="https://www.w3schools.com/w3images/avatar2.png"
-					class="w3-circle w3-margin-right" style="width: 46px"></a>
+				<a href="j_spring_security_logout" class=""><i
+					class="fa fa-sign-out w3-margin w3-xxlarge"></i></a>
 			</security:authorize>
 			<security:authorize access="isAnonymous()">
 				<a href="security/login.do" class=""><i
@@ -68,23 +71,45 @@
 	</div>
 	<hr>
 	<div class="w3-bar-block" style="padding-bottom: 60px">
-
-		<security:authorize access="isAuthenticated()">
+<a href="customer/list.do"
+			class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
+			class="fa fa-diamond fa-fw"></i>  <spring:message
+				code="label.customers" />
+		</a>
+<security:authorize access="isAuthenticated()">
 			<a href="incidence/${accesscontrol}/list.do"
 				class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
 				class="fa fa-ambulance fa-fw"></i>  <spring:message
 					code="label.incidences" />
 			</a>
-		</security:authorize>
-		<a href="customer/list.do"
-			class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-			class="fa fa-diamond fa-fw"></i>  <spring:message
-				code="label.customers" />
-		</a> <a href="#" class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-			class="fa fa-eye fa-fw"></i>  Servicios
-		</a> <a href="billing/manager/list.do" class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
+</security:authorize>
+		
+<security:authorize access="hasRole('USER')">
+
+</security:authorize>
+<security:authorize access="hasRole('TECHNICIAN')">
+
+</security:authorize>
+<security:authorize access="hasRole('MANAGER')">
+<a href="billing/manager/list.do" class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
 			class="fa fa-users fa-fw"></i>  <spring:message
 				code="label.billing" />
+		</a> 
+</security:authorize>
+<security:authorize access="hasRole('RESPONSABLE')">
+<a href="billing/responsable/list.do" class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
+			class="fa fa-users fa-fw"></i>  <spring:message
+				code="label.billing" />
+		</a> 
+</security:authorize>
+<security:authorize access="hasRole('ADMINISTRATOR')">
+<a href="configuration/administrator/edit.do" class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
+			class="fa fa-cog fa-fw"></i>  Settings
+		</a> 
+</security:authorize>
+<security:authorize access="isAnonymous()">
+ <a href="#" class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
+			class="fa fa-eye fa-fw"></i>  Servicios
 		</a> <a href="#" class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
 			class="fa fa-bullseye fa-fw"></i>  Equipos
 		</a> <a href="#" class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
@@ -93,9 +118,10 @@
 			class="fa fa-bank fa-fw"></i>  General
 		</a> <a href="#" class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
 			class="fa fa-history fa-fw"></i>  History
-		</a> <a href="#" class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-			class="fa fa-cog fa-fw"></i>  Settings
-		</a><br>
+		</a>
+
+			</security:authorize>
+		<br>
 		<br>
 	</div>
 

@@ -28,12 +28,10 @@
 
 		<form:hidden path="id" />
 		<form:hidden path="version" />
-		<form:hidden path="customerId" />
 
 		<div class="row">
 			<div class="col-50">
-				<acme:textbox code="label.name" path="name" readonly="${readonly}" />
-				<acme:textbox code="label.customer" path="customerId" readonly="${readonly}" />		
+				<acme:textbox code="label.name" path="name" readonly="${readonly}" />	
 				<acme:textbox code="customer.address" path="address"
 					readonly="${readonly}" />
 				<acme:textbox code="customer.website" path="webSite"
@@ -45,7 +43,7 @@
 					css="formTextArea" readonly="${readonly}" />
 				<br>
 				<acme:checkBox code="label.active" path="active"
-					readonly="${readonly}" />
+					readonly="${readonly}" css="w3-check"/>
 
 			</div>
 
@@ -59,16 +57,20 @@
 						readonly="${readonly}" />
 
 				</jstl:if>
+				
+				<spring:message var="alt" code="customer.company.logo"/>
+				
+				
 				<div class="row w3-margin-top">
 					<div class="col-100 w3-padding">
 						<div class="w3-card imgCentered"
 							style="max-height: 22em; max-width: 20em;">
-							<img src="https://www.w3schools.com/w3images/avatar2.png"
+							<img src="${customerForm.logo}"
 								class="imgCentered" style="max-height: 20em; max-width: 20em;">
 							<div class="w3-container w3-white">
-								<h4>
-									<jstl:out value="${customerForm.name}"></jstl:out>
-								</h4>
+								
+									<acme:textbox code="label.none" path="logo" css="w3-border-0" readonly="${readonly}" />
+								
 							</div>
 						</div>
 					</div>

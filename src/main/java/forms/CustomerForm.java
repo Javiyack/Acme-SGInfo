@@ -42,6 +42,17 @@ public class CustomerForm {
 	
 	private String email;
 	
+	private String logo;
+	
+	@SafeHtml(whitelistType = WhiteListType.NONE)
+	public String getLogo() {
+		return logo;
+	}
+
+	public void setLogo(String logo) {
+		this.logo = logo;
+	}
+
 	@SafeHtml(whitelistType = WhiteListType.NONE)
 	public String getEmail() {
 		return this.email;
@@ -70,6 +81,7 @@ public class CustomerForm {
 		this.setActive(cust.isActive());
 		this.setEmail(cust.getEmail());
 		this.setPassKey(cust.getPassKey());
+		this.setLogo(cust.getLogo());
 		this.setWebSite(cust.getWebSite());
 		}
 	

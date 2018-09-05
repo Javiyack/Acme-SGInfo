@@ -59,7 +59,8 @@
 					class="${classTd}" />
 				<acme:column property="description" title="label.description" />
 				<acme:column property="webSite" title="customer.website" />
-				<acme:column property="fechaAlta" title="customer.registration.date" />
+				<acme:column property="fechaAlta" title="customer.registration.date" format="moment.format" />
+				 />
 				<display:column class="${classTd}">
 					<jstl:set var="owns"
 						value="${rol=='manager' or logedCustomerId==row.id}" />

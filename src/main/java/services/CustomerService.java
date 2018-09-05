@@ -53,13 +53,18 @@ public class CustomerService {
 	}
 
 	// Save
-	public Customer save(final Customer incidence) {
-		Assert.notNull(incidence);
+	public Customer save(final Customer customer) {
+		Assert.notNull(customer);
 		Customer result;
-		if (incidence.getId() == 0) {
-			incidence.setFechaAlta(new Date());
+		if (customer.getId() == 0) {
+			customer.setFechaAlta(new Date());
+		}else {
+			Actor actor = actorService.findByPrincipal();
+			Assert.notNull(actor, "msg.not.loged.block");
+			Assert.isTrue(actor instanceof Responsable || actor instanceof Manager, "msg.not.owned.block");
+			
 		}
-		result = this.customerRepository.save(incidence);
+		result = this.customerRepository.save(customer);
 		return result;
 	}
 
@@ -72,30 +77,21 @@ public class CustomerService {
 		if (form.getId() == 0) {
 			result = this.create();
 			result.setId(0);
-			result.setVersion(0);
-			result.setName(form.getName());
-			result.setDescription(form.getDescription());
-			result.setAddress(form.getAddress());
-			result.setBillingAddress(form.getBillingAddress());
-			result.setNif(form.getNif());
-			result.setFechaAlta(form.getFechaAlta());
-			result.setActive(form.getActive());
-			result.setEmail(form.getEmail());
-			result.setPassKey(form.getPassKey());
-			result.setWebSite(form.getWebSite());
+			result.setVersion(0);			
 		} else {
 			result = this.customerRepository.findOne(form.getId());
-			result.setName(form.getName());
-			result.setDescription(form.getDescription());
-			result.setAddress(form.getAddress());
-			result.setBillingAddress(form.getBillingAddress());
-			result.setNif(form.getNif());
-			result.setFechaAlta(form.getFechaAlta());
-			result.setActive(form.getActive());
-			result.setEmail(form.getEmail());
-			result.setPassKey(form.getPassKey());
-			result.setWebSite(form.getWebSite());
 		}
+		result.setName(form.getName());
+		result.setDescription(form.getDescription());
+		result.setAddress(form.getAddress());
+		result.setBillingAddress(form.getBillingAddress());
+		result.setNif(form.getNif());
+		result.setFechaAlta(form.getFechaAlta());
+		result.setActive(form.getActive());
+		result.setEmail(form.getEmail());
+		result.setLogo(form.getLogo());
+		result.setPassKey(form.getPassKey());
+		result.setWebSite(form.getWebSite());
 
 		validator.validate(result, binding);
 		return result;
@@ -140,5 +136,11 @@ public class CustomerService {
 
 	public Customer findByBill(Bill bill) {		
 		return this.customerRepository.findByBillId(bill.getId());
+	}
+
+	public Integer findByPrincipal() {
+		Actor actor = actorService.findByPrincipal();
+		Assert.notNull(actor, "msg.not.loged.block");
+		return this.customerRepository.findByPrincipalId(actor.getId());
 	}
 }

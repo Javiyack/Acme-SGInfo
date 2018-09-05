@@ -20,35 +20,33 @@ public class PostBoxService {
 
 	// Managed repository -----------------------------------------------------
 	@Autowired
-	private PostBoxRepository	postBoxRepository;
+	private PostBoxRepository postBoxRepository;
 
 	// Supporting services
 	@Autowired
-	private ActorService		actorService;
+	private ActorService actorService;
 
 	@Autowired
-	private MessageService	messageService;
+	private MessageService messageService;
 	@Autowired
-	private FolderService	folderService;
-
+	private FolderService folderService;
 
 	// CRUD Methods
 
 	// Create
-	public PostBox create() {		
+	public PostBox create() {
 		return new PostBox();
 	}
 
 	// Save
-	public PostBox save(final PostBox postBox) {		
+	public PostBox save(final PostBox postBox) {
 		return postBoxRepository.save(postBox);
 	}
-	
+
 	public void checkPrincipal(final PostBox folder) {
 	}
 
 	public void createSystemFolders(final Actor actor) {
-
 
 	}
 
@@ -64,17 +62,20 @@ public class PostBoxService {
 	public Folder findFolderByMessage(Message message) {
 		Actor actor;
 		actor = this.actorService.findByPrincipal();
-		Assert.isTrue(message.getSender().equals(actor) 
-				|| message.getRecipient().equals(actor), "msg.not.owned.block");
-		return postBoxRepository.findFolderByActorAndMessageId(actor.getId(),message.getId());
+		if (!message.getBroadcast()) {
+			Assert.isTrue(message.getSender().equals(actor) || message.getRecipient().equals(actor),
+					"msg.not.owned.block");
+		}
+		return postBoxRepository.findFolderByActorAndMessageId(actor.getId(), message.getId());
 	}
 
 	public PostBox findOneByMessage(Message message) {
 		Actor actor;
 		actor = this.actorService.findByPrincipal();
-		Assert.isTrue(message.getSender().equals(actor) 
-				|| message.getRecipient().equals(actor), "msg.not.owned.block");
-		return postBoxRepository.findOneByMessage(actor.getId(),message.getId());
+		if(!message.getBroadcast()) {
+			Assert.isTrue(message.getSender().equals(actor) || message.getRecipient().equals(actor), "msg.not.owned.block");
+		}
+		return postBoxRepository.findOneByMessage(actor.getId(), message.getId());
 	}
 
 	public PostBox saveNotification(PostBox pb) {
@@ -84,7 +85,7 @@ public class PostBoxService {
 	public Collection<Message> findRecivedMessagesByActorId(int actorId) {
 		Actor actor;
 		actor = this.actorService.findByPrincipal();
-		Assert.isTrue(actorId==actor.getId(), "msg.not.owned.block");
+		Assert.isTrue(actorId == actor.getId(), "msg.not.owned.block");
 		return postBoxRepository.findRecivedMessagesByActorId(actorId);
 	}
 

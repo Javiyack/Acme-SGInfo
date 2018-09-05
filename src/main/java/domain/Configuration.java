@@ -7,6 +7,7 @@ import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -22,12 +23,24 @@ public class Configuration extends DomainEntity {
 	private String	companyName;
 	private String	passKey;
 	private String	logo;
+	private String	defaultCurrency;
 	private Collection<String> folderNames;
 	private String	welcomeMessageEs;
 	private String	welcomeMessageEn;
 	private double	iva;
 	private double	hourPrice;
 
+
+
+	@NotBlank
+	@SafeHtml(whitelistType = WhiteListType.NONE)
+	public String getDefaultCurrency() {
+		return defaultCurrency;
+	}
+
+	public void setDefaultCurrency(String currency) {
+		this.defaultCurrency = currency;
+	}
 
 	@ElementCollection
 	@NotNull
@@ -92,7 +105,7 @@ public class Configuration extends DomainEntity {
 	}
 
 	@Min(0)
-	@Max(1)
+	@Max(100)
 	@NotNull
 	public double getIva() {
 		return iva;

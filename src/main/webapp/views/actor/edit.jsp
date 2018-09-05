@@ -11,7 +11,6 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<jstl:out value="${message}"></jstl:out>
 <div class="form">
 
 	<form:form action="${requestUri}" modelAttribute="actorForm">
@@ -79,15 +78,15 @@
 						</div>
 						<div class="col-50">
 							<acme:select items="${customers}" code="label.customer"
-								itemLabel="name" path="customer" css="formSelect"
-								addEmpty="true" />
+								itemLabel="name" path="customer" css="formSelect" id="combo"
+								onchange="javascript:ajaxSearch(this, '${pageContext.request.contextPath}')"/>
 							<acme:textbox code="label.passkey" path="passKey" />
 							<form:label path="${path}">
 								<spring:message code="actor.authority.selection" />
 							</form:label>
 							<select id="authority" name="authority">
 								<jstl:forEach items="${permisos}" var="permiso">
-									<option value="${permiso}">
+									<option value="${permiso}" id="${permiso}">
 										<spring:message code="actor.authority.${permiso}" />
 									</option>
 
@@ -111,9 +110,11 @@
 									css="formInput" readonly="true" />
 							</div>
 							<div class="col-50">
-								<acme:textbox code="actor.authority" path="authority"
+								<form:hidden path="authority"/>
+								<spring:message code="actor.authority.${actorForm.account.authority}" var="rango" />
+								<acme:labelAndText label="actor.authority"
+								 text="${rango}" 
 									css="formInput" readonly="true" />
-
 							</div>
 						</div>
 						<div class="row">
@@ -137,14 +138,14 @@
 							</div>
 						</div>
 					</div>
-
 				</jstl:if>
 			</div>
 			<div class="seccion w3-light-green">
 				<security:authorize access="isAnonymous()">
-					<p class="terminos w3-text-red">
-						<spring:message code="term.registration" />
-					</p>
+					<p class="terminos w3-text-white">
+						<acme:checkBox code="term.registration.acept" path="agree" css="w3-check"/>
+						(<a href="term/termsAndConditions.do"><spring:message code="term.terms" /></a>
+						 && <a href="term/cookies.do" ><spring:message code="term.cookie"/></a>)
 				</security:authorize>
 				<div class="row">
 					<div class="col-50">

@@ -10,18 +10,19 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import controllers.AbstractController;
+import domain.Actor;
 import domain.Bill;
 import domain.Customer;
 import domain.Labor;
-import forms.BillForm;
+import domain.Manager;
+import services.ActorService;
 import services.BillingService;
-import services.CustomerService;
+import services.ConfigurationService;
 import services.LaborService;
 
 @Controller
@@ -32,10 +33,11 @@ public class ManagerBillingController extends AbstractController {
 	@Autowired
 	private BillingService billingService;
 	@Autowired
-	private CustomerService customerService;
-	@Autowired
 	private LaborService laborService;
-
+	@Autowired
+	ConfigurationService configurationService;
+	@Autowired
+	private ActorService actorService;
 	// Constructor
 
 	public ManagerBillingController() {
@@ -47,20 +49,31 @@ public class ManagerBillingController extends AbstractController {
 	@RequestMapping("/list")
 	public ModelAndView list() {
 		ModelAndView result;
-		final Collection<Object> bills = this.billingService.findAllPropper();
-		Map<Customer, List<Bill>> billsByCustomer = new HashMap<Customer, List<Bill>>();
-		if (!bills.isEmpty()) {
-			for (Object object : bills) {
-				final Object[] entryCustomerBill = (Object[]) object;
-			Bill bill = (Bill) entryCustomerBill[0];
-			Customer customer = (Customer) entryCustomerBill[1];
-			List<Bill> customerBills = ((billsByCustomer.get(customer)!=null) ?billsByCustomer.get(customer):new ArrayList<Bill>());
-			customerBills.add(bill);
-			billsByCustomer.put(customer, customerBills);			
+		try {
+			Actor actor = actorService.findByPrincipal();
+			Assert.notNull(actor, "msg.not.loged.block");
+
+			final Collection<Object> bills = this.billingService.findAllPropper();
+			Map<Customer, List<Bill>> billsByCustomer = new HashMap<Customer, List<Bill>>();
+			if (!bills.isEmpty()) {
+				for (Object object : bills) {
+					final Object[] entryCustomerBill = (Object[]) object;
+					Bill bill = (Bill) entryCustomerBill[0];
+					Customer customer = (Customer) entryCustomerBill[1];
+					List<Bill> customerBills = ((billsByCustomer.get(customer) != null) ? billsByCustomer.get(customer)
+							: new ArrayList<Bill>());
+					customerBills.add(bill);
+					billsByCustomer.put(customer, customerBills);
+				}
 			}
+			result = new ModelAndView("billing/list");
+			result.addObject("facturas", billsByCustomer);
+		} catch (final Throwable oops) {
+			if (oops.getMessage().startsWith("msg."))
+				result = this.createMessageModelAndView(oops.getLocalizedMessage(), "/");
+			else
+				result = this.createMessageModelAndView("msg.commit.error", "/");
 		}
-		result = new ModelAndView("billing/list");
-		result.addObject("facturas", billsByCustomer);
 		return result;
 	}
 
@@ -83,19 +96,9 @@ public class ManagerBillingController extends AbstractController {
 		return result;
 	}
 
-	// Create billing
-	// ---------------------------------------------------------------
-	@RequestMapping("/create")
-	public ModelAndView create() {
-		ModelAndView result;
-		result = new ModelAndView("billing/create");
-		result.addObject("incidences", "");
-		return result;
-	}
-
 	// Edit billing
 	// ---------------------------------------------------------------
-	@RequestMapping("/edit")
+	@RequestMapping("/display")
 	public ModelAndView edit(@Valid final int id) {
 		ModelAndView result;
 		Bill bill = billingService.findOne(id);
@@ -104,32 +107,26 @@ public class ManagerBillingController extends AbstractController {
 		Labor anyLabor = labors.iterator().next();
 		Customer customer = anyLabor.getIncidence().getUser().getCustomer();
 		Customer biller = anyLabor.getIncidence().getTechnician().getCustomer();
-		result = new ModelAndView("billing/edit");
+		Double iva = configurationService.findIVA();
+		Double precioHora = configurationService.findHourPrice();
+		result = new ModelAndView("billing/display");
 		result.addObject("bill", bill);
 		result.addObject("labors", labors);
 		result.addObject("customer", customer);
 		result.addObject("biller", biller);
-		result.addObject("precioHora", 28.0);
-		result.addObject("iva", 0.21);
+		result.addObject("precioHora", precioHora);
+		result.addObject("iva", iva);
 		result.addObject("backUrl", "/billing/manager/list.do");
-		return result;
-	}
-
-	// Save billing
-	// ---------------------------------------------------------------
-	@RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
-	public ModelAndView save(@Valid final Bill bill, final BindingResult binding) {
-		ModelAndView result;
-
-		if (binding.hasErrors())
-			result = this.createEditModelAndView(bill);
-		else
-			try {
-				this.billingService.save(bill);
-				result = new ModelAndView("redirect:/billing/list.do");
-			} catch (final Throwable oops) {
-				result = this.createEditModelAndView(bill, "msg.commit.error");
-			}
+		try {
+			Actor actor = actorService.findByPrincipal();
+			Assert.notNull(actor, "msg.not.loged.block");
+			Assert.isTrue(actor instanceof Manager, "msg.not.owned.block");			
+		} catch (final Throwable oops) {
+			if (oops.getMessage().startsWith("msg."))
+				result = this.createMessageModelAndView(oops.getLocalizedMessage(), "/");
+			else
+				result = this.createMessageModelAndView("msg.commit.error", "/");
+		}
 		return result;
 	}
 
@@ -144,28 +141,9 @@ public class ManagerBillingController extends AbstractController {
 	protected ModelAndView createEditModelAndView(final Bill bill, final String message) {
 		final ModelAndView result;
 
-		result = new ModelAndView("billing/create");
+		result = new ModelAndView("billing/display");
 		result.addObject("billing", bill);
 		result.addObject("message", message);
-		result.addObject("requestUri", "billing/create.do");
-
-		return result;
-
-	}
-
-	protected ModelAndView createEditModelAndView(final BillForm bill) {
-		final ModelAndView result;
-		result = this.createEditModelAndView(bill, null);
-		return result;
-	}
-
-	protected ModelAndView createEditModelAndView(final BillForm bill, final String message) {
-		final ModelAndView result;
-
-		result = new ModelAndView("billing/edit");
-		result.addObject("billing", bill);
-		result.addObject("message", message);
-		result.addObject("requestUri", "billing/edit.do");
 
 		return result;
 

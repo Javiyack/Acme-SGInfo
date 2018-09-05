@@ -1,20 +1,17 @@
 
 package domain;
 
-import java.util.Collection;
-
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.NotEmpty;
 import org.hibernate.validator.constraints.SafeHtml;
 
 import security.UserAccount;
@@ -34,7 +31,8 @@ public abstract class Actor extends DomainEntity {
 	//Relationships
 	private UserAccount userAccount;
 
-	@ManyToOne(optional = true)
+	@NotNull
+	@ManyToOne(optional = false)
 	public Customer getCustomer() {
 		return customer;
 	}
@@ -44,7 +42,6 @@ public abstract class Actor extends DomainEntity {
 	}
 	
 	
-	@NotBlank
 	@SafeHtml
 	public String getName() {
 		return this.name;
@@ -54,7 +51,6 @@ public abstract class Actor extends DomainEntity {
 		this.name = name;
 	}
 
-	@NotBlank
 	public String getSurname() {
 		return this.surname;
 	}
@@ -64,7 +60,6 @@ public abstract class Actor extends DomainEntity {
 	}
 
 	@Email
-	@NotBlank
 	public String getEmail() {
 		return this.email;
 	}

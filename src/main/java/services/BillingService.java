@@ -21,6 +21,7 @@ import domain.Incidence;
 import domain.Labor;
 import domain.Manager;
 import domain.Money;
+import domain.Responsable;
 import domain.Technician;
 import forms.BillForm;
 import forms.LaborForm;
@@ -36,7 +37,7 @@ public class BillingService {
 	@Autowired
 	private ActorService actorService;
 	@Autowired
-	private CustomerService customerService;
+	ConfigurationService	configurationService;
 	@Autowired
 	private LaborService laborService;
 	@Autowired
@@ -139,6 +140,9 @@ public class BillingService {
 
 	public void generate() {
 		// Recuperamos la incidencias facturables
+		Actor actor = actorService.findByPrincipal();
+		Assert.notNull(actor, "msg.not.loged.block");
+		Assert.isTrue(actor instanceof Manager, "msg.not.owned.block");
 		Collection<Incidence> incidences = this.incidenceService.findFacturables();
 		if (!incidences.isEmpty()) {
 			for (Incidence incidence : incidences) {
@@ -148,14 +152,17 @@ public class BillingService {
 					// creamos una factura con esas labores
 					Bill bill = this.create();
 					Money money = new Money();
-					Double precioHora = 28.0;
+					Double precioHora = configurationService.findHourPrice();
+					Double iva = configurationService.findIVA();
+					bill.setCurrentIVA(iva);
+					bill.setCurrentHourPrice(precioHora);
 					Calendar calendar = Calendar.getInstance();
 					bill = this.billingRepository.save(bill);
 					for (Labor labor : labors) {
 						labor.setBill(bill);
 						calendar.setTime(labor.getTime());
-						money.setAmount(precioHora * calendar.get(Calendar.HOUR_OF_DAY)
-								+ calendar.get(Calendar.MINUTE) * precioHora / 60);
+						money.setAmount((precioHora * calendar.get(Calendar.HOUR_OF_DAY)
+								+ calendar.get(Calendar.MINUTE) * precioHora / 60));
 						bill.getAmount().add(money);
 						laborService.save(labor);
 					}
@@ -182,5 +189,22 @@ public class BillingService {
 	public Collection<Object> findAllPropper() {
 		// TODO Auto-generated method stub
 		return billingRepository.findAllPropper();
+	}
+
+	public Collection<Object> findPropperByCustomer() {
+		Actor actor = actorService.findByPrincipal();
+		Assert.notNull(actor, "msg.not.loged.block");
+		Assert.isTrue(actor instanceof Responsable || actor instanceof Manager, "msg.not.owned.block");
+		return billingRepository.findPropperByCustomerId(actor.getCustomer().getId());
+	}
+
+
+	public void checkOwns(Customer customer, Labor anyLabor) {
+		final Actor logedActor = this.actorService.findByPrincipal();
+		Assert.notNull(logedActor, "msg.not.loged.block");
+		Assert.isTrue(logedActor instanceof Responsable || logedActor instanceof Manager, "msg.not.owned.block");		
+		Assert.isTrue(logedActor.getCustomer().equals(customer), "msg.not.owned.block");
+		Assert.isTrue(logedActor.getCustomer().equals(anyLabor.getIncidence().getUser().getCustomer()), "msg.not.owned.block");
+		
 	}
 }

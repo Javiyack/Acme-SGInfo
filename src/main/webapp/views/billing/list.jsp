@@ -20,10 +20,27 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@taglib prefix="acme" tagdir="/WEB-INF/tags"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 
 <jsp:useBean id="date" class="java.util.Date" />
-
+<security:authorize access="isAuthenticated()">
+		<jstl:set var="colom" value=", " />
+		<security:authentication property="principal.username" var="username" />
+		<security:authentication property="principal" var="logedActor" />
+		<security:authentication property="principal.authorities[0]"
+			var="permiso" />
+		<jstl:set var="rol" value="${fn:toLowerCase(permiso)}/" />
+	</security:authorize>
+	<jstl:set var="rol" value="${fn:toLowerCase(permiso)}" />
+	<jstl:if test="${rol == 'user' or rol == 'responsable'}">
+		<jstl:set value="external" var="accesscontrol" />
+	</jstl:if>
+	<jstl:if
+		test="${rol == 'technician' or rol == 'manager' or rol == 'administrator'}">
+		<jstl:set value="internal" var="accesscontrol" />
+	</jstl:if>
 
 <ul class="w3-ul ">
 	<jstl:forEach items="${facturas}" var="facturas">
@@ -39,8 +56,8 @@
 					<div class="w3-col m3 w3-center"><strong><spring:message code="label.moment"/></strong></div>
 					<div class="w3-col m2 w3-center"><strong><spring:message code="label.year"/></strong></div>
 					<div class="w3-col m1 w3-center"><strong><spring:message code="label.month"/></strong></div>
-					<div class="w3-col m2 w3-center"><strong><spring:message code="label.amount"/></strong></div>
-					<div class="w3-col m1 w3-center"><strong><spring:message code="label.curency"/></strong></div>
+					<div class="w3-col m2 w3-center"><strong><spring:message code="label.tax.base"/></strong></div>
+					<div class="w3-col m1 w3-center"><strong><spring:message code="label.currency"/></strong></div>
 					<div class="w3-col m2 w3-center"><strong><spring:message code="label.view"/></strong></div>
 				</div>
 
@@ -76,7 +93,7 @@
 										<jstl:out value="${row.amount.currency}" />
 									</div>
 									<div class="w3-col m2 w3-center">
-										<a href="billing/manager/edit.do?id=${row.id}"> <i
+										<a href="billing/${rol}/display.do?id=${row.id}"> <i
 								class="fa fa-eye w3-xlarge"></i>
 										</a>
 									</div>

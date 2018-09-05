@@ -11,20 +11,12 @@
 
 <tiles-definitions>
 
-	<definition name="billing/create" extends="master.page">
-		<put-attribute name="title" value="Invoice" />
-		<put-attribute name="body" value="/views/billing/create.jsp" />
-	</definition>
 
 	<definition name="billing/display" extends="master.page">
 		<put-attribute name="title" value="Invoice" />
 		<put-attribute name="body" value="/views/billing/create.jsp" />
 	</definition>
 
-	<definition name="billing/edit" extends="master.page">
-		<put-attribute name="title" value="Invoice" />
-		<put-attribute name="body" value="/views/billing/create.jsp" />
-	</definition>	
 	<definition name="billing/list" extends="master.page">
 		<put-attribute name="title" value="Invoices" />
 		<put-attribute name="body" value="/views/billing/list.jsp" />

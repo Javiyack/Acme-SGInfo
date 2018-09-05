@@ -59,7 +59,7 @@
 				<display:column property="title" title="${title}" sortable="true"
 					class="${classTd}" />
 				<acme:column property="description" title="label.description" />
-				<acme:column property="moment" title="label.moment" />
+				<acme:column property="moment" title="label.moment" format="moment.format" />
 				<acme:column property="time" title="label.time" />
 				<display:column class="${classTd}">
 					<jstl:set var="owns"

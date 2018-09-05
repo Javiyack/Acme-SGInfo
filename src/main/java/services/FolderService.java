@@ -1,18 +1,17 @@
 
 package services;
 
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import repositories.FolderRepository;
 import domain.Actor;
 import domain.Folder;
-import domain.Message;
+import repositories.FolderRepository;
 
 @Service
 @Transactional
@@ -28,7 +27,9 @@ public class FolderService {
 
 	@Autowired
 	private MessageService messageService;
-
+	@Autowired
+	private ConfigurationService configurationService;
+	
 	// CRUD Methods
 
 	// Create
@@ -138,7 +139,7 @@ public class FolderService {
 	}
 
 	public void createSystemFolders(final Actor actor) {
-		String[] names = {"inbox","outbox","notificationbox","spambox","trashbox"};
+		List<String> names = configurationService.findFolderNames();
 		for (String folderName : names) {
 			Folder systemFolder = new Folder();
 			systemFolder.setName(folderName);

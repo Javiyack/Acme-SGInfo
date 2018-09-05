@@ -24,14 +24,22 @@
 
 
 		<div class="row">
-			<div class="col-50">
+			<div class="col-25">
+				<security:authorize access="hasRole('ADMINISTRATOR')">
+					<acme:checkBox code="label.notification" path="broadcast"
+						css="formCheck w3-padding"
+						onclick="javascript:toggleVisible('recipients')" />
+				</security:authorize>
 
-				<jstl:if test="${requestUri eq 'message/edit.do'}">
-					<acme:select items="${actors}" itemLabel="userAccount.username"
-						code="ms.recipient" path="recipient" id="id" />
-				</jstl:if>
-			</div>
-			<div class="col-50">
+
+				<div id="recipients">
+					<jstl:if test="${requestUri eq 'message/edit.do'}">
+						<acme:select items="${actors}" itemLabel="userAccount.username"
+							code="ms.recipient" path="recipient" />
+					</jstl:if>
+				</div>
+
+				<acme:textbox code="ms.subject" path="subject" />
 				<form:label path="priority">
 					<spring:message code="ms.priority" />
 				</form:label>
@@ -42,24 +50,24 @@
 				</form:select>
 				<form:errors cssClass="error" path="priority" />
 
+			</div>
+			<div class="col-75">
+				<acme:textarea code="ms.body" path="body" css="msgTextArea" />
+			</div>
 
-			</div>
 		</div>
-		<div class="row">
-			<div class="col-100">
-			<acme:textbox code="ms.subject" path="subject" />
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-100">
-			<acme:textarea code="ms.body" path="body" css="formTextArea" />
-			</div>
-		</div>
-		<div class="row">
+		<div class="row w3-padding">
 			<div class="col-25">
-					<acme:submit name="save" code="ms.send" css="formButton toLeft" />&nbsp;
-					<acme:cancel url="/" code="ms.cancel" css="formButton toLeft" />
-				</div>
+				<button type="submit" name="save" class="flatButton toRight">
+					<i class="fa fa-paper-plane w3-bar-item w3-xlarge w3-padding"
+					onmouseenter="overEffect(this);" onmouseleave="overEffect(this);"></i>
+				</button>
+				<button type="button" onclick="javascript: relativeRedir('/folder/list.do')"
+					class="flatButton toRight w3-padding">
+					<i class="fa fa-arrow-left w3-bar-item w3-xlarge"
+					onmouseenter="overEffect(this);" onmouseleave="overEffect(this);"></i>
+				</button>
 			</div>
+		</div>
 	</form:form>
 </div>

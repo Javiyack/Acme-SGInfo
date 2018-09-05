@@ -85,10 +85,10 @@
 					<acme:column property="time" title="label.time" format="time.format"/>
 					<spring:message code="label.amount" var="labelAmount"/>
 					<display:column title="${labelAmount }">
-					<fmt:formatNumber  value = "${row.time.hours * precioHora +  row.time.minutes * precioHora / 60 }" 
+					<fmt:formatNumber  value = "${row.time.hours * bill.currentHourPrice +  row.time.minutes * bill.currentHourPrice / 60 }" 
          				type = "number" maxFractionDigits = "2" minFractionDigits = "2" />
      		   		</display:column>
-					<input value="${row.time.hours * precioHora +  row.time.minutes * precioHora / 60 }" />
+					<input value="${row.time.hours * bill.currentHourPrice +  row.time.minutes * bill.currentHourPrice / 60 }" />
 				</display:table>
 			</div>
 			<hr>	
@@ -117,7 +117,9 @@
 			</div>
 			<div class="w3-third w3-container w3-right">
 				<div class="billHead w3-right">
-				21%					
+			<fmt:formatNumber  value = "${bill.currentIVA}" 
+         				type = "number" maxFractionDigits = "2" minFractionDigits = "2" />
+         				%			
 				</div>
 				<br />
 			</div>
@@ -132,7 +134,7 @@
 			</div>
 			<div class="w3-third w3-container w3-right">
 				<h2 class="billHead w3-right">
-				<fmt:formatNumber  value = "${bill.amount.amount * 1.21}" 
+				<fmt:formatNumber  value = "${bill.amount.amount*(1+bill.currentIVA/100)}" 
          				type = "number" maxFractionDigits = "2" minFractionDigits = "2" />
          				<jstl:out value="${bill.amount.currency}"/>     		   							
 				</h2>
@@ -150,4 +152,3 @@
 		</div>
 	</form:form>
 </div>
-<jstl:out value="${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}${pageContext.request.contextPath}/"></jstl:out>

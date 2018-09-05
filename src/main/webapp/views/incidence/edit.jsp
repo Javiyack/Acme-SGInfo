@@ -83,7 +83,7 @@
 						css="formTextArea" readonly="${readonly}" />
 					<br>
 
-					<div onclick="togleDisabled('reason')">
+					<div onclick="toggleDisabled('reason')">
 						<acme:checkBox code="incidencia.cancelled" path="cancelled" css=""
 							readonly="${readonly}" />
 					</div>

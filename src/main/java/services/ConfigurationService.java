@@ -2,15 +2,17 @@
 package services;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
-import repositories.ConfigurationRepository;
+import domain.Actor;
 import domain.Administrator;
 import domain.Configuration;
+import repositories.ConfigurationRepository;
 
 @Service
 @Transactional
@@ -22,7 +24,7 @@ public class ConfigurationService {
 
 	// Supporting services ----------------------------------------------------
 	@Autowired
-	private AdministratorService	administratorService;
+	private ActorService	actorService;
 
 
 	// Constructors -----------------------------------------------------
@@ -46,8 +48,9 @@ public class ConfigurationService {
 	}
 
 	public Configuration save(final Configuration configuration) {
-		final Administrator admin = this.administratorService.findByPrincipal();
-		Assert.notNull(admin);
+		final Actor actor = this.actorService.findByPrincipal();
+		Assert.notNull(actor, "msg.not.loged.block");
+		Assert.notNull(actor instanceof Administrator, "msg.not.owned.block");
 		Configuration saved;
 
 		saved = this.configurationRepository.save(configuration);
@@ -93,5 +96,35 @@ public class ConfigurationService {
 	public void flush() {
 		this.configurationRepository.flush();
 
+	}
+
+	public Double findHourPrice() {
+		Double result;
+
+		result = this.configurationRepository.findHourPrice();
+
+		return result;
+	}
+
+	public Double findIVA() {
+		Double result;
+
+		result = this.configurationRepository.findIVA();
+
+		return result;
+	}
+
+	public String findPassKey() {
+		String result;
+
+		result = this.configurationRepository.findPassKey();
+
+		return result;
+	}
+
+	public List<String> findFolderNames() {
+		Configuration cfg = (Configuration) configurationRepository.findCfg();
+		System.out.println();
+		return (List<String>) cfg.getFolderNames();
 	}
 }

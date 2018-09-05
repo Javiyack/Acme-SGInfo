@@ -30,7 +30,7 @@
 <%@ attribute name="placeholder" required="false"%>
 
 <jstl:if test="${path == null}">
-	<jstl:set var="path" value="fsd" />
+	<jstl:set var="path" value="" />
 </jstl:if>
 
 <jstl:if test="${readonly == null}">

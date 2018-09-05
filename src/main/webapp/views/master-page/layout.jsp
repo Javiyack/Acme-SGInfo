@@ -15,6 +15,9 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
+<%@taglib prefix="security"	uri="http://www.springframework.org/security/tags"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>	
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 
@@ -56,6 +59,10 @@
 <link rel="stylesheet" href="styles/topnav.css" type="text/css">
 <link rel="stylesheet" href="styles/acme.css" type="text/css">
 
+<jsp:useBean id="date" class="java.util.Date" />
+
+	
+
 <title><tiles:insertAttribute name="title" ignore="true" /></title>
 
 <body class="w3-flat-wet-asphalt">
@@ -64,7 +71,7 @@
 
 	<!-- !PAGE CONTENT! -->
 	<div class="w3-main"
-		style="margin-left: 300px; margin-top: 46px; padding: 0em 7% 0em 7%;">
+		style="margin-left: 260px; margin-top: 56px; padding: 0em 7% 0em 7%;">
 		<!-- Mensajes de error -->
 		<jstl:if test="${message != null}">
 			<ul class="w3-ul">

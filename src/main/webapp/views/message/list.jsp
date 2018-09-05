@@ -17,7 +17,8 @@
 </legend>
 <display:table pagesize="10" class="displaytag" name="postBoxes"
 	requestURI="folder/list.do" id="row2">
-	<display:column>
+	<spring:message code="ms.subject" var="title"></spring:message>
+	<display:column title="${title}">
 		<a href="message/display.do?messageId=${row2.message.id}"> <jstl:out value="${row2.message.subject}"/>
 		</a>
 	</display:column>

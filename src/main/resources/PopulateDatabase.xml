@@ -373,7 +373,7 @@
 		<property name="publicationDate" value="2018/04/15 12:00" />
 		<property name="startingDate" value="2018/04/16 20:45" />
 		<property name="endingDate" value="2018/04/17 12:00" />
-		<property name="user" ref="user1" />
+		<property name="user" ref="user3" />
 		<property name="technician" ref="technician1" />
 		<property name="cancelled" value="false" />
 	</bean>
@@ -583,6 +583,45 @@
 		<property name="systemFolder" value="false" />
 		<property name="parent" ref="inbox2" />
 		<property name="actor" ref="user2" />
+	</bean>
+
+	
+	<!-- user3 folders -->
+	<bean id="inbox11" class="domain.Folder">
+		<property name="name" value="inbox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="user3" />
+	</bean>
+
+	<bean id="outbox11" class="domain.Folder">
+		<property name="name" value="outbox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="user3" />
+	</bean>
+
+	<bean id="notificationbox11" class="domain.Folder">
+		<property name="name" value="notificationbox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="user3" />
+	</bean>
+
+	<bean id="spambox11" class="domain.Folder">
+		<property name="name" value="spambox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="user3" />
+	</bean>
+
+	<bean id="trashbox11" class="domain.Folder">
+		<property name="name" value="trashbox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="user3" />
+	</bean>
+
+	<bean id="custombox11" class="domain.Folder">
+		<property name="name" value="work" />
+		<property name="systemFolder" value="false" />
+		<property name="parent" ref="inbox11" />
+		<property name="actor" ref="user3" />
 	</bean>
 
 	<!-- technician1 folders -->
@@ -813,6 +852,44 @@
 		<property name="actor" ref="responsable2" />
 	</bean>
 
+	<!-- responsable3 folders -->
+	<bean id="inbox10" class="domain.Folder">
+		<property name="name" value="inbox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="responsable3" />
+	</bean>
+
+	<bean id="outbox10" class="domain.Folder">
+		<property name="name" value="outbox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="responsable3" />
+	</bean>
+
+	<bean id="notificationbox10" class="domain.Folder">
+		<property name="name" value="notificationbox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="responsable3" />
+	</bean>
+
+	<bean id="spambox10" class="domain.Folder">
+		<property name="name" value="spambox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="responsable3" />
+	</bean>
+
+	<bean id="trashbox10" class="domain.Folder">
+		<property name="name" value="trashbox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="responsable3" />
+	</bean>
+
+	<bean id="custombox10" class="domain.Folder">
+		<property name="name" value="work" />
+		<property name="systemFolder" value="false" />
+		<property name="parent" ref="inbox10" />
+		<property name="actor" ref="responsable3" />
+	</bean>
+
 	<!-- admin folders -->
 	<bean id="inbox9" class="domain.Folder">
 		<property name="name" value="inbox" />
@@ -879,11 +956,12 @@
 		<property name="companyName" value="Acme CRM" />
 		<property name="passKey" value="CUS-010100-00000001" />
 		<property name="logo" value="images/logo.png" />
+		<property name="defaultCurrency" value="EUR" />
 		<property name="welcomeMessageEs"
 			value="Pruebalo!" />
 		<property name="welcomeMessageEn"
 			value="Check it out!" />
-		<property name="iva" value="0.21" />
+		<property name="iva" value="21" />
 		<property name="hourPrice" value="28" />
 		<property name="folderNames">
 			<list>

@@ -13,8 +13,8 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 <div class="seccion w3-light-green">
 
-	<div class="row">
-		<div class="col-25">
+	<div class="w3-row">
+		<div class="w3-col w3-quarter">
 
 			<i class="w3-bar-item fa fa fa-folder-open-o w3-xxlarge"></i> <span
 				class="w3-xlarge" style="margin-bottom: 1em; margin-left: 0.5em;"><jstl:out
@@ -70,11 +70,8 @@
 					</div>
 				</li>
 			</ul>
-
-
-
 		</div>
-		<div class="col-75"><%@ include file="/views/message/list.jsp"%>
+		<div class="w3-col w3-panel w3-threequarter"><%@ include file="/views/message/list.jsp"%>
 		</div>
 	</div>
 </div>
