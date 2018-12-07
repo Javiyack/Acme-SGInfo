@@ -49,7 +49,9 @@
 		<security:intercept-url
 			pattern="/actor/create.do" access="permitAll" />
 		<security:intercept-url
-			pattern="/customer/list.do" access="permitAll" />
+				pattern="/customer/list.do" access="permitAll" />
+		<security:intercept-url
+				pattern="/customer/create.do" access="permitAll" />
 		<security:intercept-url
 			pattern="/customer/display.do" access="permitAll" />
 		
@@ -79,8 +81,8 @@
 
 		<!-- Responsable -->
 		<security:intercept-url
-			pattern="/customer/edit.do" access="hasRole('RESPONSABLE')" />		
-		
+				pattern="/customer/edit.do" access="hasRole('RESPONSABLE')" />
+
 		<security:intercept-url
 			pattern="/billing/responsable/list.do"
 			access="hasRole('RESPONSABLE')" />
@@ -102,14 +104,15 @@
 		<!-- Manager -->
 		<security:intercept-url
 			pattern="/billing/manager/**" access="hasRole('MANAGER')" />
-		<security:intercept-url
-			pattern="/customer/edit.do" access="hasRole('MANAGER')" />		
 		
 
 		<!-- Admin -->
 		<security:intercept-url
-			pattern="/configuration/administrator/**"
-			access="hasRole('ADMINISTRATOR')" />
+				pattern="/configuration/administrator/**"
+				access="hasRole('ADMINISTRATOR')" />
+		<security:intercept-url
+				pattern="/dashboard/administrator/**"
+				access="hasRole('ADMINISTRATOR')" />
 
 		<!-- Login Logout -->
 		
