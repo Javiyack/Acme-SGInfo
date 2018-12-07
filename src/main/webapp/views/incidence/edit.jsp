@@ -32,12 +32,12 @@
 	<jstl:set var="readonly"
 		value="${(display || !owns || closed) && incidenceForm.id != 0}" />
 
-
 	<form:form action="${requestUri}" modelAttribute="incidenceForm">
 
 
 		<div class="seccion w3-light-grey">
 
+			MSG: <jstl:out value="${message}"/>
 			<form:hidden path="id" />
 			<form:hidden path="version" />
 			<form:hidden path="customerId" />

@@ -296,4 +296,15 @@ public class ActorService {
 		this.actorRepository.flush();
 
 	}
+
+    public Collection<Actor> findCoworkers(Actor actor) {
+		return actorRepository.findCoworkers(actor.getCustomer().getId());
+    }
+
+	public Collection<Actor> findInternalStaff() {
+		Collection<Actor> result;
+		result = actorRepository.findAllTecnicians();
+		result.addAll(actorRepository.findAllManagers());
+		return result;
+	}
 }
