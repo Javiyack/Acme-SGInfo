@@ -13,6 +13,10 @@ $(document).ready(function() {
 
 });
 
+function selectedCheck(element){
+	alert(element);
+}
+
 function ajaxCheck(element, contextPath) {
 	id = element.value;
 	url = contextPath + "/jquery/hostCheck.do?id=" + id;
@@ -50,6 +54,8 @@ function ajaxSearch(element, contextPath) {
 		}
 	});
 }
+
+
 
 function toggleDisabled(element) {
 	document.getElementById(element).disabled=!document.getElementById(element).disabled;

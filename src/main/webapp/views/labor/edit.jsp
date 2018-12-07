@@ -24,7 +24,7 @@
 	value="${(display || !owns) && laborForm.id != 0}" />
 
 
-<div class="seccion w3-light-green">
+<div class="seccion w3-light-grey">
 	<form:form action="${requestUri}" modelAttribute="laborForm">
 
 		<form:hidden path="id" />

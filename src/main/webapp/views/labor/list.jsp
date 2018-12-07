@@ -34,7 +34,7 @@
 	<jstl:set var="rol" value="${fn:toLowerCase(permiso)}/" />
 </security:authorize>
 <jstl:set var="rol" value="${fn:toLowerCase(permiso)}" />
-<div class="seccion w3-light-green">
+<div class="seccion w3-light-grey">
 	<div class="w3-row-padding w3-margin-top">
 		<div class="w3-padding">
 
@@ -84,7 +84,7 @@
 				<display:column class="${classTd}">
 					<jstl:if test="${owns && !closed}">
 						<div>
-							<a href="labor/${rol}/delete.do?id=${row.id}&incidenceId=${row.incidence.id}"> <i
+							<a href="labor/delete.do?id=${row.id}&incidenceId=${row.incidence.id}"> <i
 								class="fa fa-remove w3-xlarge"></i>
 							</a>
 						</div>

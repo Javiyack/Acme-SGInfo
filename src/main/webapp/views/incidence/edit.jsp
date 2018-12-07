@@ -36,7 +36,7 @@
 	<form:form action="${requestUri}" modelAttribute="incidenceForm">
 
 
-		<div class="seccion w3-light-green">
+		<div class="seccion w3-light-grey">
 
 			<form:hidden path="id" />
 			<form:hidden path="version" />
@@ -96,7 +96,7 @@
 			</div>
 
 		</div>
-		<div class="seccion w3-light-green">
+		<div class="seccion w3-light-grey">
 			<div class="w3-row-padding">
 				<acme:cancelButton url="/incidence/${accesscontrol}/list.do" code="label.back"
 					css="formButton toLeft" />

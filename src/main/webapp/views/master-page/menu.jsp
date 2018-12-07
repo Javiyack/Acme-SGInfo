@@ -96,31 +96,23 @@
 				code="label.billing" />
 		</a> 
 </security:authorize>
+
 <security:authorize access="hasRole('RESPONSABLE')">
 <a href="billing/responsable/list.do" class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
 			class="fa fa-users fa-fw"></i>  <spring:message
 				code="label.billing" />
 		</a> 
 </security:authorize>
-<security:authorize access="hasRole('ADMINISTRATOR')">
-<a href="configuration/administrator/edit.do" class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-			class="fa fa-cog fa-fw"></i>  Settings
-		</a> 
-</security:authorize>
-<security:authorize access="isAnonymous()">
- <a href="#" class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-			class="fa fa-eye fa-fw"></i>  Servicios
-		</a> <a href="#" class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-			class="fa fa-bullseye fa-fw"></i>  Equipos
-		</a> <a href="#" class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-			class="fa fa-bell fa-fw"></i>  News
-		</a> <a href="#" class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-			class="fa fa-bank fa-fw"></i>  General
-		</a> <a href="#" class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-			class="fa fa-history fa-fw"></i>  History
-		</a>
 
-			</security:authorize>
+<security:authorize access="hasRole('ADMINISTRATOR')">
+	<a href="configuration/administrator/edit.do" 
+	class="w3-bar-item w3-button w3-padding w3-xlarge"> 
+		<i class="fa fa-cog fa-fw"></i>  Settings	</a> 
+</security:authorize>
+
+<security:authorize access="isAnonymous()">
+
+</security:authorize>
 		<br>
 		<br>
 	</div>

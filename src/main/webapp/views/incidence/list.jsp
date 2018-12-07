@@ -40,7 +40,7 @@
 		test="${rol == 'technician' or rol == 'manager' or rol == 'administrator'}">
 		<jstl:set value="internal" var="accesscontrol" />
 	</jstl:if>
-	<div class="seccion w3-light-green">
+	<div class="seccion w3-light-grey">
 		<div class="w3-row-padding w3-margin-top">
 
 			<jstl:if test="${pageSize == null}">

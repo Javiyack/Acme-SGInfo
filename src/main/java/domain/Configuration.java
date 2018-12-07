@@ -8,6 +8,7 @@ import javax.persistence.AccessType;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -104,9 +105,9 @@ public class Configuration extends DomainEntity {
 		this.logo = logo;
 	}
 
-	@Min(0)
-	@Max(100)
 	@NotNull
+	@Min(0)
+	@Digits(integer = 9, fraction = 2)
 	public double getIva() {
 		return iva;
 	}

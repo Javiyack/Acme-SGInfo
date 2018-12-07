@@ -34,7 +34,7 @@
 	<jstl:set var="rol" value="${fn:toLowerCase(permiso)}/" />
 </security:authorize>
 <jstl:set var="rol" value="${fn:toLowerCase(permiso)}" />
-<div class="seccion w3-light-green">
+<div class="seccion w3-light-grey">
 	<div class="w3-row-padding w3-margin-top">
 					<div class="w3-padding">
 

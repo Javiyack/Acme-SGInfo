@@ -10,7 +10,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
-<div class="seccion w3-light-green">
+<div class="seccion w3-light-grey">
 	<form:form action="${requestUri}" modelAttribute="modelMessage">
 		<form:hidden path="id" />
 		<form:hidden path="version" />

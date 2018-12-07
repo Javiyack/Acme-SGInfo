@@ -11,7 +11,7 @@
 	uri="http://www.springframework.org/security/tags"%>
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
-<div class="seccion w3-light-green">
+<div class="seccion w3-light-grey">
 
 	<div class="w3-row">
 		<div class="w3-col w3-quarter">

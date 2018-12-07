@@ -51,6 +51,6 @@
 		<spring:message code="${code}" />
 	</form:label>
 	<form:textarea disabled="${disabled}" path="${path}" readonly="${readonly}" id="${id}"
-		class="${css}" style="display:${visible}" placeholder="${placeholder}" />
+		class="${css}" style="display:${visible}" placeholder="${placeholder}" title="${placeholder}"/>
 	<form:errors path="${path}" cssClass="error" />
 </div>

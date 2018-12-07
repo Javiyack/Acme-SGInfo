@@ -22,7 +22,7 @@
 <jstl:if test="${modelName == null}">
 	<jstl:set value="files" var="modelName" />
 </jstl:if>
-<div class="seccion w3-light-green">
+<div class="seccion w3-light-grey">
 	<div class="w3-row-padding w3-margin-top">
 		<div class="w3-padding">
 

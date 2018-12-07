@@ -23,7 +23,7 @@
 	value="${(display || !owns) && customerForm.id != 0}" />
 
 
-<div class="seccion w3-light-green">
+<div class="seccion w3-light-grey">
 	<form:form action="${requestUri}" modelAttribute="customerForm">
 
 		<form:hidden path="id" />
@@ -67,10 +67,8 @@
 							style="max-height: 22em; max-width: 20em;">
 							<img src="${customerForm.logo}"
 								class="imgCentered" style="max-height: 20em; max-width: 20em;">
-							<div class="w3-container w3-white">
-								
-									<acme:textbox code="label.none" path="logo" css="w3-border-0" readonly="${readonly}" />
-								
+							<div class="w3-container w3-white">								
+									<acme:textbox code="label.none" path="logo" css="w3-border-0" readonly="${readonly}" placeholder="Logo" />
 							</div>
 						</div>
 					</div>

@@ -17,7 +17,7 @@
 		<form:hidden path="id" />
 		<br>
 
-		<div class="seccion w3-light-green">
+		<div class="seccion w3-light-grey">
 			<legend>
 				<spring:message code="actor.personal.data" />
 			</legend>
@@ -51,7 +51,7 @@
 			</div>
 		</div>
 		<jstl:if test="${!edition}">
-			<div class="seccion w3-light-green">
+			<div class="seccion w3-light-grey">
 				<div class="row">
 					<div class="col-50">
 						<acme:backButton text="actor.back" css="formButton toLeft" />
@@ -60,7 +60,7 @@
 			</div>
 		</jstl:if>
 		<jstl:if test="${edition}">
-			<div class="seccion w3-light-green">
+			<div class="seccion w3-light-grey">
 
 
 				<jstl:if test="${creation}">
@@ -89,7 +89,6 @@
 									<option value="${permiso}" id="${permiso}">
 										<spring:message code="actor.authority.${permiso}" />
 									</option>
-
 								</jstl:forEach>
 							</select>
 						</div>
@@ -140,7 +139,7 @@
 					</div>
 				</jstl:if>
 			</div>
-			<div class="seccion w3-light-green">
+			<div class="seccion w3-light-grey">
 				<security:authorize access="isAnonymous()">
 					<p class="terminos w3-text-white">
 						<acme:checkBox code="term.registration.acept" path="agree" css="w3-check"/>
