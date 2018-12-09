@@ -1,15 +1,13 @@
 package services;
 
-import java.util.Collection;
-
+import domain.Technician;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
-
-import domain.Technician;
 import repositories.TechnicianRepository;
 import security.UserAccountService;
+
+import java.util.Collection;
 
 @Service
 @Transactional

@@ -1,9 +1,9 @@
 package controllers;
 
-import java.util.Collection;
-
-import javax.validation.Valid;
-
+import domain.Actor;
+import domain.Folder;
+import domain.Message;
+import domain.PostBox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -12,17 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import domain.Actor;
-import domain.Folder;
-import domain.Message;
-import domain.PostBox;
 import security.Authority;
-import services.ActorService;
-import services.AdministratorService;
-import services.FolderService;
-import services.MessageService;
-import services.PostBoxService;
+import services.*;
+
+import javax.validation.Valid;
+import java.util.Collection;
 
 @Controller
 @RequestMapping("/message")
@@ -191,7 +185,7 @@ public class MessageController extends AbstractController {
         Actor actor = actorService.findByPrincipal();
         String authority = actorService.getType(actor.getUserAccount());
         Collection<Actor> actors;
-        if (authority.equals(Authority.RESPONSABLE) || authority.equals(Authority.USER)){
+        if (authority.equals(Authority.RESPONSIBLE) || authority.equals(Authority.USER)){
             actors = actorService.findCoworkers(actor);
             actors.addAll(actorService.findInternalStaff());
         }

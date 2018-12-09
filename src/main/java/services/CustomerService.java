@@ -1,9 +1,7 @@
 package services;
 
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-
+import domain.*;
+import forms.CustomerForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,14 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
-
-import domain.Actor;
-import domain.Bill;
-import domain.Customer;
-import domain.Manager;
-import domain.Responsable;
-import forms.CustomerForm;
 import repositories.CustomerRepository;
+
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
 
 @Service
 @Transactional
@@ -61,7 +56,7 @@ public class CustomerService {
 		}else {
 			Actor actor = actorService.findByPrincipal();
 			Assert.notNull(actor, "msg.not.loged.block");
-			Assert.isTrue(actor instanceof Responsable || actor instanceof Manager, "msg.not.owned.block");
+			Assert.isTrue(actor instanceof Responsible || actor instanceof Manager, "msg.not.owned.block");
 			
 		}
 		result = this.customerRepository.save(customer);
@@ -125,9 +120,9 @@ public class CustomerService {
 		Assert.notNull(customer);
 		Actor actor = actorService.findByPrincipal();
 		Assert.notNull(actor, "msg.not.loged.block");
-		Assert.isTrue(actor instanceof Responsable || actor instanceof Manager, "msg.not.owned.block");
-		if (actor instanceof Responsable)
-			Assert.isTrue(((Responsable) actor).getCustomer().getId() == customer.getId(), "msg.not.owned.block");
+		Assert.isTrue(actor instanceof Responsible || actor instanceof Manager, "msg.not.owned.block");
+		if (actor instanceof Responsible)
+			Assert.isTrue(((Responsible) actor).getCustomer().getId() == customer.getId(), "msg.not.owned.block");
 
 		this.customerRepository.delete(customer.getId());
 

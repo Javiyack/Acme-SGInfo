@@ -102,7 +102,7 @@
 		<property name="active" value="true" />
 	</bean>
 
-	<!-- Responsable accounts -->
+	<!-- Responsible accounts -->
 
 	<bean id="userAccountResponsable1" class="security.UserAccount">
 		<property name="username" value="responsable1" />
@@ -111,7 +111,7 @@
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
-					<property name="authority" value="RESPONSABLE" />
+					<property name="authority" value="RESPONSIBLE" />
 				</bean>
 			</list>
 		</property>
@@ -125,7 +125,7 @@
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
-					<property name="authority" value="RESPONSABLE" />
+					<property name="authority" value="RESPONSIBLE" />
 				</bean>
 			</list>
 		</property>
@@ -139,7 +139,7 @@
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
-					<property name="authority" value="RESPONSABLE" />
+					<property name="authority" value="RESPONSIBLE" />
 				</bean>
 			</list>
 		</property>
@@ -236,7 +236,7 @@
 
 	<!-- Responsables -->
 
-	<bean id="responsable1" class="domain.Responsable">
+	<bean id="responsable1" class="domain.Responsible">
 		<property name="name" value="Nombre Responsable 1" />
 		<property name="surname" value="Apellidos usuario 1" />
 		<property name="email" value="usuario1@gmail.com" />
@@ -245,7 +245,7 @@
 		<property name="userAccount" ref="userAccountResponsable1" />
 		<property name="customer" ref="customer2" />
 	</bean>
-	<bean id="responsable2" class="domain.Responsable">
+	<bean id="responsable2" class="domain.Responsible">
 		<property name="name" value="Nombre Responsable 2" />
 		<property name="surname" value="Apellidos usuario 1" />
 		<property name="email" value="usuario1@gmail.com" />
@@ -254,7 +254,7 @@
 		<property name="userAccount" ref="userAccountResponsable2" />
 		<property name="customer" ref="customer2" />
 	</bean>
-	<bean id="responsable3" class="domain.Responsable">
+	<bean id="responsable3" class="domain.Responsible">
 		<property name="name" value="Antonio" />
 		<property name="surname" value="Mochuelo" />
 		<property name="email" value="mochuelo@ecotono.org" />

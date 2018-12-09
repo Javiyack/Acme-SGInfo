@@ -1,12 +1,11 @@
 
 package converters;
 
-import javax.transaction.Transactional;
-
+import domain.User;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import domain.User;
+import javax.transaction.Transactional;
 
 @Component
 @Transactional

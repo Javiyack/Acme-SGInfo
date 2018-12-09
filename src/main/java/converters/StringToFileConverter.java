@@ -1,14 +1,13 @@
 package converters;
 
-import javax.transaction.Transactional;
-
+import domain.File;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
-
 import repositories.FileRepository;
-import domain.File;
+
+import javax.transaction.Transactional;
 
 @Component
 @Transactional

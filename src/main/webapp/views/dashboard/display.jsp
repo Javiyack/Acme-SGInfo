@@ -18,7 +18,7 @@
 	<spring:message code="dashboard.best.selling.services" />
 </h3>
 
-<display:table class="displaytag" name="bestSellinServices" id="row">
+<display:table class="flat-table0" name="bestSellinServices" id="row">
 
 	<spring:message code="dashboard.service" var="titleName" />
 	<display:column title="${titleName}">
@@ -37,7 +37,7 @@
 	<spring:message code="dashboard.services.manages.over.average" />
 </h3>
 
-<display:table class="displaytag"
+<display:table class="flat-table0"
 	name="managersWhitCountServicesOverAverage" id="row">
 
 	<spring:message code="dashboard.manager" var="titleName" />
@@ -60,7 +60,7 @@
 	<spring:message code="dashboard.services.cancelled.manager" />
 </h3>
 
-<display:table class="displaytag"
+<display:table class="flat-table0 flat-table-1 w3-light-grey"
 	name="managersWhitMoreServicesCancelled" id="row">
 
 	<spring:message code="dashboard.manager" var="titleName" />
@@ -80,7 +80,7 @@
 	<spring:message code="dashboard.avg.category.per.rendezvous" />
 </h3>
 
-<display:table class="displaytag" name="distinctCartoriesOfRequestedServicesAndNumberOfRendezvouses"
+<display:table class="flat-table0 flat-table-1 w3-light-grey" name="distinctCartoriesOfRequestedServicesAndNumberOfRendezvouses"
 	id="row">
 
 	<spring:message code="dashboard.average" var="titleName" />
@@ -105,7 +105,7 @@
 	<spring:message code="dashboard.avg.ratio.services.per.category" />
 </h3>
 
-<display:table class="displaytag" name="serviceNumberAndCategoryNumber"
+<display:table class="flat-table0 flat-table-1 w3-light-grey" name="serviceNumberAndCategoryNumber"
 	id="row">
 
 	<spring:message code="dashboard.average" var="titleName" />
@@ -130,7 +130,7 @@
 	<spring:message code="dashboard.avg.max.min.requested.services.per.rendezvous" />
 </h3>
 
-<display:table class="displaytag" name="avgMaxMinOfRequestPerRendezvous"
+<display:table class="flat-table0 flat-table-1 w3-light-grey" name="avgMaxMinOfRequestPerRendezvous"
 	id="row">
 
 	<spring:message code="dashboard.average" var="titleName" />
@@ -157,7 +157,7 @@
 	<spring:message code="dashboard.top.selling.services" />
 </h3>
 
-<display:table class="displaytag" name="bestSellinServices" id="row">
+<display:table class="flat-table0 flat-table-1 w3-light-grey" name="bestSellinServices" id="row">
 
 	<spring:message code="dashboard.service" var="titleName" />
 	<display:column title="${titleName}">
@@ -215,7 +215,7 @@
 	<spring:message code="dashboard.rendezvouses.top10" />
 </h3>
 
-<display:table class="displaytag" name="dashboard5" id="row">
+<display:table class="flat-table0 flat-table-1 w3-light-grey" name="dashboard5" id="row">
 
 	<spring:message code="rendezvous.name" var="titleName" />
 	<display:column title="${titleName}">
@@ -244,7 +244,7 @@
 	<spring:message code="dashboard.announcements.above.75" />
 </h3>
 
-<display:table class="displaytag" name="dashboard7" id="row">
+<display:table class="flat-table0 flat-table-1 w3-light-grey" name="dashboard7" id="row">
 
 	<spring:message code="rendezvous.name" var="titleName" />
 	<display:column title="${titleName}">
@@ -260,7 +260,7 @@
 	<spring:message code="dashboard.rendezvouses.linked" />
 </h3>
 
-<display:table class="displaytag" name="dashboard8" id="row">
+<display:table class="flat-table0 flat-table-1 w3-light-grey" name="dashboard8" id="row">
 
 	<spring:message code="rendezvous.name" var="titleName" />
 	<display:column title="${titleName}">

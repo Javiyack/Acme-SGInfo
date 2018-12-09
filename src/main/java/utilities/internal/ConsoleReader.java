@@ -10,10 +10,10 @@
 
 package utilities.internal;
 
+import org.apache.commons.lang.StringUtils;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-
-import org.apache.commons.lang.StringUtils;
 
 public class ConsoleReader {
 

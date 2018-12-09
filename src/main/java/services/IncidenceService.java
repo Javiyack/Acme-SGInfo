@@ -1,9 +1,7 @@
 package services;
 
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-
+import domain.*;
+import forms.IncidenceForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,17 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
-
-import domain.Actor;
-import domain.Incidence;
-import domain.Labor;
-import domain.Manager;
-import domain.Responsable;
-import domain.Technician;
-import domain.User;
-import forms.IncidenceForm;
 import repositories.IncidenceRepository;
 import security.Authority;
+
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
 
 @Service
 @Transactional
@@ -61,8 +54,8 @@ public class IncidenceService {
 			result.setUser((User) actor);
 			result.setTechnician(technicianService.findLessOcuped());
 			break;
-		case Authority.RESPONSABLE:
-			Assert.isTrue(actor instanceof Responsable);
+		case Authority.RESPONSIBLE:
+			Assert.isTrue(actor instanceof Responsible);
 			result.setTechnician(technicianService.findLessOcuped());
 			break;
 
@@ -94,7 +87,7 @@ public class IncidenceService {
 		Assert.isTrue(
 				actor instanceof Manager || actor instanceof Technician
 						|| incidence.getUser().getId() == (actor.getId())
-						|| (actor instanceof Responsable
+						|| (actor instanceof Responsible
 								&& incidence.getUser().getCustomer().equals(actor.getCustomer())),
 				"msg.not.owned.block");
 		if (incidence.getId() == 0) {
@@ -218,8 +211,8 @@ public class IncidenceService {
 			Assert.isTrue(actor instanceof User);
 			result = this.incidenceRepository.findByUserAccountId(actor.getCustomer().getId());
 			break;
-		case Authority.RESPONSABLE:
-			Assert.isTrue(actor instanceof Responsable);
+		case Authority.RESPONSIBLE:
+			Assert.isTrue(actor instanceof Responsible);
 			result = this.incidenceRepository.findByUserAccountId(actor.getCustomer().getId());
 			break;
 		case Authority.TECHNICIAN:

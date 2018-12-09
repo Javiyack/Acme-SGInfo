@@ -34,7 +34,7 @@
 		<jstl:set var="rol" value="${fn:toLowerCase(permiso)}/" />
 	</security:authorize>
 	<jstl:set var="rol" value="${fn:toLowerCase(permiso)}" />
-	<jstl:if test="${rol == 'user' or rol == 'responsable'}">
+	<jstl:if test="${rol == 'user' or rol == 'responsible'}">
 		<jstl:set value="external" var="accesscontrol" />
 	</jstl:if>
 	<jstl:if

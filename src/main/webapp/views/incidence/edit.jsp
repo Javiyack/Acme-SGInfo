@@ -19,7 +19,7 @@
 		<security:authentication property="principal.authorities[0]"
 			var="permiso" />
 		<jstl:set var="rol" value="${fn:toLowerCase(permiso)}" />
-		<jstl:if test="${rol == 'user' || rol == 'responsable'}">
+		<jstl:if test="${rol == 'user' || rol == 'responsible'}">
 			<jstl:set var="accesscontrol" value="external" />
 		</jstl:if>
 		<jstl:if test="${rol == 'technician' || rol == 'manager'}">
@@ -37,7 +37,6 @@
 
 		<div class="seccion w3-light-grey">
 
-			MSG: <jstl:out value="${message}"/>
 			<form:hidden path="id" />
 			<form:hidden path="version" />
 			<form:hidden path="customerId" />
@@ -55,7 +54,7 @@
 						<form:hidden path="user" />
 					</jstl:if>
 					<jstl:if
-						test="${rol == 'user' || rol == 'responsable' || readonly}">
+						test="${rol == 'user' || rol == 'responsible' || readonly}">
 						<form:hidden path="technician" />
 					</jstl:if>
 
@@ -69,13 +68,13 @@
 						readonly="true" />
 					<acme:moment code="incidencia.starting.moment" path="startingDate"
 						placeholder="dd-MM-yyyyTHH:mm" css="formInput"
-						readonly="${rol == 'user' || rol == 'responsable' || readonly}" />
+						readonly="${rol == 'user' || rol == 'responsible' || readonly}" />
 					<acme:moment code="incidencia.ending.moment" path="endingDate"
 						placeholder="dd-MM-yyyyTHH:mm" css="formInput"
-						readonly="${rol == 'user' || rol == 'responsable' || readonly}" />
+						readonly="${rol == 'user' || rol == 'responsible' || readonly}" />
 					<acme:select items="${technicians}" itemLabel="name"
 						code="incidencia.technician" path="technician"
-						readonly="${rol == 'user' || rol == 'responsable' || readonly}"
+						readonly="${rol == 'user' || rol == 'responsible' || readonly}"
 						css="formSelect" />
 				</div>
 				<div class="w3-third">

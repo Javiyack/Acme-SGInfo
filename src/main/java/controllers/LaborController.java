@@ -10,10 +10,8 @@
 
 package controllers;
 
-import java.util.Collection;
-
-import javax.validation.Valid;
-
+import domain.*;
+import forms.LaborForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -22,16 +20,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import domain.Actor;
-import domain.Incidence;
-import domain.Labor;
-import domain.Responsable;
-import domain.Technician;
-import forms.LaborForm;
 import services.ActorService;
 import services.IncidenceService;
 import services.LaborService;
+
+import javax.validation.Valid;
+import java.util.Collection;
 
 @Controller
 @RequestMapping("/labor")
@@ -64,7 +58,7 @@ public class LaborController extends AbstractController {
         try {
             Actor actor;
             actor = this.actorService.findByPrincipal();
-            if (actor != null && actor instanceof Responsable) {
+            if (actor != null && actor instanceof Responsible) {
                 result.addObject("logedCustomerId", actor.getCustomer().getId());
             } else {
                 result.addObject("logedCustomerId", -1);

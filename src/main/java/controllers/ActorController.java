@@ -1,8 +1,9 @@
 
 package controllers;
 
-import java.util.Collection;
-
+import domain.Actor;
+import domain.Customer;
+import forms.ActorForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -11,13 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import domain.Actor;
-import domain.Customer;
-import forms.ActorForm;
 import security.Authority;
 import services.ActorService;
 import services.CustomerService;
+
+import java.util.Collection;
 
 @Controller
 @RequestMapping("/actor")

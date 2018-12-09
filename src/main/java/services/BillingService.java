@@ -1,9 +1,8 @@
 package services;
 
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-
+import domain.*;
+import forms.BillForm;
+import forms.LaborForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,20 +11,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
-
-import domain.Actor;
-import domain.Bill;
-import domain.Constant;
-import domain.Customer;
-import domain.Incidence;
-import domain.Labor;
-import domain.Manager;
-import domain.Money;
-import domain.Responsable;
-import domain.Technician;
-import forms.BillForm;
-import forms.LaborForm;
 import repositories.BillingRepository;
+
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
 
 @Service
 @Transactional
@@ -194,7 +184,7 @@ public class BillingService {
 	public Collection<Object> findPropperByCustomer() {
 		Actor actor = actorService.findByPrincipal();
 		Assert.notNull(actor, "msg.not.loged.block");
-		Assert.isTrue(actor instanceof Responsable || actor instanceof Manager, "msg.not.owned.block");
+		Assert.isTrue(actor instanceof Responsible || actor instanceof Manager, "msg.not.owned.block");
 		return billingRepository.findPropperByCustomerId(actor.getCustomer().getId());
 	}
 
@@ -202,7 +192,7 @@ public class BillingService {
 	public void checkOwns(Customer customer, Labor anyLabor) {
 		final Actor logedActor = this.actorService.findByPrincipal();
 		Assert.notNull(logedActor, "msg.not.loged.block");
-		Assert.isTrue(logedActor instanceof Responsable || logedActor instanceof Manager, "msg.not.owned.block");		
+		Assert.isTrue(logedActor instanceof Responsible || logedActor instanceof Manager, "msg.not.owned.block");
 		Assert.isTrue(logedActor.getCustomer().equals(customer), "msg.not.owned.block");
 		Assert.isTrue(logedActor.getCustomer().equals(anyLabor.getIncidence().getUser().getCustomer()), "msg.not.owned.block");
 		

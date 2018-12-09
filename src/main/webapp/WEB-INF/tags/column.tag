@@ -36,9 +36,9 @@
 	<spring:message code="${format }" var="formatVar" />
 </jstl:if>
 <spring:message code="${title }" var="titleVar" />
-<display:column property="${property }" title="${ titleVar}" 
-				sortable="${sortable }" class="${css}" format="${formatVar}" 
-				style="${style}"/> 
+<display:column property="${property }" title="${ titleVar}"
+				sortable="${sortable }" class="${css}" format="${formatVar}"
+				style="${style}"/>
 
 
 

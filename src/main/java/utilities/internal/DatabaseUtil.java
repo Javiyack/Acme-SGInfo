@@ -10,26 +10,7 @@
 
 package utilities.internal;
 
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.sql.Statement;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.FlushModeType;
-import javax.persistence.Query;
-import javax.persistence.metamodel.EmbeddableType;
-import javax.persistence.metamodel.EntityType;
-import javax.persistence.metamodel.Metamodel;
-import javax.persistence.spi.PersistenceProvider;
-
+import domain.DomainEntity;
 import org.apache.commons.lang.StringUtils;
 import org.hibernate.Session;
 import org.hibernate.cfg.Configuration;
@@ -37,9 +18,18 @@ import org.hibernate.dialect.Dialect;
 import org.hibernate.internal.util.ReflectHelper;
 import org.hibernate.jdbc.Work;
 import org.hibernate.jpa.HibernatePersistenceProvider;
-
 import utilities.DatabaseConfig;
-import domain.DomainEntity;
+
+import javax.persistence.*;
+import javax.persistence.metamodel.EmbeddableType;
+import javax.persistence.metamodel.EntityType;
+import javax.persistence.metamodel.Metamodel;
+import javax.persistence.spi.PersistenceProvider;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.*;
+import java.util.Map.Entry;
 
 public class DatabaseUtil {
 

@@ -51,7 +51,7 @@
 
 
 			<display:table pagesize="${pageSize}"
-				class="displaytag w3-text-black" name="labors"
+				class="flat-table0 flat-table-1 w3-light-grey" name="labors"
 				requestURI="${requestUri}" id="row">
 
 

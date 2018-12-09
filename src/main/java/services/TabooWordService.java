@@ -1,17 +1,15 @@
 
 package services;
 
-import java.util.Collection;
-
-import javax.transaction.Transactional;
-
+import domain.Administrator;
+import domain.TabooWord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
-
 import repositories.TabooWordRepository;
-import domain.Administrator;
-import domain.TabooWord;
+
+import javax.transaction.Transactional;
+import java.util.Collection;
 
 @Service
 @Transactional

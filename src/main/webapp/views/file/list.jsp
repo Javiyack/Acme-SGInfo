@@ -35,13 +35,13 @@
 					<input type="submit" value=">">
 				</form:form>
 
-				<display:table pagesize="${pageSize}" class="displaytag"
+				<display:table pagesize="${pageSize}" class="flat-table0"
 					name="${modelName}" requestURI="${requestUri}" id="row">
 					<%@ include file="/views/file/columns.jsp"%>
 				</display:table>
 			</jstl:if>
 			<jstl:if test="${requestUri == null || pageSize == null}">
-				<display:table class="displaytag" name="${modelName}" id="row">
+				<display:table class="flat-table0" name="${modelName}" id="row">
 					<%@ include file="/views/file/columns.jsp"%>
 				</display:table>
 			</jstl:if>

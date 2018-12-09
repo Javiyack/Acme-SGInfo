@@ -1,17 +1,16 @@
 
 package services;
 
-import java.util.Collection;
-import java.util.List;
-
+import domain.Actor;
+import domain.Folder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
-
-import domain.Actor;
-import domain.Folder;
 import repositories.FolderRepository;
+
+import java.util.Collection;
+import java.util.List;
 
 @Service
 @Transactional

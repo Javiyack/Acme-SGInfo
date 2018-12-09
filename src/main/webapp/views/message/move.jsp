@@ -10,25 +10,28 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
+<div class="seccion w3-light-gray">
 
 
+	<display:table pagesize="5" class="flat-table0 flat-table-1 w3-light-grey" keepStatus="true"
+				   name="folders"  id="row" requestURI="message/move.do">
 
-<display:table pagesize="5" class="displaytag" keepStatus="true"
-	name="folders"  id="row" requestURI="message/move.do">
-	
-	<acme:column property="name" title="ms.folderName"/>
+		<acme:column property="name" title="ms.folderName"/>
 
-	<display:column>
-	<jstl:choose>
-	<jstl:when test="${folder.id eq row.id}">
-	<spring:message code="ms.alreadyIn" />
-	</jstl:when>
-	<jstl:otherwise>
-	<a href="message/saveMove.do?folderId=${row.id}&messageId=${m.getId()}"><spring:message
-						code="ms.move" /></a>
-	</jstl:otherwise>
-	</jstl:choose>
-	</display:column>
-</display:table>
+		<display:column>
+			<jstl:choose>
+				<jstl:when test="${folder.id eq row.id}">
+					<spring:message code="ms.alreadyIn" />
+				</jstl:when>
+				<jstl:otherwise>
+					<a href="message/saveMove.do?folderId=${row.id}&messageId=${m.getId()}"><spring:message
+							code="ms.move" /></a>
+				</jstl:otherwise>
+			</jstl:choose>
+		</display:column>
+	</display:table>
 
-<acme:cancelButton url="message/display.do?messageId=${m.id}" code="ms.back" css ="formButton toLeft"/>
+	<acme:cancelButton url="message/display.do?messageId=${m.id}" code="ms.back" css ="formButton toLeft"/>
+
+<br>
+</div>

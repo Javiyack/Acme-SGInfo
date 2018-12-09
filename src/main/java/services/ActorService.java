@@ -1,10 +1,8 @@
 
 package services;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
+import domain.*;
+import forms.ActorForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -12,18 +10,15 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
-
-import domain.Actor;
-import domain.Manager;
-import domain.Responsable;
-import domain.Technician;
-import domain.User;
-import forms.ActorForm;
 import repositories.ActorRepository;
 import security.Authority;
 import security.LoginService;
 import security.UserAccount;
 import security.UserAccountService;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Service
 @Transactional
@@ -159,8 +154,8 @@ public class ActorService {
 				logedActor = new User();
 				externalAllowed = externalAllowedCheck(actorForm.getPassKey());
 				break;
-			case Authority.RESPONSABLE:
-				logedActor = new Responsable();
+			case Authority.RESPONSIBLE:
+				logedActor = new Responsible();
 				externalAllowed = externalAllowedCheck(actorForm.getPassKey());
 				break;
 			case Authority.MANAGER:

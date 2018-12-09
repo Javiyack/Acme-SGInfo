@@ -15,7 +15,7 @@
 <legend>
 	<spring:message code="folder.messages" />
 </legend>
-<display:table pagesize="10" class="displaytag" name="postBoxes"
+<display:table pagesize="10" class="flat-table0 flat-table-1 w3-light-grey" name="postBoxes"
 	requestURI="folder/list.do" id="row2">
 	<spring:message code="ms.subject" var="title"></spring:message>
 	<display:column title="${title}">
@@ -29,7 +29,7 @@
 	</jstl:if>
 	<display:column>
 
-		<i class="w3-bar-item fa fa fa-remove w3-xlarge" 
+		<i class="w3-bar-item fa fa fa-remove w3-xlarge iButton zoom"
 			onclick="relativeRedir('message/delete.do?messageId=${row2.message.id}&folderId=${folder.id}');"
 			onmouseenter="overEffect(this);" onmouseleave="overEffect(this);"></i>		
 	</display:column>

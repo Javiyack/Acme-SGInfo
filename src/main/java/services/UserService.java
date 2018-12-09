@@ -1,19 +1,14 @@
 package services;
 
-import java.util.Collection;
-
+import domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
-
-import domain.Actor;
-import domain.Manager;
-import domain.Responsable;
-import domain.Technician;
-import domain.User;
 import repositories.UserRepository;
 import security.UserAccountService;
+
+import java.util.Collection;
 
 @Service
 @Transactional
@@ -83,7 +78,7 @@ public class UserService {
 		public Collection<User> findAllByPrincipal() {
 			Actor actor = actorService.findByPrincipal();
 			Assert.notNull(actor);
-			Assert.notNull(actor instanceof Responsable || actor instanceof User);
+			Assert.notNull(actor instanceof Responsible || actor instanceof User);
 			Collection<User> result = this.userRepository.findAllByCustomerId(actor.getCustomer().getId());
 			return result;
 		}

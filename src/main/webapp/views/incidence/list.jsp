@@ -33,7 +33,7 @@
 		<jstl:set var="rol" value="${fn:toLowerCase(permiso)}/" />
 	</security:authorize>
 	<jstl:set var="rol" value="${fn:toLowerCase(permiso)}" />
-	<jstl:if test="${rol == 'user' or rol == 'responsable'}">
+	<jstl:if test="${rol == 'user' or rol == 'responsible'}">
 		<jstl:set value="external" var="accesscontrol" />
 	</jstl:if>
 	<jstl:if
@@ -55,8 +55,8 @@
 			</form:form>
 
 
-			<display:table pagesize="${pageSize}" class="displaytag w3-text-black"
-				name="incidences" requestURI="${requestUri}" id="row">
+			<display:table pagesize="${pageSize}" class="flat-table0 flat-table-1 w3-light-grey"
+						   name="incidences" requestURI="${requestUri}" id="row">
 				<jstl:set var="classTd" value="w3-flat-pomegranate" />				
 				<jstl:if test="${row.startingDate < date}">
 					<jstl:set var="classTd" value="w3-flat-sun-flower" />

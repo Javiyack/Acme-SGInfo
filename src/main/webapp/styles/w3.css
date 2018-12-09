@@ -1273,6 +1273,30 @@ to {
 .w3-padding {
 	padding: 8px 16px !important
 }
+.w3-padding-top {
+	padding-left: 10px !important
+}
+
+.w3-padding-right {
+	padding-right: 10px !important
+}
+
+.w3-padding-bottom {
+	padding-left: 10px !important
+}
+
+.w3-padding-right {
+	padding-right: 10px !important
+}
+
+.w3-padding-vertical {
+	padding-top: 12px !important;
+	padding-bottom: 12px !important;
+}
+.w3-padding-horizontal {
+	padding-left: 12px !important;
+	padding-right: 12px !important;
+}
 
 .w3-padding-large {
 	padding: 12px 24px !important
@@ -1280,7 +1304,7 @@ to {
 
 .w3-padding-16 {
 	padding-top: 16px !important;
-	padding-bottom: 16px !important
+	padding-bottom: 16px !important;
 }
 
 .w3-padding-24 {
@@ -1313,7 +1337,7 @@ to {
 
 .w3-button:hover {
 	color: #000 !important;
-	background-color: #ccc !important
+	background-color: #b4aa50 !important
 }
 
 .w3-transparent, .w3-hover-none:hover {
@@ -1380,7 +1404,7 @@ to {
 	background-color: #f0e68c !important
 }
 
-.w3-lime, .w3-hover-lime:hover {
+.w3-light-grey, .w3-hover-lime:hover {
 	color: #000 !important;
 	background-color: #cddc39 !important
 }
@@ -1390,7 +1414,7 @@ to {
 	background-color: #ff9800 !important
 }
 
-.w3-deep-orange, .w3-hover-deep-orange:hover {
+.w3-orange, .w3-hover-orange:hover {
 	color: #fff !important;
 	background-color: #ff5722 !important
 }
@@ -1530,7 +1554,7 @@ to {
 	color: #ff9800 !important
 }
 
-.w3-text-deep-orange, .w3-hover-text-deep-orange:hover {
+.w3-text-orange, .w3-hover-text-orange:hover {
 	color: #ff5722 !important
 }
 
@@ -1638,7 +1662,7 @@ to {
 	border-color: #ff9800 !important
 }
 
-.w3-border-deep-orange, .w3-hover-border-deep-orange:hover {
+.w3-border-orange, .w3-hover-border-orange:hover {
 	border-color: #ff5722 !important
 }
 

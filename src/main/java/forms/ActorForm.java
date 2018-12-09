@@ -1,16 +1,15 @@
 
 package forms;
 
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-
+import domain.Actor;
+import domain.Customer;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
 
-import domain.Actor;
-import domain.Customer;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 public class ActorForm {
 

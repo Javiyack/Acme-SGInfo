@@ -1,18 +1,17 @@
 
 package services;
 
-import java.util.Collection;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
-
 import domain.Actor;
 import domain.Folder;
 import domain.Message;
 import domain.PostBox;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 import repositories.PostBoxRepository;
+
+import java.util.Collection;
 
 @Service
 @Transactional

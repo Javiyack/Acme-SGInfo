@@ -1,17 +1,15 @@
 
 package utilities;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import domain.Actor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import org.springframework.web.servlet.ModelAndView;
-
-import domain.Actor;
-import domain.Manager;
 import services.ActorService;
 import services.ConfigurationService;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 public class HandlerInterceptor extends org.springframework.web.servlet.i18n.LocaleChangeInterceptor {
 

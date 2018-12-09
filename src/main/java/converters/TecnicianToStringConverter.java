@@ -1,12 +1,10 @@
 package converters;
 
-import javax.transaction.Transactional;
-
+import domain.Technician;
 import org.springframework.core.convert.converter.Converter;
 import org.springframework.stereotype.Component;
 
-import domain.Manager;
-import domain.Technician;
+import javax.transaction.Transactional;
 
 @Component
 @Transactional

@@ -10,23 +10,16 @@
 
 package security;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
-import javax.persistence.Access;
-import javax.persistence.AccessType;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Transient;
-import javax.validation.Valid;
-import javax.validation.constraints.Size;
-
+import domain.DomainEntity;
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.Assert;
 
-import domain.DomainEntity;
+import javax.persistence.*;
+import javax.validation.Valid;
+import javax.validation.constraints.Size;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Entity
 @Access(AccessType.PROPERTY)

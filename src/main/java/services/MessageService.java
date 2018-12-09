@@ -1,23 +1,18 @@
 
 package services;
 
-import java.util.Collection;
-import java.util.Date;
-import java.util.TreeSet;
-
+import domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
-
-import domain.Actor;
-import domain.Administrator;
-import domain.Folder;
-import domain.Message;
-import domain.PostBox;
 import repositories.MessageRepository;
+
+import java.util.Collection;
+import java.util.Date;
+import java.util.TreeSet;
 
 @Service
 @Transactional

@@ -10,16 +10,15 @@
 
 package security;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Embeddable;
 import javax.validation.constraints.Pattern;
-
-import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.security.core.GrantedAuthority;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Embeddable
 @Access(AccessType.PROPERTY)
@@ -41,7 +40,7 @@ public class Authority implements GrantedAuthority {
 	public static final String	ADMINISTRATOR	= "ADMINISTRATOR";
 	public static final String	MANAGER	= "MANAGER";
 	public static final String	TECHNICIAN	= "TECHNICIAN";
-	public static final String	RESPONSABLE	= "RESPONSABLE";
+	public static final String RESPONSIBLE = "RESPONSIBLE";
 	
 	
 	// Attributes -------------------------------------------------------------
@@ -51,7 +50,7 @@ public class Authority implements GrantedAuthority {
 
 	@NotBlank
 	@Pattern(regexp = "^" + Authority.USER + "|" + Authority.ADMINISTRATOR + "|" 
-	+ Authority.MANAGER + "|" + Authority.TECHNICIAN + "|" + Authority.RESPONSABLE + "$")
+	+ Authority.MANAGER + "|" + Authority.TECHNICIAN + "|" + Authority.RESPONSIBLE + "$")
 	@Override
 	public String getAuthority() {
 		return this.authority;
@@ -86,7 +85,7 @@ public class Authority implements GrantedAuthority {
 		result.add(authority);
 		
 		authority = new Authority();
-		authority.setAuthority(Authority.RESPONSABLE);
+		authority.setAuthority(Authority.RESPONSIBLE);
 		result.add(authority);
 		
 

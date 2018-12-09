@@ -1,29 +1,19 @@
 package controllers.manager;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.validation.Valid;
-
+import controllers.AbstractController;
+import domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-
-import controllers.AbstractController;
-import domain.Actor;
-import domain.Bill;
-import domain.Customer;
-import domain.Labor;
-import domain.Manager;
 import services.ActorService;
 import services.BillingService;
 import services.ConfigurationService;
 import services.LaborService;
+
+import javax.validation.Valid;
+import java.util.*;
 
 @Controller
 @RequestMapping("/billing/manager")

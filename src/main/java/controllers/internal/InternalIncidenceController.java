@@ -1,10 +1,8 @@
 package controllers.internal;
 
-import java.util.Collection;
-import java.util.Date;
-
-import javax.validation.Valid;
-
+import controllers.AbstractController;
+import domain.*;
+import forms.IncidenceForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -12,19 +10,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+import services.*;
 
-import controllers.AbstractController;
-import domain.Actor;
-import domain.Incidence;
-import domain.Labor;
-import domain.Technician;
-import domain.User;
-import forms.IncidenceForm;
-import services.ActorService;
-import services.IncidenceService;
-import services.LaborService;
-import services.TechnicianService;
-import services.UserService;
+import javax.validation.Valid;
+import java.util.Collection;
+import java.util.Date;
 
 @Controller
 @RequestMapping("/incidence/internal")

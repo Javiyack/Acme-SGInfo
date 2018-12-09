@@ -10,6 +10,16 @@
 
 package utilities;
 
+import domain.DomainEntity;
+import org.apache.log4j.Level;
+import org.apache.log4j.LogManager;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import utilities.internal.DatabaseUtil;
+import utilities.internal.EclipseConsole;
+import utilities.internal.SchemaPrinter;
+import utilities.internal.ThrowablePrinter;
+
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.util.LinkedList;
@@ -17,17 +27,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
-
-import org.apache.log4j.Level;
-import org.apache.log4j.LogManager;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import utilities.internal.DatabaseUtil;
-import utilities.internal.EclipseConsole;
-import utilities.internal.SchemaPrinter;
-import utilities.internal.ThrowablePrinter;
-import domain.DomainEntity;
 
 public class PopulateDatabase {
 

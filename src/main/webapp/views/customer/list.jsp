@@ -50,8 +50,8 @@
 			</form:form>
 
 
-			<display:table pagesize="${pageSize}" class="displaytag w3-text-black"
-				name="customers" requestURI="${requestUri}" id="row">
+			<display:table pagesize="${pageSize}"  class="flat-table0 flat-table-1 w3-light-grey"
+						   name="customers" requestURI="${requestUri}" id="row">
 
 
 				<spring:message code="label.name" var="title" />

@@ -31,6 +31,7 @@
 		<value>/views/labor/tiles.xml</value>
 		<value>/views/payment/tiles.xml</value>
 		<value>/views/servant/tiles.xml</value>
+		<value>/views/request/tiles.xml</value>
 		<value>/views/file/tiles.xml</value>
 		
 		<value>/views/message/tiles.xml</value>

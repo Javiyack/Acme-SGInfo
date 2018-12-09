@@ -1,19 +1,17 @@
 
 package forms;
 
-import java.util.Date;
+import domain.Bill;
+import domain.Money;
+import org.hibernate.validator.constraints.SafeHtml;
+import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
-
-import org.hibernate.validator.constraints.SafeHtml;
-import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import domain.Bill;
-import domain.Money;
+import java.util.Date;
 
 public class BillForm {
 

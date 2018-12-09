@@ -1,9 +1,7 @@
 package services;
 
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
-
+import domain.*;
+import forms.LaborForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,18 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
-
-import domain.Actor;
-import domain.Bill;
-import domain.Constant;
-import domain.Customer;
-import domain.Incidence;
-import domain.Labor;
-import domain.Manager;
-import domain.Money;
-import domain.Technician;
-import forms.LaborForm;
 import repositories.LaborRepository;
+
+import java.util.Calendar;
+import java.util.Collection;
+import java.util.Date;
 
 @Service
 @Transactional

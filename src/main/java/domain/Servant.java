@@ -1,12 +1,14 @@
 
 package domain;
 
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.URL;
+
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
-
-import org.hibernate.validator.constraints.NotBlank;
-import org.hibernate.validator.constraints.URL;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -15,8 +17,10 @@ public class Servant extends DomainEntity {
 	//Attributes
 	private String		name;
 	private String		description;
+	private Double		price;
 	private String		picture;
 	private boolean		cancelled;
+	private boolean     draft;
 	//Relationships
 
 
@@ -41,6 +45,16 @@ public class Servant extends DomainEntity {
 		this.description = description;
 	}
 
+	@NotNull
+	@Digits(integer=9, fraction=2)
+	public Double getPrice() {
+		return price;
+	}
+
+	public void setPrice(Double price) {
+		this.price = price;
+	}
+
 	@URL
 	public String getPicture() {
 		return this.picture;
@@ -56,5 +70,13 @@ public class Servant extends DomainEntity {
 
 	public void setCancelled(final boolean cancelled) {
 		this.cancelled = cancelled;
+	}
+
+	public boolean isDraft() {
+		return draft;
+	}
+
+	public void setDraft(boolean draft) {
+		this.draft = draft;
 	}
 }

@@ -13,7 +13,7 @@ package controllers;
 import domain.Actor;
 import domain.Customer;
 import domain.Manager;
-import domain.Responsable;
+import domain.Responsible;
 import forms.CustomerForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -56,7 +56,7 @@ public class CustomerController extends AbstractController {
 
         result = new ModelAndView("customer/list");
         result.addObject("customers", customers);
-        if (actor != null && (actor instanceof Responsable || actor instanceof Responsable)) {
+        if (actor != null && (actor instanceof Responsible || actor instanceof Responsible)) {
             result.addObject("logedCustomerId", actor.getCustomer().getId());
         } else {
             result.addObject("logedCustomerId", -1);
@@ -103,7 +103,7 @@ public class CustomerController extends AbstractController {
             Assert.notNull(actor, "msg.not.loged.block");
             final CustomerForm customerForm = new CustomerForm(actor.getCustomer());
             result = this.createEditModelAndView(customerForm);
-            result.addObject("display", !(actor instanceof Responsable || actor instanceof Manager));
+            result.addObject("display", !(actor instanceof Responsible || actor instanceof Manager));
 
         } catch (final Throwable oops) {
             if (oops.getMessage().startsWith("msg."))
@@ -189,9 +189,9 @@ public class CustomerController extends AbstractController {
         result.addObject("requestUri", "customer/create.do");
         result.addObject("actor", actor);
         result.addObject("owns", false);
-        if (actor != null && actor instanceof Responsable) {
+        if (actor != null && actor instanceof Responsible) {
             if (customer.getId() == actor.getCustomer().getId()) {
-                result.addObject("actor", (Responsable) actor);
+                result.addObject("actor", (Responsible) actor);
                 result.addObject("owns", true);
             }
         } else if (actor != null && actor instanceof Manager) {

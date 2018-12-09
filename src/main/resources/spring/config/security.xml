@@ -74,21 +74,21 @@
 		<!-- external -->
 		<security:intercept-url
 			pattern="/incidence/external/**"
-			access="hasAnyRole('USER', 'RESPONSABLE')" />
+			access="hasAnyRole('USER', 'RESPONSIBLE')" />
 
 		<!-- User -->
 
 
-		<!-- Responsable -->
+		<!-- Responsible -->
 		<security:intercept-url
-				pattern="/customer/edit.do" access="hasRole('RESPONSABLE')" />
+				pattern="/customer/edit.do" access="hasRole('RESPONSIBLE')" />
 
 		<security:intercept-url
-			pattern="/billing/responsable/list.do"
-			access="hasRole('RESPONSABLE')" />
+			pattern="/billing/responsible/list.do"
+			access="hasRole('RESPONSIBLE')" />
 		<security:intercept-url
-			pattern="/billing/responsable/display.do"
-			access="hasRole('RESPONSABLE')" />
+			pattern="/billing/responsible/display.do"
+			access="hasRole('RESPONSIBLE')" />
 		
 
 		<!-- Internal -->

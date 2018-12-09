@@ -23,7 +23,7 @@
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<display:table pagesize="5" class="displaytag" name="tabooWords" requestURI="tabooWord/administrator/list.do" id="row">
+<display:table pagesize="5" class="flat-table0 flat-table-1 w3-light-grey" name="tabooWords" requestURI="tabooWord/administrator/list.do" id="row">
 
 	<acme:column property="text" title="tabooWord.text" sortable="true"/>
 

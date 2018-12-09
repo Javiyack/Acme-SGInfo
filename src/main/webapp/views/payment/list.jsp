@@ -23,7 +23,7 @@
 
 <jsp:useBean id="date" class="java.util.Date" />
 <div class="formForm">
-<display:table pagesize="5" class="displaytag" name="incidencias" requestURI="${requestUri}" id="row">
+<display:table pagesize="5" class="flat-table0 flat-table-1 w3-light-grey" name="incidencias" requestURI="${requestUri}" id="row">
 
 	<jstl:if test="${row.publicationDate < date}">
 		<jstl:set var="classTd" value="passed" />

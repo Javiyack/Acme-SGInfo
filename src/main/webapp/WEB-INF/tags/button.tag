@@ -27,6 +27,8 @@
 
 <%@ attribute name="css" required="false"%>
 <%@ attribute name="id" required="false"%>
+<%@ attribute name="icon" required="false"%>
+<%@ attribute name="title" required="false"%>
 <%@ attribute name="confirmation" required="false"%>
 
 <jstl:if test="${css == null}">
@@ -44,7 +46,9 @@
 
 <%-- Definition --%>
 
-<button type="button" onclick="javascript: relativeRedir('${url}')" class="${cssVar}" id="${id}">
-	<spring:message code="${text}" />
+<button type="button" onclick="relativeRedir('${url}')" class="${cssVar}" id="${id}" title="${title}">
+	<jstl:if test="${icon != null}">
+		<i class="${icon}"></i>
+	</jstl:if><spring:message code="${text}" />
 </button>
 

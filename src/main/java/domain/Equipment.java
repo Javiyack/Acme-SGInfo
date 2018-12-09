@@ -1,10 +1,9 @@
 package domain;
 
-import java.util.Date;
-
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import java.util.Date;
 
 @Entity
 @Access(AccessType.PROPERTY)

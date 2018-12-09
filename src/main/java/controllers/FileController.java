@@ -1,10 +1,7 @@
 package controllers;
 
-import java.io.IOException;
-import java.util.Collection;
-
-import javax.servlet.http.HttpServletResponse;
-
+import domain.File;
+import forms.FileForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
@@ -15,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import domain.File;
-import forms.FileForm;
-import services.ActorService;
 import services.FileService;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Collection;
 
 @Controller
 @RequestMapping("/file")
