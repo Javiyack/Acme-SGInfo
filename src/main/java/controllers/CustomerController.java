@@ -51,7 +51,7 @@ public class CustomerController extends AbstractController {
     @RequestMapping("/list")
     public ModelAndView list(final Integer pageSize) {
         ModelAndView result;
-        final Collection <Customer> customers = this.customerService.findAll();
+        final Collection <Customer> customers = this.customerService.findAllActive();
         Actor actor = this.actorService.findByPrincipal();
 
         result = new ModelAndView("customer/list");
@@ -100,7 +100,7 @@ public class CustomerController extends AbstractController {
         ModelAndView result;
         try {
             Actor actor = actorService.findByPrincipal();
-            Assert.notNull(actor, "msg.not.loged.block");
+            Assert.notNull(actor, "msg.not.logged.block");
             final CustomerForm customerForm = new CustomerForm(actor.getCustomer());
             result = this.createEditModelAndView(customerForm);
             result.addObject("display", !(actor instanceof Responsible || actor instanceof Manager));
@@ -129,27 +129,27 @@ public class CustomerController extends AbstractController {
         return result;
     }
 
-    // Save customer
+    // Save customerForm
     // ---------------------------------------------------------------
     @RequestMapping(value = "/create", method = RequestMethod.POST, params = "save")
-    public ModelAndView save(@Valid final CustomerForm customer, final BindingResult binding) {
+    public ModelAndView save(final CustomerForm customerForm, final BindingResult binding) {
         ModelAndView result;
-        Customer customer2 = customerService.recontruct(customer, binding);
+        Customer customer = customerService.recontruct(customerForm, binding);
 
         if (binding.hasErrors())
-            result = this.createEditModelAndView(customer);
+            result = this.createEditModelAndView(customerForm);
         else
             try {
-                this.customerService.save(customer2);
+                this.customerService.save(customer);
                 result = new ModelAndView("redirect:/customer/list.do");
             } catch (final Throwable oops) {
                 if (oops.getMessage().startsWith("msg."))
-                    result = this.createEditModelAndView(customer, oops.getLocalizedMessage());
+                    result = this.createEditModelAndView(customerForm, oops.getLocalizedMessage());
                 else if (oops.getCause().getCause() != null
                         && oops.getCause().getCause().getMessage().startsWith("Duplicate"))
-                    result = this.createEditModelAndView(customer, "msg.duplicate.username");
+                    result = this.createEditModelAndView(customerForm, "msg.duplicate.nif");
                 else
-                    result = this.createEditModelAndView(customer, "msg.commit.error");
+                    result = this.createEditModelAndView(customerForm, "msg.commit.error");
             }
         return result;
     }

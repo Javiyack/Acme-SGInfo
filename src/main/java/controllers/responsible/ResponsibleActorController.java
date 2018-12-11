@@ -1,6 +1,7 @@
 
-package controllers;
+package controllers.responsible;
 
+import controllers.AbstractController;
 import domain.Actor;
 import domain.Customer;
 import forms.ActorForm;
@@ -16,11 +17,12 @@ import security.Authority;
 import services.ActorService;
 import services.CustomerService;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 @Controller
-@RequestMapping("/actor")
-public class ActorController extends AbstractController {
+@RequestMapping("/actor/responsible")
+public class ResponsibleActorController extends AbstractController {
 
 	// Supporting services -----------------------------------------------------
 
@@ -32,7 +34,7 @@ public class ActorController extends AbstractController {
 
 	// Constructors -----------------------------------------------------------
 
-	public ActorController() {
+	public ResponsibleActorController() {
 		super();
 	}
 
@@ -41,53 +43,52 @@ public class ActorController extends AbstractController {
 	public ModelAndView list(final Integer pageSize) {
 		ModelAndView result;
 
-		final Collection<Actor> actors = this.actorService.findAll();
+		final Collection<Actor> actors = this.actorService.findCoworkers();
 
 		result = new ModelAndView("actor/list");
 		result.addObject("actors", actors);
-		result.addObject("requestUri", "actor/list.do");
+		result.addObject("requestUri", "actor/responsible/list.do");
 		result.addObject("pageSize", (pageSize != null) ? pageSize : 5);
 		return result;
 	}
-
-	// Display user -----------------------------------------------------------
-	@RequestMapping(value = "/display", method = RequestMethod.GET)
-	public ModelAndView display(@RequestParam final int actorId) {
+	// Activate deactivate members ------------------------------------------------------------------
+	@RequestMapping(value = "/activation", method = RequestMethod.GET)
+	public ModelAndView activation(final Integer id) {
 		ModelAndView result;
 
-		final Actor actor;
-		try {
-			final Actor logedActor = this.actorService.findByPrincipal();
-			Assert.notNull(logedActor, "msg.not.logged.block");
-		} catch (Throwable oops) {
-			if (oops.getMessage().startsWith("msg.")) {
-				return createMessageModelAndView(oops.getLocalizedMessage(), "/");
-			} else {
-				return this.createMessageModelAndView("panic.message.text", "/");
-			}
-		}		
-		actor = this.actorService.findOne(actorId);
-		result = new ModelAndView("actor/display");
-		result.addObject("actorForm", actor);
-		result.addObject("display", true);
+		final Actor actor = this.actorService.findOne(id);
+		actorService.toggleActivation(actor);
+		result = new ModelAndView("redirect:/actor/responsible/list.do?id=");
 		return result;
 	}
+	// activate deactivate All members ------------------------------------------------------------------
+	@RequestMapping(value = "/activateAll", method = RequestMethod.GET)
+	public ModelAndView activateAll() {
+		ModelAndView result;
 
-	private ModelAndView checkLoged() {
-		ModelAndView result = null;
 		try {
-			final Actor actor = this.actorService.findByPrincipal();
-			Assert.notNull(actor, "msg.not.logged.block");
-		} catch (Throwable oops) {
-			if (oops.getMessage().startsWith("msg.")) {
-				return createMessageModelAndView(oops.getLocalizedMessage(), "/");
-			} else {
-				return this.createMessageModelAndView("panic.message.text", "/");
-			}
+			Assert.isTrue(this.customerService.activateAllMembers());
+			result = new ModelAndView("redirect:/actor/responsible/list.do");
+		} catch (final Throwable oops) {
+			result = this.createMessageModelAndView( "msg.commit.error","/actor/responsible/list.do" );
 		}
-
 		return result;
 	}
+
+	// activate deactivate All members ------------------------------------------------------------------
+	@RequestMapping(value = "/deactivateAll", method = RequestMethod.GET)
+	public ModelAndView deactivateAll() {
+		ModelAndView result;
+
+		try {
+			Assert.isTrue(this.customerService.deactivateAllMembers());
+			result = new ModelAndView("redirect:/actor/responsible/list.do");
+		} catch (final Throwable oops) {
+			result = this.createMessageModelAndView( "msg.commit.error","/actor/responsible/list.do" );
+		}
+		return result;
+	}
+
 
 	// Create ---------------------------------------------------------------
 
@@ -99,27 +100,6 @@ public class ActorController extends AbstractController {
 		return result;
 	}
 
-	// Edit ---------------------------------------------------------------
-
-	@RequestMapping("/edit")
-	public ModelAndView edit() {
-		ModelAndView result;
-		ActorForm model;
-
-		try {
-			final Actor actor = this.actorService.findByPrincipal();
-			model = new ActorForm(actor);
-			result = this.createEditModelAndView(model, null);
-		} catch (Throwable oops) {
-			if (oops.getMessage().startsWith("msg.")) {
-				return createMessageModelAndView(oops.getLocalizedMessage(), "/");
-			} else {
-				return this.createMessageModelAndView("panic.message.text", "/");
-			}
-		}
-
-		return result;
-	}
 
 	// Save mediante Post ---------------------------------------------------
 
@@ -169,15 +149,15 @@ public class ActorController extends AbstractController {
 
 	protected ModelAndView createEditModelAndView(final ActorForm model, final String message) {
 		final ModelAndView result;
-		final Collection<Authority> permisos = Authority.listAuthorities();
-		final Collection<Customer> customers = customerService.findAll();
+		final Collection<Authority> permisos = new ArrayList<>();
+		final Collection<Customer> customers = new ArrayList<>();
 		final Authority authority = new Authority();
-		authority.setAuthority(Authority.ADMINISTRATOR);
-		permisos.remove(authority);
-
+		authority.setAuthority(Authority.USER);
+		permisos.add(authority);
+		customers.add(actorService.findByPrincipal().getCustomer());
 		result = new ModelAndView("actor/create");
 		result.addObject("actorForm", model);
-		result.addObject("requestUri", "actor/create.do");
+		result.addObject("requestUri", "actor/responsible/create.do");
 		result.addObject("permisos", permisos);
 		result.addObject("customers", customers);
 		result.addObject("edition", true);

@@ -7,5 +7,5 @@ import javax.persistence.Entity;
 @Entity
 @Access(AccessType.PROPERTY)
 public class Responsible extends Actor{
-	
+
 }

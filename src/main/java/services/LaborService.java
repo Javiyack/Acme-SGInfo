@@ -40,7 +40,7 @@ public class LaborService {
     // Create
 
     public Labor create(Incidence incidence) {
-        Assert.notNull(incidence, "msg.save.incidence.first");
+        Assert.notNull(incidence, "msg.save.first");
         Actor actor = actorService.findByPrincipal();
         Assert.isTrue(actor instanceof Technician, "msg.not.owned.block");
         Assert.isTrue(actor.getId() == incidence.getTechnician().getId(), "msg.not.owned.block");
@@ -112,7 +112,7 @@ public class LaborService {
     public boolean delete(LaborForm labor) {
         Assert.notNull(labor);
         Actor actor = actorService.findByPrincipal();
-        Assert.notNull(actor, "msg.not.loged.block");
+        Assert.notNull(actor, "msg.not.logged.block");
         Assert.isTrue(actor instanceof Technician || actor instanceof Manager, "msg.not.owned.block");
         if (actor instanceof Technician)
             Assert.isTrue(actor.getId() == labor.getIncidence().getTechnician().getId(), "msg.not.owned.block");
@@ -130,7 +130,7 @@ public class LaborService {
     public boolean delete(Labor labor) {
         Assert.notNull(labor);
         Actor actor = actorService.findByPrincipal();
-        Assert.notNull(actor, "msg.not.loged.block");
+        Assert.notNull(actor, "msg.not.logged.block");
         Assert.isTrue(actor instanceof Technician, "msg.not.owned.block");
         Assert.isTrue(actor.getId() == labor.getIncidence().getTechnician().getId(), "msg.not.owned.block");
         this.laborRepository.delete(labor.getId());

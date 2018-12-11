@@ -137,27 +137,23 @@
                         </div>
                     </div>
                 </jstl:if>
-            </div>
-            <div class="seccion w3-light-grey">
-                <security:authorize access="isAnonymous()">
-                    <p class="terminos">
-                        (<a href="term/termsAndConditions.do"
-                            class="w3-text-deep-purple w3-hover-text-aqua"><spring:message
-                            code="term.terms"/></a> && <a href="term/cookies.do"
-                                                          class="w3-text-deep-purple w3-hover-text-aqua"><spring:message
-                            code="term.cookie"/></a>)
-                    </p>
-                </security:authorize>
-                <div class="row">
-                    <div class="col-50">
-                        <input type="submit" name="save" id="save"
-                               value='<spring:message code="actor.save"/>'
-                               class="formButton toLeft"/>&nbsp; <input type="button"
-                                                                        name="cancel"
-                                                                        value='<spring:message code="actor.cancel" />'
-                                                                        onclick="javascript: relativeRedir('/');"
-                                                                        class="formButton toLeft"/>
-                    </div>
+			</div>
+			<div class="seccion w3-light-grey">
+				<security:authorize access="isAnonymous()">
+					<p class="terminos">
+						<acme:checkBox code="term.registration.acept" path="agree" css="w3-check"/>
+						(<a href="term/termsAndConditions.do" class="w3-text-blue iButton"><spring:message code="term.terms" /></a>
+						 && <a href="term/cookies.do" class="w3-text-blue iButton" ><spring:message code="term.cookie"/></a>)
+				</security:authorize>
+				<div class="row">
+					<div class="col-50">
+						<input type="submit" name="save" id="save"
+							value='<spring:message code="actor.save"/>'
+							class="formButton toLeft" />&nbsp; <input type="button"
+							name="cancel" value='<spring:message code="actor.cancel" />'
+							onclick="javascript: relativeRedir('/');"
+							class="formButton toLeft" />
+					</div>
                 </div>
             </div>
         </jstl:if>

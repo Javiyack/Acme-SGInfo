@@ -23,8 +23,14 @@ public interface ActorRepository extends JpaRepository<Actor, Integer> {
 	@Query("select a from Actor a where a.userAccount.id = ?1")
 	Actor findByUserAccountId(int userAccountId);
 
+	@Query("select a from Actor a " +
+			"where a.id in (select u.id from User u where u.customer=?1) " +
+			"or a.id in (select r.id from Responsible r where r.customer=?1)")
+	Collection<Actor> findWorkers(int customerId);
+
 	@Query("select a from Actor a where a.customer.id = ?1")
 	Collection<Actor> findCoworkers(int customerId);
+
 
 	@Query("select t from Technician t")
 	Collection<Actor> findAllTecnicians();

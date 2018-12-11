@@ -81,7 +81,7 @@
 
 		<!-- Responsible -->
 		<security:intercept-url
-				pattern="/customer/edit.do" access="hasRole('RESPONSIBLE')" />
+				pattern="/customer/edit.do" access="hasAnyRole('MANAGER', 'RESPONSIBLE')" />
 
 		<security:intercept-url
 			pattern="/billing/responsible/list.do"

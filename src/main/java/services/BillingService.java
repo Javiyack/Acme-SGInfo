@@ -97,7 +97,7 @@ public class BillingService {
 	public boolean delete(LaborForm labor) {
 		Assert.notNull(labor);
 		Actor actor = actorService.findByPrincipal();
-		Assert.notNull(actor, "msg.not.loged.block");
+		Assert.notNull(actor, "msg.not.logged.block");
 		Assert.isTrue(actor instanceof Technician || actor instanceof Manager, "msg.not.owned.block");
 		if (actor instanceof Technician)
 			Assert.isTrue(actor.getId() == labor.getIncidence().getTechnician().getId(), "msg.not.owned.block");
@@ -115,7 +115,7 @@ public class BillingService {
 	public boolean delete(Labor labor) {
 		Assert.notNull(labor);
 		Actor actor = actorService.findByPrincipal();
-		Assert.notNull(actor, "msg.not.loged.block");
+		Assert.notNull(actor, "msg.not.logged.block");
 		Assert.isTrue(actor instanceof Technician || actor instanceof Manager, "msg.not.owned.block");
 		if (actor instanceof Technician)
 			Assert.isTrue(actor.getId() == labor.getIncidence().getTechnician().getId(), "msg.not.owned.block");
@@ -131,7 +131,7 @@ public class BillingService {
 	public void generate() {
 		// Recuperamos la incidencias facturables
 		Actor actor = actorService.findByPrincipal();
-		Assert.notNull(actor, "msg.not.loged.block");
+		Assert.notNull(actor, "msg.not.logged.block");
 		Assert.isTrue(actor instanceof Manager, "msg.not.owned.block");
 		Collection<Incidence> incidences = this.incidenceService.findFacturables();
 		if (!incidences.isEmpty()) {
@@ -183,18 +183,16 @@ public class BillingService {
 
 	public Collection<Object> findPropperByCustomer() {
 		Actor actor = actorService.findByPrincipal();
-		Assert.notNull(actor, "msg.not.loged.block");
+		Assert.notNull(actor, "msg.not.logged.block");
 		Assert.isTrue(actor instanceof Responsible || actor instanceof Manager, "msg.not.owned.block");
-		return billingRepository.findPropperByCustomerId(actor.getCustomer().getId());
+		return billingRepository.findPropperByCustomerId(((Responsible)actor).getCustomer().getId());
 	}
 
 
-	public void checkOwns(Customer customer, Labor anyLabor) {
+	public void checkOwns(Customer customer) {
 		final Actor logedActor = this.actorService.findByPrincipal();
-		Assert.notNull(logedActor, "msg.not.loged.block");
-		Assert.isTrue(logedActor instanceof Responsible || logedActor instanceof Manager, "msg.not.owned.block");
+		Assert.notNull(logedActor, "msg.not.logged.block");
 		Assert.isTrue(logedActor.getCustomer().equals(customer), "msg.not.owned.block");
-		Assert.isTrue(logedActor.getCustomer().equals(anyLabor.getIncidence().getUser().getCustomer()), "msg.not.owned.block");
 		
 	}
 }

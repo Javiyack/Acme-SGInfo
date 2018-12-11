@@ -28,10 +28,14 @@
 
 <%@ attribute name="value" required="false"%>
 <%@ attribute name="readonly" required="false"%>
+<%@ attribute name="disabled" required="false"%>
 <%@ attribute name="css" required="false"%>
 
 <jstl:if test="${readonly == null}">
 	<jstl:set var="readonly" value="false" />
+</jstl:if>
+<jstl:if test="${disabled == null}">
+	<jstl:set var="disabled" value="false" />
 </jstl:if>
 
 <jstl:if test="${placeholder == null}">
@@ -45,7 +49,7 @@
 	<form:label path="${path}">
 		<spring:message code="${code}" />
 	</form:label>
-	<form:input path="${path}" type="datetime-local" readonly="${readonly}" placeholder="${placeholder}" 
+	<form:input path="${path}" type="datetime-local" readonly="${readonly}" disabled="${disabled}" placeholder="${placeholder}"
 		class="${css}" title="${value}"/>
 	<form:errors path="${path}" cssClass="error" />
 </div>

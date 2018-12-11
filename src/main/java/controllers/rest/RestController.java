@@ -18,7 +18,7 @@ public class RestController {
 	@Autowired
 	private CustomerService customerService;
 
-	
+
 	@RequestMapping(value="/hostCheck")
 	public @ResponseBody Boolean ajaxPasskeyCheck(HttpServletRequest req, HttpServletResponse res) {
 		String passKey =this.configurationService.findPassKey();

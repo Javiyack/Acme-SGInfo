@@ -2,6 +2,7 @@ package domain;
 
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.URL;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -30,11 +31,13 @@ public class Customer extends DomainEntity {
 	private String nif;
 
 	private String passKey;
-	
+
 	private Boolean active;
-	
+
 	private String email;
-	
+
+	private String phone;
+
 	private String logo;
 	
 	@URL
@@ -56,7 +59,19 @@ public class Customer extends DomainEntity {
 		this.email = email;
 	}
 
-	
+
+
+	//@Pattern(regexp = "[0-9+()]{4,32}")
+	//@NotBlank
+	//@Size(min = 4,max = 32)
+	public String getPhone() {
+		return this.phone;
+	}
+
+	public void setPhone(final String phone) {
+		this.phone = phone;
+	}
+
 	@NotBlank
 	@Size(min = 5, max = 32)
 	public String getName() {
@@ -104,8 +119,7 @@ public class Customer extends DomainEntity {
 		this.address = address;
 	}
 
-	@NotBlank
-	@Size(min = 1, max = 100)
+	@SafeHtml
 	public String getBillingAddress() {
 		return billingAddress;
 	}
@@ -116,7 +130,7 @@ public class Customer extends DomainEntity {
 
 	@NotBlank
 	@Column(unique = true)
-	@Pattern(regexp = "^CUS-([012][1-9]|[3][01]|20)([0][1-9]|[1][0-2])\\d\\d-\\d{0,8}$") // "CUS-MMDDYY-XXXXXXXX"
+	@Pattern(regexp = "^CUS-([012][1-9]|[3][01]|10|20)([0][1-9]|[1][0-2])\\d\\d-\\d{8}$") // "CUS-MMDDYY-XXXXXXXX"
 	public String getPassKey() {
 		return passKey;
 	}
@@ -125,6 +139,9 @@ public class Customer extends DomainEntity {
 		this.passKey = passKey;
 	}
 
+	public Boolean getActive() {
+		return active;
+	}
 	public Boolean isActive() {
 		return active;
 	}
@@ -139,7 +156,7 @@ public class Customer extends DomainEntity {
 	
 	@NotBlank
 	@Column(unique = true)
-	@Pattern(regexp = "(^(\\d{8})([A-Z])$)|(^([ABCDEFGHJKLMNPQRSUVW])(\\d{7})([0-9A-J])$)|(^[XYZ]\\d{7,8}[A-Z]$)") // Identificaciop fiscal
+	@Pattern(regexp = "(^(\\d{8})([a-zA-Z])$)|(^([abcdefghjklmnprrsuvwABCDEFGHJKLMNPQRSUVW])(\\d{7})([0-9a-jA-J])$)|(^[xyzXYZ]\\d{7,8}[a-zA-Z]$)") // Identificaciop fiscal
 	public String getNif() {
 		return nif;
 	}

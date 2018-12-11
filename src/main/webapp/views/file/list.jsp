@@ -47,7 +47,7 @@
 			</jstl:if>
 			<jstl:if test="${incidenceForm!=null}">
 				<spring:message var="msg"
-					code="msg.save.incidence.first" />
+					code="msg.save.first" />
 				<jstl:set var="url" value="/attachment/create.do?incidenceId=${incidenceForm.id}"></jstl:set>
 				<p >
 					<i class="fa fa-plus-square w3-xlarge" onclick="javascript: showConditionalAlert('${msg}','${incidenceForm.id}','${url}');"

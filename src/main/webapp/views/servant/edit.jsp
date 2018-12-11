@@ -17,10 +17,8 @@
     <jstl:set var="readonly" value="false"/>
 </jstl:if>
 <jstl:if test="${servantForm.draft==false}">
-    <jstl:out value="draft = false; "/>
     <jstl:set var="readonly" value="true"/>
 </jstl:if>
-re: <jstl:out value="${readonly}"/>
 <div class="seccion w3-light-gray">
     <form:form action="${requestUri}" modelAttribute="servantForm">
         <form:hidden path="id"/>
@@ -28,7 +26,7 @@ re: <jstl:out value="${readonly}"/>
         <div class="row">
             <div class="col-50">
                 <acme:textbox code="servant.name" path="name" readonly="${readonly}"/>
-                <acme:textbox code="servant.description" path="description" readonly="${readonly}"/>
+                <acme:textarea code="servant.description" path="description" readonly="${readonly}" css="formTextArea"/>
                 <div class="row">
                     <div class="col-12-5">
                         <spring:message code="placeholder.money" var="placeholder"/>
@@ -52,7 +50,15 @@ re: <jstl:out value="${readonly}"/>
             </div>
             <div class="col-50">
                 <acme:textbox code="servant.picture" path="picture" readonly="${readonly}"/>
-
+                <div class="carrusel" style="background-color: black;">
+                    <div class="slideshow-container" id="carrusel">
+                        <jstl:if test="${servantForm.picture!=null and  servantForm.picture!=''}">
+                            <div class="mySlides">
+                                <img src="${servantForm.picture}" class="marco sombra" style="width: 100%">
+                            </div>
+                        </jstl:if>
+                    </div>
+                </div>
             </div>
         </div>
         <hr>

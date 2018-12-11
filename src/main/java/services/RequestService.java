@@ -36,7 +36,12 @@ public class RequestService {
     public Request save(Request request) {
         final Actor actor = this.actorService.findByPrincipal();
         Assert.notNull(actor, "msg.not.logged.block");
-        Assert.isTrue(actor instanceof Responsible, "msg.not.owned.block");
+        Assert.isTrue(actor instanceof Responsible || actor instanceof Manager, "msg.not.owned.block");
+        Collection<Request> previousRequests = requestRepository.findByResponsibleAndServant(actor.getId(), request.getServant().getId());
+        for (Request previous: previousRequests) {
+            Assert.isTrue(previous.getStatus().equals(Request.REJECTED), "msg.duplicate.request");
+        }
+        Assert.isTrue(true);
         Request bdObject = requestRepository.findOne(request.getId());
         if (request.getId() == 0) {
             Assert.isTrue(request.getResponsible().equals((Responsible) actor), "msg.not.owned.block");
@@ -47,7 +52,7 @@ public class RequestService {
             Assert.isNull(bdObject.getEndingDay(), "msg.ended.request.block");
             Assert.isTrue(!bdObject.getServant().isCancelled(), "msg.not.available.item.block");
             Assert.isTrue(!bdObject.getServant().isDraft(), "msg.not.available.item.block");
-            Assert.isTrue(bdObject.getResponsible().equals((Responsible) actor) || actor instanceof Manager, "msg.not.owned.block");
+            Assert.isTrue(bdObject.getResponsible().equals(actor) || actor instanceof Manager, "msg.not.owned.block");
             String status = bdObject.getStatus();
             if (status.equals(Request.PENDING)) { // Aqui impedimos el cambio de estado una vez aceptado o rechazado
                 if (request.getStatus().equals(Request.ACCEPTED)) {
@@ -108,7 +113,7 @@ public class RequestService {
         Actor responsible = this.actorService.findOne(request.getResponsible().getId());
         request.setResponsible((Responsible) responsible);
         this.validator.validate(request, binding);
-        Assert.isTrue(responsible.equals((Responsible) actor) || actor instanceof Manager,
+        Assert.isTrue(actor.equals(responsible) || actor instanceof Manager,
                 "msg.not.owned.block");
         return request;
     }

@@ -5,9 +5,11 @@ import controllers.AbstractController;
 import domain.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import services.RequestService;
 
@@ -40,13 +42,32 @@ public class ManagerRequestController extends AbstractController {
     public ModelAndView createdList(final Integer pageSize) {
         ModelAndView result;
         final Collection <Request> requests = this.requestService.findAll();
-        result = new ModelAndView("request/manager/list");
+        result = new ModelAndView("request/list");
         result.addObject("requests", requests);
         result.addObject("requestUri", "request/manager/list.do");
         result.addObject("pageSize", (pageSize != null) ? pageSize : 5);
         return result;
     }
+    // Edit  -----------------------------------------------------------
+    @RequestMapping(value = "/edit", method = RequestMethod.GET)
+    public ModelAndView edit(@RequestParam int requestId) {
+        ModelAndView result;
 
+        try {
+            Request request = this.requestService.findOne(requestId);
+            Assert.notNull(request, "msg.not.found.error");
+            result = this.createEditModelAndView(request);
+            result.addObject("display", false);
+
+        } catch (Throwable oops) {
+            if (oops.getMessage().startsWith("msg.")) {
+                return createMessageModelAndView(oops.getLocalizedMessage(), "/servant/list.do");
+            } else {
+                return this.createMessageModelAndView("panic.message.text", "/servant/list.do");
+            }
+        }
+        return result;
+    }
 
     // Save mediante Post ---------------------------------------------------
 
@@ -78,7 +99,7 @@ public class ManagerRequestController extends AbstractController {
 
     protected ModelAndView createEditModelAndView(final Request model, final String message) {
         final ModelAndView result;
-        result = new ModelAndView("request/manager/create");
+        result = new ModelAndView("request/create");
         result.addObject("request", model);
         result.addObject("requestUri", "request/manager/create.do");
         result.addObject("edition", true);

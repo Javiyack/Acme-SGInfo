@@ -10,5 +10,5 @@ import javax.persistence.Entity;
 public class User extends Actor {
 
 
-	
+
 }

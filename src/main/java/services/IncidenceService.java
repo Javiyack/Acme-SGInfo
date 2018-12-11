@@ -83,7 +83,7 @@ public class IncidenceService {
 		Incidence result;
 		Assert.notNull(incidence);
 		Actor actor = actorService.findByPrincipal();
-		Assert.notNull(actor, "msg.not.loged.block");
+		Assert.notNull(actor, "msg.not.logged.block");
 		Assert.isTrue(
 				actor instanceof Manager || actor instanceof Technician
 						|| incidence.getUser().getId() == (actor.getId())
@@ -178,7 +178,7 @@ public class IncidenceService {
 	public Incidence delete(IncidenceForm incidence) {
 		Assert.notNull(incidence);
 		Actor actor = actorService.findByPrincipal();
-		Assert.notNull(actor, "msg.not.loged.block");
+		Assert.notNull(actor, "msg.not.logged.block");
 		Assert.isTrue(actor.getId() == incidence.getTechnician().getId() || actor.getId() == incidence.getUser().getId()
 				|| actor instanceof Manager, "msg.not.owned.block");
 		Incidence incidencia = this.incidenceRepository.findOne(incidence.getId());

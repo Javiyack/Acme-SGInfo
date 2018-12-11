@@ -279,7 +279,7 @@ function asynchSearch(contextPath, path, target) {
 
 function ajaxSearch(element, contextPath) {
     id = element.value;
-    url = contextPath + "/asynchronous/hostCheck.do";
+    url = contextPath + "/jquery/hostCheck.do";
     $.ajax({
         type: "POST",
         url: url,
@@ -309,12 +309,24 @@ function toggleDisabled(element) {
         .getElementById(element).disabled;
 }
 
+function setDisabled(element, value) {
+    document.getElementById(element).disabled = value;
+}
+
 function toggleVisible(element) {
     var x = document.getElementById(element);
     if (x.style.display === 'none') {
         x.style.display = 'block';
     } else {
         x.style.display = 'none';
+    }
+}
+
+function checkRejected(element){
+    if(document.getElementById(element).value === 'REJECTED'){
+        setDisabled('reason', false);
+    }else{
+        setDisabled('reason', true);
     }
 }
 

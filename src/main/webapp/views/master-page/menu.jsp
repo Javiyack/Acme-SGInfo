@@ -71,24 +71,25 @@
     </div>
     <hr>
     <div class="w3-bar-block" style="padding-bottom: 60px">
-        <a href="customer/list.do"
-           class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-                class="fa fa-diamond fa-fw"></i>  <spring:message
-                code="label.customers"/>
-        </a>
         <a href="servant/list.do"
            class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-                class="fas fa-shield-alt fa-fw"></i>  <spring:message
+                class="fas fa-shield-alt fa-fw w3-margin-right"></i><spring:message
                 code="label.services"/>
         </a>
-        <security:authorize access="isAuthenticated()">
-            <a href="incidence/${accesscontrol}/list.do"
+        <security:authorize access="isAnonymous()">
+            <a href="customer/list.do"
                class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-                    class="fa fa-ambulance fa-fw"></i>  <spring:message
-                    code="label.incidences"/>
+                    class="fa fa-diamond fa-fw w3-margin-right"></i><spring:message
+                    code="label.customers"/>
             </a>
         </security:authorize>
-
+        <security:authorize access="hasAnyRole('USER', 'RESPONSIBLE')">
+            <a href="customer/list.do"
+               class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
+                    class="fa fa-diamond fa-fw w3-margin-right"></i><spring:message
+                    code="label.customers"/>
+            </a>
+        </security:authorize>
         <security:authorize access="hasRole('USER')">
 
         </security:authorize>
@@ -96,27 +97,59 @@
 
         </security:authorize>
         <security:authorize access="hasRole('MANAGER')">
+            <a href="customer/manager/list.do"
+               class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
+                    class="fa fa-diamond fa-fw w3-margin-right"></i><spring:message
+                    code="label.customers"/>
+            </a>
+        <a href="request/manager/list.do" class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
+                    class="fas fa-tasks fa-fw w3-margin-right"></i><spring:message
+                    code="label.requests"/>
+            </a>
             <a href="billing/manager/list.do" class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-                    class="fa fa-users fa-fw"></i>  <spring:message
+                    class="fas fa-money-bill-alt fa-fw w3-margin-right"></i><spring:message
                     code="label.billing"/>
+            </a>
+            <a href="actor/manager/list.do" name="menuItem"
+               class="w3-bar-item w3-button w3-padding w3-xlarge" id="actors"> <i
+                    class="fa fa-users fa-fw w3-margin-right"></i><spring:message code="label.users"/>
+            </a>
+
+        </security:authorize>
+        <security:authorize access="isAuthenticated()">
+            <a href="incidence/${accesscontrol}/list.do"
+               class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
+                    class="fa fa-ambulance fa-fw w3-margin-right"></i><spring:message
+                    code="label.incidences"/>
             </a>
         </security:authorize>
 
+
         <security:authorize access="hasRole('RESPONSIBLE')">
-            <a href="billing/responsible/list.do" class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-                    class="fa fa-users fa-fw"></i>  <spring:message
-                    code="label.billing"/>
-            </a>
             <a href="request/responsible/list.do" class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
-                    class="fa fa-users fa-fw"></i>  <spring:message
+                    class="fas fa-tasks fa-fw w3-margin-right"></i><spring:message
+                    code="label.requests"/>
+            </a>
+            <a href="billing/responsible/list.do" class="w3-bar-item w3-button w3-padding w3-xlarge"> <i
+                    class="fa fa-users fa-fw w3-margin-right"></i><spring:message
                     code="label.billing"/>
             </a>
+            <a href="actor/responsible/list.do" name="menuItem"
+               class="w3-bar-item w3-button w3-padding w3-xlarge" id="actors"> <i
+                    class="fa fa-users fa-fw w3-margin-right w3-margin-right"></i> <spring:message code="label.users"/>
+            </a>
+
         </security:authorize>
 
         <security:authorize access="hasRole('ADMINISTRATOR')">
+
+            <a href="actor/administrator/list.do" name="menuItem"
+               class="w3-bar-item w3-button w3-padding w3-xlarge" id="actors"> <i
+                    class="fa fa-users fa-fw w3-margin-right w3-margin-right"></i> <spring:message code="label.users"/>
+            </a>
             <a href="configuration/administrator/edit.do"
                class="w3-bar-item w3-button w3-padding w3-xlarge">
-                <i class="fa fa-cog fa-fw"></i>  Settings </a>
+                <i class="fa fa-cog fa-fw w3-margin-right"></i>Settings </a>
         </security:authorize>
 
         <security:authorize access="isAnonymous()">

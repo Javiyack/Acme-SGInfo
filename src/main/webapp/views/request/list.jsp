@@ -53,20 +53,29 @@
 
             <jstl:set var="url" value="servant/display.do?id=${row.servant.id}"/>
             <jstl:set var="icono" value="fa fa-eye w3-xlarge"/>
+            <jstl:if test="${logedActor eq row.responsible.userAccount}">
+                <jstl:set var="url" value="request/responsible/edit.do?requestId=${row.id}"/>
+            </jstl:if>
+            <security:authorize access="hasRole('MANAGER')">
+                <jstl:set var="url" value="request/manager/edit.do?requestId=${row.id}"/>
+                <jstl:set var="icono" value="fa fa-edit w3-xlarge"/>
+
+            </security:authorize>
 
             <spring:message code="moment.pattern" var="intercionalizedPattern"/>
-            <fmt:formatDate value="${row.creationMoment}" pattern="${intercionalizedPattern}" var="intercionalizedMoment"/>
+            <fmt:formatDate value="${row.creationMoment}" pattern="${intercionalizedPattern}" var="creationMoment"/>
             <spring:message code="date.pattern" var="intercionalizedDatePattern"/>
-            <fmt:formatDate value="${row.startingDay}" pattern="${intercionalizedDatePattern}" var="intercionalizedMoment"/>
-            <fmt:formatDate value="${row.endingDay}" pattern="${intercionalizedDatePattern}" var="intercionalizedMoment"/>
-            <acme:urlColumn value="${intercionalizedMoment}" title="label.moment" href="${url}" css="iButton"/>
+            <fmt:formatDate value="${row.startingDay}" pattern="${intercionalizedDatePattern}" var="startingDay"/>
+            <fmt:formatDate value="${row.endingDay}" pattern="${intercionalizedDatePattern}" var="endingDay"/>
+            <acme:urlColumn value="${row.responsible.name}" title="actor.authority.RESPONSIBLE" href="${url}" css="iButton"/>
+            <acme:urlColumn value="${creationMoment}" title="label.moment" href="${url}" css="iButton"/>
+            <acme:urlColumn value="${startingDay}" title="label.starting.on" href="${url}" css="iButton"/>
+            <acme:urlColumn value="${endingDay}" title="label.ending.on" href="${url}" css="iButton"/>
             <acme:urlColumn value="${row.servant.name}" title="label.service" href="${url}" css="iButton" sortable="true"/>
             <acme:urlColumn value="${row.status}" title="label.status" sortable="true" href="${url}" css="iButton"/>
+            <acme:urlColumn value="" title="label.none" href="${url}" css="iButton" icon="${icono}"/>
 
-            <jstl:if test="${logedActor eq row.responsible.userAccount}">
-                <acme:urlColumn value="" title="label.none" href="request/responsible/edit.do?requestId=${row.id}" css="iButton"
-                                icon="fa fa-eye w3-xlarge" />
-            </jstl:if>
+
         </display:table>
     </div>
 

@@ -16,20 +16,21 @@ import java.util.Date;
 @Entity
 @Access(AccessType.PROPERTY)
 public class Request extends DomainEntity {
-    /*  For every request, the system must store the
+    /*
+     *  For every request, the system must store the
         moment when the request is made; if the corresponding item is free, then no credit card
         must be included in the request; otherwise a valid credit card that must not expire in less
         than 30 days must be included.
     */
     //Relationships
     private Servant servant;
-    private  Responsible responsible;
+    private Responsible responsible;
     private Date creationMoment;
     private Date startingDay;
     private Date endingDay;
     private String status;
     private String rejectionReason;
-    private Collection<String> comments;
+    private String comments;
     public static final String	PENDING			= "PENDING";
     public static final String	ACCEPTED	    = "ACCEPTED";
     public static final String	REJECTED	    = "REJECTED";
@@ -101,12 +102,12 @@ public class Request extends DomainEntity {
         this.status = status;
     }
 
-    @ElementCollection
-    public Collection<String> getComments() {
+   @SafeHtml
+   public String getComments() {
         return comments;
     }
 
-    public void setComments(Collection<String> comments) {
+    public void setComments(String comments) {
         this.comments = comments;
     }
 

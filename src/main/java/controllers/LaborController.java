@@ -59,7 +59,7 @@ public class LaborController extends AbstractController {
             Actor actor;
             actor = this.actorService.findByPrincipal();
             if (actor != null && actor instanceof Responsible) {
-                result.addObject("logedCustomerId", actor.getCustomer().getId());
+                result.addObject("logedCustomerId", ((Responsible)actor).getCustomer().getId());
             } else {
                 result.addObject("logedCustomerId", -1);
             }
@@ -166,8 +166,8 @@ public class LaborController extends AbstractController {
             result = new ModelAndView("redirect:/incidence/internal/edit.do?id=" + labor.getIncidence().getId());
 
         } catch (final Throwable ooops) {
-            if (ooops.getMessage().equals("msg.not.loged.block"))
-                result = this.createEditModelAndView(labor, "msg.not.loged.block");
+            if (ooops.getMessage().equals("msg.not.logged.block"))
+                result = this.createEditModelAndView(labor, "msg.not.logged.block");
             else if (ooops.getMessage().equals("msg.not.owned.block"))
                 result = this.createEditModelAndView(labor, "msg.not.owned.block");
             else

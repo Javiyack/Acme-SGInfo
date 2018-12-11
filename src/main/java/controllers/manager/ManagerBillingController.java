@@ -41,7 +41,7 @@ public class ManagerBillingController extends AbstractController {
 		ModelAndView result;
 		try {
 			Actor actor = actorService.findByPrincipal();
-			Assert.notNull(actor, "msg.not.loged.block");
+			Assert.notNull(actor, "msg.not.logged.block");
 
 			final Collection<Object> bills = this.billingService.findAllPropper();
 			Map<Customer, List<Bill>> billsByCustomer = new HashMap<Customer, List<Bill>>();
@@ -109,7 +109,7 @@ public class ManagerBillingController extends AbstractController {
 		result.addObject("backUrl", "/billing/manager/list.do");
 		try {
 			Actor actor = actorService.findByPrincipal();
-			Assert.notNull(actor, "msg.not.loged.block");
+			Assert.notNull(actor, "msg.not.logged.block");
 			Assert.isTrue(actor instanceof Manager, "msg.not.owned.block");			
 		} catch (final Throwable oops) {
 			if (oops.getMessage().startsWith("msg."))

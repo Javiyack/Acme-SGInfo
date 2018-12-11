@@ -32,11 +32,15 @@
 <%@ attribute name="form" required="false"%>
 <%@ attribute name="id" required="false"%>
 <%@ attribute name="readonly" required="false"%>
+<%@ attribute name="disabled" required="false"%>
 <%@ attribute name="css" required="false"%>
 <%@ attribute name="icon" required="false"%>
 
 <jstl:if test="${readonly == null}">
 	<jstl:set var="readonly" value="false" />
+</jstl:if>
+<jstl:if test="${disabled == null}">
+	<jstl:set var="disabled" value="false" />
 </jstl:if>
 
 <jstl:if test="${placeholder == null}">
@@ -50,7 +54,7 @@
 	<form:label path="${path}">
 		<i class="${icon}"></i> <spring:message code="${code}" />
 	</form:label>
-	<form:input path="${path}" readonly="${readonly}" placeholder="${placeholder}"
+	<form:input path="${path}" readonly="${readonly}" placeholder="${placeholder}" disabled="${disabled}"
 				class="${css}" title="${title}" id="${id}" style="font-family:Arial, FontAwesome" form="${form}" pattern="${pattern}"/>
 	<form:errors path="${path}" cssClass="error" />
 </div>

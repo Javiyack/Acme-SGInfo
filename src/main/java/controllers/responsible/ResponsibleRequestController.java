@@ -59,7 +59,7 @@ public class ResponsibleRequestController extends AbstractController {
 
         try {
             Request request = this.requestService.findOne(requestId);
-            Assert.notNull(request, "msg.not.found.resource");
+            Assert.notNull(request, "msg.not.found.error");
             result = this.createEditModelAndView(request);
             result.addObject("display", false);
 

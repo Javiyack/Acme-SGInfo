@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
+
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 
@@ -12,6 +14,8 @@ public interface CustomerRepository extends JpaRepository<Customer, Integer> {
 	Customer findByBillId(int id);
 
 	@Query("select a.customer.id from Actor a where a.id=?1")
-	Integer findByPrincipalId(int id);
+	Integer findIdByPrincipalId(int id);
 
+	@Query("select c from Customer c where c.active=true")
+	Collection<Customer> findAllActive();
 }

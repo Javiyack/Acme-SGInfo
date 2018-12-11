@@ -46,7 +46,7 @@ public class InternalIncidenceController extends AbstractController {
 		final Collection<Incidence> inidencias = this.incidenceService.findAll();
 		try {
 			final Actor logedActor = this.actorService.findByPrincipal();
-			Assert.notNull(logedActor, "msg.not.loged.block");
+			Assert.notNull(logedActor, "msg.not.logged.block");
 		} catch (Throwable oops) {
 			if (oops.getMessage().startsWith("msg.")) {
 				return createMessageModelAndView(oops.getLocalizedMessage(), "/");

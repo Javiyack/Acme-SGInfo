@@ -49,7 +49,7 @@ public class FolderController extends AbstractController {
 		if (folderId != null) {
 			try {
 				final Actor actor = this.actorService.findByPrincipal();
-				Assert.notNull(actor, "msg.not.loged.block");
+				Assert.notNull(actor, "msg.not.logged.block");
 				folder = folderService.findOne(folderId);
 				Assert.notNull(folder, "msg.not.found.error");
 				Assert.isTrue(actor.equals(folder.getActor()), "msg.not.owned.block");

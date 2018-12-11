@@ -10,9 +10,12 @@ import java.util.Collection;
 
 @Repository
 public interface RequestRepository extends JpaRepository<Request, Integer> {
-    
+
     @Query("select r from Request r where r.responsible.id=?1")
     Collection<Request> findByResponsibleId(int id);
+
+    @Query("select r from Request r where r.responsible.id=?1 and r.servant.id=?2")
+    Collection<Request> findByResponsibleAndServant(int responsibleId, int servantId);
 
     @Query("select r from Request r where r.status = 'ACCEPTED'")
     Collection<Request> findAllAcceptedRequests();

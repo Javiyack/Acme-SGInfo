@@ -71,11 +71,17 @@ public class ActorService {
 		Assert.notNull(actor);
 		Actor result;
 
-		if (actor.getId() == 0)
+		if (actor.getId() == 0){
 			actor.getUserAccount().setActive(false);
-		if (actor.getId() != 0)
-			Assert.isTrue(actor.equals(this.findByPrincipal()), "not.allowed.action");
+			Assert.isTrue(actor.getCustomer().isActive(), "msg.not.active.customer.actor.save.block" );
+		}
 
+		if (actor.getId() != 0){
+			Actor principal = this.findByPrincipal();
+			Assert.isTrue(actor.equals(principal)
+					|| (actor instanceof  Responsible && actor.getCustomer().equals(principal.getCustomer()))
+					|| actor instanceof  Manager, "not.allowed.action");
+		}
 		result = this.actorRepository.save(actor);
 		this.flush();
 		if (actor.getId() == 0) {
@@ -292,9 +298,17 @@ public class ActorService {
 
 	}
 
-    public Collection<Actor> findCoworkers(Actor actor) {
+	public Collection<Actor> findCoworkers() {
+		Actor ppal = this.findByPrincipal();
+		Assert.notNull(ppal);
+		return actorRepository.findCoworkers(ppal.getCustomer().getId());
+	}
+	public Collection<Actor> findCoworkers(Actor actor) {
 		return actorRepository.findCoworkers(actor.getCustomer().getId());
-    }
+	}
+	public Collection<Actor> findWorkers(Customer customer) {
+		return actorRepository.findCoworkers(customer.getId());
+	}
 
 	public Collection<Actor> findInternalStaff() {
 		Collection<Actor> result;
@@ -302,4 +316,43 @@ public class ActorService {
 		result.addAll(actorRepository.findAllManagers());
 		return result;
 	}
+
+	public void activateUserAccount(int actorId) {
+		Actor ppal = this.findByPrincipal();
+		Assert.notNull(ppal);
+		Actor actor = actorRepository.findOne(actorId);
+		Assert.isTrue(ppal instanceof Manager || ppal instanceof Responsible || ppal.equals(actor), "msg.not.owned.block");
+		actor.getUserAccount().setActive(true);
+		this.userAccountService.save(actor.getUserAccount());
+	}
+
+	public void deactivateUserAccountByActorId(int actorId) {
+		Actor ppal = this.findByPrincipal();
+		Assert.notNull(ppal);
+		Actor actor = actorRepository.findOne(actorId);
+		Assert.isTrue(ppal instanceof Manager || ppal instanceof Responsible, "msg.not.owned.block");
+		actor.getUserAccount().setActive(false);
+		this.userAccountService.save(actor.getUserAccount());
+	}
+
+	public void synchronizeActivationStatus(Actor member) {
+		member.getUserAccount().setActive(member.getCustomer().isActive());
+		this.userAccountService.save(member.getUserAccount());
+	}
+
+	public void setActivationStatus(Actor actor, boolean status) {
+		Actor ppal = this.findByPrincipal();
+		Assert.notNull(ppal);
+		Assert.isTrue(ppal instanceof Manager || ppal instanceof Responsible, "msg.not.owned.block");
+		actor.getUserAccount().setActive(status);
+		this.userAccountService.save(actor.getUserAccount());
+	}
+	public void toggleActivation(Actor actor){
+		Actor ppal = this.findByPrincipal();
+		Assert.notNull(ppal);
+		Assert.isTrue((ppal instanceof Responsible && actor.getCustomer().equals(ppal.getCustomer())), "msg.not.owned.block");
+		actor.getUserAccount().setActive(!actor.getUserAccount().isEnabled());
+		this.userAccountService.save(actor.getUserAccount());
+	}
+
 }

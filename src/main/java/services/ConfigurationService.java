@@ -48,7 +48,7 @@ public class ConfigurationService {
 
 	public Configuration save(final Configuration configuration) {
 		final Actor actor = this.actorService.findByPrincipal();
-		Assert.notNull(actor, "msg.not.loged.block");
+		Assert.notNull(actor, "msg.not.logged.block");
 		Assert.notNull(actor instanceof Administrator, "msg.not.owned.block");
 		Configuration saved;
 

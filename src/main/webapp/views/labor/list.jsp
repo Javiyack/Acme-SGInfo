@@ -105,7 +105,7 @@
 				<acme:backButton text="label.back" css="formButton toLeft" />
 			</jstl:if>
 			<jstl:if test="${incidenceForm!=null && !closed}">
-				<spring:message var="msg" code="msg.save.incidence.first" />
+				<spring:message var="msg" code="msg.save.first" />
 				<jstl:set var="url"
 					value="/labor/create.do?incidenceId=${incidenceForm.id}"></jstl:set>
 				<p>

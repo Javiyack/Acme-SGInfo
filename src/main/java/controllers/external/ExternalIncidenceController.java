@@ -60,7 +60,7 @@ public class ExternalIncidenceController extends AbstractController {
 		final IncidenceForm incidence = new IncidenceForm(incidencia);
 		try {
 			Actor actor = actorService.findByPrincipal();
-			Assert.notNull(actor, "msg.not.loged.block");
+			Assert.notNull(actor, "msg.not.logged.block");
 			incidence.setCustomerId(actor.getCustomer().getId());
 		} catch (Throwable oops) {
 			if (oops.getMessage().startsWith("msg."))
