@@ -60,8 +60,7 @@
                 <acme:column property="description" title="label.description"/>
                 <acme:column property="webSite" title="customer.website"/>
                 <acme:column property="fechaAlta" title="customer.registration.date" format="moment.format"/>
-                <acme:imgColumn src="${row.logo}" title="label.logo" css="tableImg"
-                                style="width:9em;"/>
+                <acme:imgColumn src="${row.logo}" title="label.logo" css="tableImg"/>
 
                 <display:column class="${classTd}">
                     <jstl:set var="owns"

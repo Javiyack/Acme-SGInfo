@@ -107,7 +107,8 @@
 </ul>
 <br />
 <br />
+<spring:message code="label.create" var="texto"/>
 <acme:backButton text="label.back" css="formButton toLeft" />
-<acme:button url="/billing/manager/generate.do" text="label.new" />
+<acme:button url="/billing/manager/generate.do" text="label.create" />
 <br />
 <br />
