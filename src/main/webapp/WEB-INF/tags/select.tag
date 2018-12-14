@@ -38,6 +38,9 @@
 <jstl:if test="${readonly == null}">
 	<jstl:set var="readonly" value="false" />
 </jstl:if>
+<jstl:if test="${readonly == true}">
+	<form:hidden path="${path}" />
+</jstl:if>
 
 <jstl:if test="${id == null}">
 	<jstl:set var="id" value="${UUID.randomUUID().toString()}" />

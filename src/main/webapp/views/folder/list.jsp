@@ -4,6 +4,7 @@
 
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
@@ -18,7 +19,7 @@
 
 			<i class="w3-bar-item fa fa fa-folder-open-o w3-xxlarge"></i> <span
 				class="w3-xlarge" style="margin-bottom: 1em; margin-left: 0.5em;"><jstl:out
-					value="${folder.name}" /></span>
+					value="${fn:toLowerCase(folder.name)}" /></span>
 			<ul class="w3-ul w3-card-4 w3-padding">
 				<jstl:forEach items="${folders}" var="subFolder">
 					<li class="menuItem w3-bar"
@@ -30,7 +31,7 @@
 						<div class="w3-threequarter">
 							<div class="w3-bar-item">
 								<span class="w3-large"><jstl:out
-										value=" ${subFolder.name}" /></span>
+										value=" ${fn:toLowerCase(subFolder.name)}" /></span>
 							</div>
 						</div>
 					</li>
@@ -46,7 +47,7 @@
 					</jstl:if>
 					 <jstl:if test="${folder!=null}">
 						<div class="w3-quarter toRight">
-							<spring:message var="msg" code="msg.delte.folder.confirmation" />
+							<spring:message var="msg" code="msg.delete.folder.confirmation" />
 							<jstl:set var="url"
 								value="/folder/delete.do?folderId=${folder.id}"></jstl:set>
 

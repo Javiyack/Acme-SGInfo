@@ -79,8 +79,7 @@
 					<spring:message code="label.incidence" var="title" />
 					<display:column title="${title }" value="${row.incidence.title}"/>
      		   		<spring:message code="label.labor" var="title" />
-					<display:column property="title" title="${title}" sortable="true"
-						class="${classTd}" />
+					<display:column property="title" title="${title}" class="${classTd}" />
 					<acme:column property="description" title="label.description" />
 					<acme:column property="time" title="label.time" format="time.format"/>
 					<spring:message code="label.amount" var="labelAmount"/>

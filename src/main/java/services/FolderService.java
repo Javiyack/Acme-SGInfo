@@ -114,7 +114,7 @@ public class FolderService {
 	// Delete
 	public void delete(final Folder folder) {
 		Assert.notNull(folder);
-		Assert.isTrue(!folder.getSystemFolder());
+		Assert.isTrue(!folder.getSystemFolder(), "msg.system.folder.block");
 		this.checkPrincipal(folder);
 
 		final Collection<Folder> childFolders = this.folderRepository.findChildFolders(folder.getId());

@@ -66,15 +66,32 @@
 					<acme:moment code="incidencia.publication.moment"
 						path="publicationDate" placeholder="dd-MM-yyyyTHH:mm"
 						readonly="true" />
-					<acme:moment code="incidencia.starting.moment" path="startingDate"
-						placeholder="dd-MM-yyyyTHH:mm" css="formInput"
-						readonly="${rol == 'user' || rol == 'responsible' || readonly}" />
-					<acme:moment code="incidencia.ending.moment" path="endingDate"
-						placeholder="dd-MM-yyyyTHH:mm" css="formInput"
-						readonly="${rol == 'user' || rol == 'responsible' || readonly}" />
+					<div class="w3-row">
+						<div class="w3-threequarter">
+							<acme:moment code="incidencia.starting.moment" path="startingDate"
+										 placeholder="dd-MM-yyyyTHH:mm" css="formInput"
+										 readonly="true" />
+						</div>
+						<div class="w3-quarter" style="padding-left: 10%;margin-top: 3em;">
+							<spring:message code="incidencia.start" var="title"/>
+							<a href="incidence/technician/start.do?id=${incidenceForm.id}"><i class="fa fa-play fw w3-xlarge w3-text-green iButton zoom" title="${title}"></i></a>
+						</div>
+					</div>
+					<div class="w3-row">
+						<div class="w3-threequarter">
+							<acme:moment code="incidencia.ending.moment" path="endingDate"
+										 placeholder="dd-MM-yyyyTHH:mm" css="formInput"
+										 readonly="true" />
+						</div>
+						<div class="w3-quarter" style="padding-left: 10%;margin-top: 3em;">
+							<spring:message code="label.cerrar" var="title"/>
+							<a href="incidence/technician/close.do?id=${incidenceForm.id}" title="${title}"><i class="fa fa-stop fw w3-xlarge w3-text-green iButton zoom"></i></a>
+						</div>
+					</div>
+
 					<acme:select items="${technicians}" itemLabel="name"
 						code="incidencia.technician" path="technician"
-						readonly="${rol == 'user' || rol == 'responsible' || readonly}"
+						readonly="${rol == 'user' || rol == 'responsible'  || rol == 'technician' || readonly}"
 						css="formSelect" />
 				</div>
 				<div class="w3-third">
@@ -83,12 +100,17 @@
 					<br>
 
 					<div onclick="toggleDisabled('reason')">
-						<acme:checkBox code="incidencia.cancelled" path="cancelled" css=""
+						<acme:checkBox code="incidencia.cancelled" path="cancelled" css="w3-check"
 							readonly="${readonly}" />
 					</div>
-					<acme:textarea code="empty" path="cancelationReason"
-						css="formTextArea" disabled="true"
-						placeholder="Cancelation reason..." readonly="${readonly}"
+					<spring:message code="placeholder.cancel.reason" var="placeholder"/>
+					<jstl:set var="ifNoCancelled" value="true"/>
+					<jstl:if test="${incidenceForm.cancelled}">
+						<jstl:set var="ifNoCancelled" value="false"/>
+					</jstl:if>
+					<acme:textarea code="empty" path="cancellationReason"
+						css="formTextArea" disabled="${ifNoCancelled}"
+						placeholder="${placeholder}" readonly="${readonly}"
 						id="reason" />
 				</div>
 

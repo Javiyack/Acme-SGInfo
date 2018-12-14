@@ -29,7 +29,7 @@ public class IncidenceForm {
 	private User		user;
 	private Integer		customerId;
 	private boolean		cancelled;
-	private String		cancelationReason;
+	private String 		cancellationReason;
 	private int			id;
 	private int			version;
 
@@ -56,7 +56,7 @@ public class IncidenceForm {
 		this.setEndingDate(incid.getEndingDate());
 		this.setServant(incid.getServant());
 		this.setCancelled(incid.getCancelled());
-		this.setCancelationReason(incid.getCancelationReason());
+		this.setCancellationReason(incid.getCancellationReason());
 		}
 	
 
@@ -99,8 +99,8 @@ public class IncidenceForm {
 	}	
 
 	@SafeHtml(whitelistType = WhiteListType.NONE)
-	public String getCancelationReason() {
-		return cancelationReason;
+	public String getCancellationReason() {
+		return cancellationReason;
 	}
 
 	public Servant getServant() {
@@ -127,7 +127,7 @@ public class IncidenceForm {
 		this.user = user;
 	}
 
-	public boolean isCancelled() {
+	public boolean getCancelled() {
 		return cancelled;
 	}
 
@@ -175,8 +175,8 @@ public class IncidenceForm {
 		this.endingDate = endingDate;
 	}
 
-	public void setCancelationReason(String cancelationReason) {
-		this.cancelationReason = cancelationReason;
+	public void setCancellationReason(String cancellationReason) {
+		this.cancellationReason = cancellationReason;
 	}
 
 	public Integer getCustomerId() {

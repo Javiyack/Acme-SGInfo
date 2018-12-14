@@ -11,7 +11,6 @@ import org.springframework.util.Assert;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import security.Authority;
 import services.ActorService;
@@ -43,7 +42,7 @@ public class ResponsibleActorController extends AbstractController {
 	public ModelAndView list(final Integer pageSize) {
 		ModelAndView result;
 
-		final Collection<Actor> actors = this.actorService.findCoworkers();
+		final Collection<Actor> actors = this.actorService.findWorkers();
 
 		result = new ModelAndView("actor/list");
 		result.addObject("actors", actors);

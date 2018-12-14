@@ -23,7 +23,7 @@ public class Incidence extends DomainEntity {
 
 	private Boolean cancelled;
 
-	private String cancelationReason;
+	private String cancellationReason;
 
 	private Date startingDate;
 
@@ -84,12 +84,12 @@ public class Incidence extends DomainEntity {
 		this.cancelled = cancelled;
 	}
 
-	public String getCancelationReason() {
-		return cancelationReason;
+	public String getCancellationReason() {
+		return cancellationReason;
 	}
 
-	public void setCancelationReason(String cancelationReason) {
-		this.cancelationReason = cancelationReason;
+	public void setCancellationReason(String cancelationReason) {
+		this.cancellationReason = cancelationReason;
 	}
 
 	@Past

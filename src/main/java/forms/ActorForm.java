@@ -157,6 +157,7 @@ public class ActorForm {
 		this.email = email;
 	}
 
+	@NotBlank
 	@Pattern(regexp = "()|^[6,7]\\d{8}$")
 	public String getPhone() {
 		return this.phone;

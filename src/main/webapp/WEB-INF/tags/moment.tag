@@ -45,11 +45,11 @@
 
 <%-- Definition --%>
 
-<div>
+
 	<form:label path="${path}">
 		<spring:message code="${code}" />
 	</form:label>
 	<form:input path="${path}" type="datetime-local" readonly="${readonly}" disabled="${disabled}" placeholder="${placeholder}"
 		class="${css}" title="${value}"/>
 	<form:errors path="${path}" cssClass="error" />
-</div>
+

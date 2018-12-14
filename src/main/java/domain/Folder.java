@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.SafeHtml;
 import javax.persistence.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Access(AccessType.PROPERTY)
@@ -23,6 +24,7 @@ public class Folder extends DomainEntity {
 
 	@NotBlank
 	@SafeHtml
+	@Size(min = 1, max = 16)
 	public String getName() {
 		return this.name;
 	}

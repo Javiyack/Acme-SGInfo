@@ -84,7 +84,7 @@
             style="padding: 0.8em 2em; margin: 0em 1.5em;"><spring:message
                 code="${message}"/> <span
                 onclick="this.parentElement.style.display='none'"
-                class="w3-btn w3-transparent w3-display-right w3-padding">&times;</span>
+                class="fas fa-times fw w3-large w3-transparent w3-display-right w3-padding iButton w3-hover-text-gray"/>
         </li>
     </jstl:if>
     <jstl:if test="${info != null}">
@@ -92,7 +92,7 @@
             style="padding: 0.5em 2em; margin: 0em 1.5em;"><spring:message
                 code="${info}"/> <span
                 onclick="this.parentElement.style.display='none'"
-                class="w3-btn w3-transparent w3-display-right w3-padding">&times;</span>
+                class="fas fa-times fw w3-large w3-transparent w3-display-right w3-padding iButton w3-hover-text-gray"/>
         </li>
     </jstl:if>
 

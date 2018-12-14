@@ -72,17 +72,18 @@ public class ManagerBillingController extends AbstractController {
 	@RequestMapping("/generate")
 	public ModelAndView generate() {
 		ModelAndView result;
+		String message;
 		try {
 			billingService.generate();
-			result = new ModelAndView("redirect:/billing/manager/list.do");
+			message =  "msg.commit.ok";
 		} catch (Throwable oops) {
 			if (oops.getMessage().startsWith("msg.")) {
-				return createMessageModelAndView(oops.getLocalizedMessage(), "billing/manager/list.do");
+				message =  oops.getLocalizedMessage();
 			} else {
-				return this.createMessageModelAndView("msg.commit.error", "billing/manager/list.do");
+				message = "msg.commit.error";
 			}
-
 		}
+		result =  createMessageModelAndView(message, "billing/manager/list.do");
 		return result;
 	}
 

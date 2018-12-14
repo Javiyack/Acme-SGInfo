@@ -186,7 +186,7 @@ public class MessageController extends AbstractController {
         String authority = actorService.getType(actor.getUserAccount());
         Collection<Actor> actors;
         if (authority.equals(Authority.RESPONSIBLE) || authority.equals(Authority.USER)){
-            actors = actorService.findCoworkers(actor);
+            actors = actorService.findWorkers(actor);
             actors.addAll(actorService.findInternalStaff());
         }
         else

@@ -298,12 +298,12 @@ public class ActorService {
 
 	}
 
-	public Collection<Actor> findCoworkers() {
+	public Collection<Actor> findWorkers() {
 		Actor ppal = this.findByPrincipal();
 		Assert.notNull(ppal);
 		return actorRepository.findCoworkers(ppal.getCustomer().getId());
 	}
-	public Collection<Actor> findCoworkers(Actor actor) {
+	public Collection<Actor> findWorkers(Actor actor) {
 		return actorRepository.findCoworkers(actor.getCustomer().getId());
 	}
 	public Collection<Actor> findWorkers(Customer customer) {

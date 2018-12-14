@@ -375,7 +375,8 @@
 		<property name="endingDate" value="2018/04/17 12:00" />
 		<property name="user" ref="user3" />
 		<property name="technician" ref="technician1" />
-		<property name="cancelled" value="false" />
+		<property name="cancelled" value="true" />
+		<property name="cancellationReason" value="El problema ha desaarecio espontaneamente" />
 	</bean>
 
 	<bean id="incidence4" class="domain.Incidence">

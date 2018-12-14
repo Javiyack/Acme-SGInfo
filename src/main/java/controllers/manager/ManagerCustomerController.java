@@ -11,10 +11,7 @@
 package controllers.manager;
 
 import controllers.AbstractController;
-import domain.Actor;
-import domain.Customer;
-import domain.Manager;
-import domain.Responsible;
+import domain.*;
 import forms.CustomerForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,26 +42,7 @@ public class ManagerCustomerController extends AbstractController {
         super();
     }
 
-    // List All customers
-    // ---------------------------------------------------------------
-    @RequestMapping("/list")
-    public ModelAndView list(final Integer pageSize) {
-        ModelAndView result;
-        final Collection <Customer> customers = this.customerService.findAll();
-        Actor actor = this.actorService.findByPrincipal();
 
-        result = new ModelAndView("customer/list");
-        result.addObject("customers", customers);
-        if (actor != null && (actor instanceof Responsible || actor instanceof Responsible)) {
-            result.addObject("logedCustomerId", actor.getCustomer().getId());
-        } else {
-            result.addObject("logedCustomerId", -1);
-
-        }
-        result.addObject("requestUri", "customer/list.do");
-        result.addObject("pageSize", (pageSize != null) ? pageSize : 20);
-        return result;
-    }
 
     // Toggle activation  ----------------------------------------------------------
     @RequestMapping(value = "/toggleActivation", method = RequestMethod.GET)

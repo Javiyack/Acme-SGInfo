@@ -1,4 +1,4 @@
-package controllers.internal;
+package controllers.technician;
 
 import controllers.AbstractController;
 import domain.*;
@@ -17,8 +17,8 @@ import java.util.Collection;
 import java.util.Date;
 
 @Controller
-@RequestMapping("/incidence/internal")
-public class InternalIncidenceController extends AbstractController {
+@RequestMapping("/incidence/technician")
+public class TechnicianIncidenceController extends AbstractController {
 
     // Services
     @Autowired
@@ -34,7 +34,7 @@ public class InternalIncidenceController extends AbstractController {
 
     // Constructor
 
-    public InternalIncidenceController() {
+    public TechnicianIncidenceController() {
         super();
     }
 
@@ -104,50 +104,53 @@ public class InternalIncidenceController extends AbstractController {
         return result;
     }
 
-
-    // Save incidence
+    // Start incidence
     // ---------------------------------------------------------------
-    @RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
-    public ModelAndView save(@Valid final IncidenceForm incidence, final BindingResult binding) {
+    @RequestMapping(value = "/start", method = RequestMethod.GET)
+    public ModelAndView start(@Valid final int id) {
         ModelAndView result;
-        if (binding.hasErrors())
-            result = this.createEditModelAndView(incidence, incidence.getCustomerId());
-        else {
-            try{
-                Incidence incidencia = incidenceService.recontruct(incidence, binding);
-                if (binding.hasErrors())
-                    result = this.createEditModelAndView(incidence, incidence.getCustomerId());
-                else
-                    try {
-                        incidencia = this.incidenceService.save(incidencia);
-                        incidence.setId(incidencia.getId());
-                        result = this.createEditModelAndView(incidence,
-                                incidence.getUser().getCustomer().getId());
-                        result.addObject("info", "msg.commit.ok");
-                    } catch (final Throwable oops) {
-                        result = redirectOnError(incidence, oops);
-                    }
-            }catch (final Throwable oops) {
-                result = redirectOnError(incidence, oops);
-            }
-
+        IncidenceForm incidence;
+        try {
+            final Incidence incidencia = this.incidenceService.start(id);
+            incidence = new IncidenceForm(incidencia);
+            result = this.createEditModelAndView(incidence,
+                    incidence.getUser().getCustomer().getId());
+            result.addObject("info", "msg.commit.ok");
+        } catch (final Throwable oops) {
+            incidence = new IncidenceForm(incidenceService.findOne(id));
+            if (oops.getMessage().startsWith("msg."))
+                result = this.createEditModelAndView(incidence, oops.getLocalizedMessage(),
+                        incidence.getUser().getCustomer().getId());
+            else
+                result = this.createEditModelAndView(incidence, "msg.commit.error",
+                        incidence.getUser().getCustomer().getId());
         }
+
         return result;
     }
 
-    // Delete incidence
+    // Close incidence
     // ---------------------------------------------------------------
-    @RequestMapping(value = "/edit", method = RequestMethod.POST, params = "delete")
-    public ModelAndView delete(@Valid final IncidenceForm incidence, final BindingResult binding) {
+    @RequestMapping(value = "/close", method = RequestMethod.GET)
+    public ModelAndView close(@Valid final int id) {
         ModelAndView result;
-
+        Incidence incidencia;
+        String error = null;
+        String info = null;
         try {
-            this.incidenceService.delete(incidence);
-            result = new ModelAndView("redirect:/incidence/internal/list.do");
-
+            incidencia = this.incidenceService.close(id);
+            info = "msg.commit.ok";
         } catch (final Throwable oops) {
-            result = redirectOnError(incidence, oops);
+            incidencia=incidenceService.findOne(id);
+            if (oops.getMessage().startsWith("msg."))
+                error = oops.getLocalizedMessage();
+            else
+                error = "msg.commit.error";
         }
+        IncidenceForm incidence = new IncidenceForm(incidencia);
+        result = this.createEditModelAndView(incidence, error,
+                incidence.getUser().getCustomer().getId());
+        result.addObject("info", info);
         return result;
     }
 
@@ -166,7 +169,7 @@ public class InternalIncidenceController extends AbstractController {
             else
                 try {
                     incidencia.setEndingDate(new Date(System.currentTimeMillis() - 1000));
-                    this.incidenceService.save(incidencia);
+                    this.incidenceService.close(incidencia.getId());
                     result = new ModelAndView("redirect:/incidence/internal/list.do");
                 } catch (final Throwable oops) {
                     result = redirectOnError(incidence, oops);
@@ -193,8 +196,8 @@ public class InternalIncidenceController extends AbstractController {
                     incidence.setEndingDate(null);
                     this.incidenceService.save(incidencia);
                     this.laborService.setBillToNull(incidencia);
-                    result = this.createEditModelAndView(incidence, incidence.getUser().getCustomer().getId());
-                    result.addObject("info", "msg.commit.ok");
+                    result = this.createEditModelAndView(incidence, "msg.commit.ok",
+                            incidence.getUser().getCustomer().getId());
                 } catch (final Throwable oops) {
                     result = redirectOnError(incidence, oops);
                 }
