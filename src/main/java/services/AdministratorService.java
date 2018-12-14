@@ -11,7 +11,9 @@ import repositories.AdministratorRepository;
 import security.LoginService;
 import security.UserAccount;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 @Service
 @Transactional
@@ -95,6 +97,32 @@ public class AdministratorService {
 		}
 
 		return isSpam;
+	}
+	
+	public List<Object[]> usersWithMoreIncidences(){
+		return administratorRepository.usersWithMoreIncidences();
+	}
+	
+	public List<Object[]> techniciansWithLessIncidences(){
+		return administratorRepository.techniciansWithLessIncidences();		
+	}
+	
+	public List<Object[]> percMessagesSenderByActor(){
+		return administratorRepository.percMessagesSenderByActor();
+	}
+	
+	public Double avgRequestByResponsible(){
+		return administratorRepository.avgRequestByResponsible();
+	}
+	
+	public Double minRequestByResponsible(){
+		return administratorRepository.minRequestByResponsible();
+	}
+	public Double maxRequestByResponsible(){
+		return administratorRepository.maxRequestByResponsible();
+	}
+	public Double stddevRequestByResponsible(){
+		return administratorRepository.stddevRequestByResponsible();
 	}
 
 }

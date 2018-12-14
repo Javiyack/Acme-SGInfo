@@ -81,7 +81,7 @@
 
 		<!-- Responsible -->
 		<security:intercept-url
-				pattern="/customer/edit.do" access="hasRole('RESPONSIBLE')" />
+				pattern="/customer/edit.do" access="hasAnyRole('MANAGER', 'RESPONSIBLE')" />
 
 		<security:intercept-url
 			pattern="/billing/responsible/list.do"
@@ -111,7 +111,7 @@
 				pattern="/configuration/administrator/**"
 				access="hasRole('ADMINISTRATOR')" />
 		<security:intercept-url
-				pattern="/dashboard/administrator/**"
+				pattern="/administrator/dashboard/**"
 				access="hasRole('ADMINISTRATOR')" />
 
 		<!-- Login Logout -->

@@ -150,6 +150,11 @@
                class="w3-bar-item w3-button w3-padding w3-xlarge" id="actors"> <i
                     class="fa fa-users fa-fw w3-margin-right w3-margin-right"></i> <spring:message code="label.users"/>
             </a>
+            <a href="administrator/dashboard.do" id="dashboard"
+               class="w3-bar-item w3-button w3-padding w3-xlarge" name="menuItem"> <i
+                    class="fa fa-dashboard fa-fw w3-margin-right"></i> <spring:message
+                    code="master.page.dashboard"/>
+            </a>
             <a href="configuration/administrator/edit.do"
                class="w3-bar-item w3-button w3-padding w3-xlarge">
                 <i class="fa fa-cog fa-fw w3-margin-right"></i>Settings </a>

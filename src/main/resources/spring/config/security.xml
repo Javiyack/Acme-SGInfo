@@ -111,7 +111,7 @@
 				pattern="/configuration/administrator/**"
 				access="hasRole('ADMINISTRATOR')" />
 		<security:intercept-url
-				pattern="/dashboard/administrator/**"
+				pattern="/administrator/dashboard/**"
 				access="hasRole('ADMINISTRATOR')" />
 
 		<!-- Login Logout -->

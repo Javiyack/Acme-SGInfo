@@ -39,6 +39,7 @@
 		<value>/views/curriculum/tiles.xml</value>
 		<value>/views/configuration/tiles.xml</value>
 		<value>/views/tabooWord/tiles.xml</value>
+		<value>/views/dashboard/tiles.xml</value>
 		
 
 		
