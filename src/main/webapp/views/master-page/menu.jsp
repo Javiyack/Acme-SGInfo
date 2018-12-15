@@ -31,9 +31,6 @@
 <jstl:if test="${rol == 'technician' or rol == 'manager' or rol == 'administrator'}">
     <jstl:set value="internal" var="accesscontrol"/>
 </jstl:if>
-<jstl:if test="${rol == 'administrator'}">
-    <jstl:set value="adminitrator" var="accesscontrol"/>
-</jstl:if>
 
 <!-- Menu and banner usually + "$") -->
 <!-- Sidebar/menu -->
