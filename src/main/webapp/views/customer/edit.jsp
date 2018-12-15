@@ -101,6 +101,13 @@
             </div>
 
         </div>
+        <security:authorize access="hasRole('MANAGER')">
+	        <div class="titulo" style="padding-left: 0.5em; padding-top: 0px;">
+	            <strong><spring:message code="label.invoices"/></strong>
+	        </div>
+        
+        	<%@ include file="/views/billing/list.jsp" %>
+        </security:authorize>
     </form:form>
 
 </div>

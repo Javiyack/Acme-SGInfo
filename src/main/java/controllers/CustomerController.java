@@ -11,6 +11,7 @@
 package controllers;
 
 import domain.Actor;
+import domain.Bill;
 import domain.Customer;
 import domain.Manager;
 import domain.Responsible;
@@ -23,10 +24,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import services.ActorService;
+import services.BillingService;
 import services.CustomerService;
 
 import javax.validation.Valid;
+
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/customer")
@@ -39,6 +46,9 @@ public class CustomerController extends AbstractController {
 
     @Autowired
     private ActorService actorService;
+    
+    @Autowired
+    private BillingService billingService;
 
     // Constructor
 
@@ -87,8 +97,24 @@ public class CustomerController extends AbstractController {
         ModelAndView result;
         final Customer incidencia = this.customerService.findOne(id);
 
-        final CustomerForm customer = new CustomerForm(incidencia);
-        result = this.createEditModelAndView(customer);
+        final CustomerForm customerForm = new CustomerForm(incidencia);
+        result = this.createEditModelAndView(customerForm);
+        Map<Customer, List<Bill>> billsCustomer = new HashMap<Customer, List<Bill>>();
+        Collection<Object> bills = billingService.findByCustomerId(id);
+        if (!bills.isEmpty()) {
+			for (Object object : bills) {
+				final Object[] entryCustomerBill = (Object[]) object;
+				Bill bill = (Bill) entryCustomerBill[0];
+				Customer customer = (Customer) entryCustomerBill[1];
+				List<Bill> customerBills = ((billsCustomer.get(customer) != null) ? billsCustomer.get(customer)
+						: new ArrayList<Bill>());
+				customerBills.add(bill);
+				
+				billsCustomer.put(customer, customerBills);
+			}
+		}
+        
+        result.addObject("facturas",billsCustomer);
 
         return result;
     }

@@ -52,7 +52,6 @@ public class MessageService {
 	// Save
 
 	public Message save(final Message message) {
-		
 		// Compruebo que no sea nulo el mensaje que me pasan
 		Assert.notNull(message);
 		message.setMoment(new Date(System.currentTimeMillis() - 1));
