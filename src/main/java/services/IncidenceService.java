@@ -31,6 +31,8 @@ public class IncidenceService {
     @Autowired
     private LaborService laborService;
     @Autowired
+    private MessageService messageService;
+    @Autowired
     private Validator validator;
 
     // Constructor
@@ -99,6 +101,15 @@ public class IncidenceService {
             if (actor instanceof Technician) {
                 Assert.isTrue(incidence.getTechnician().getId() == (result.getTechnician().getId()),
                         "msg.not.owned.block");
+                Message savedMessage = new Message();
+                Message message = messageService.create();
+                message.setBody("La incidencia " + incidence.getTitle() + " cambió de estado");
+                message.setRecipient(incidence.getUser());
+                message.setSubject("Aviso Incidencia");
+                message.setPriority("NEUTRAL");
+                savedMessage = messageService.save(message);
+                messageService.saveOnSender(savedMessage);
+                messageService.saveOnRecipient(savedMessage);
             }
             if (incidence.getCancelled()) {
                 Assert.notNull(incidence.getCancellationReason(), "msg.missing.cancel.reason.block");
