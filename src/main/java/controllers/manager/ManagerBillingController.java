@@ -83,7 +83,9 @@ public class ManagerBillingController extends AbstractController {
 				message = "msg.commit.error";
 			}
 		}
-		result =  createMessageModelAndView(message, "billing/manager/list.do");
+
+		result =  this.list();
+		result.addObject("info", message);
 		return result;
 	}
 
