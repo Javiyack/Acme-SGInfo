@@ -69,10 +69,10 @@
         <div class="col-100">
             <security:authorize access="hasAnyRole('MANAGER', 'RESPONSIBLE', 'ADMINISTRATOR')">
                 <acme:button url="actor/${rol}/deactivateAll.do?pageSize=${pageSize}"
-                             text="label.activation.false.all"
+                             text="label.activation.false.all.by.${rol}"
                              css="formButton toLeft"/>
                 <acme:button url="actor/${rol}/activateAll.do?pageSize=${pageSize}"
-                             text="label.activation.true.all"
+                             text="label.activation.true.all.by.${rol}"
                              css="formButton toLeft"/>
             </security:authorize>
             <security:authorize access="hasAnyRole('ADMINISTRATOR')">

@@ -97,7 +97,7 @@ public class CustomerService {
             Actor actor = actorService.findByPrincipal();
             Assert.notNull(actor, "msg.not.logged.block");
             Customer customer  = actor.getCustomer();
-            this.setAllMembersActivation(customer, false);
+            this.setAllMembersActivation(customer, true);
         } catch (Throwable oops) {
             result = false;
         }
@@ -110,7 +110,7 @@ public class CustomerService {
             Actor actor = actorService.findByPrincipal();
             Assert.notNull(actor, "msg.not.logged.block");
             Customer customer  = actor.getCustomer();
-            this.setAllMembersActivation(customer, true);
+            this.setAllMembersActivation(customer, false);
         } catch (Throwable oops) {
             result = false;
         }

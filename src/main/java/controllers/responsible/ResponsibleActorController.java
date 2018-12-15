@@ -52,45 +52,48 @@ public class ResponsibleActorController extends AbstractController {
 	}
 	// Activate deactivate members ------------------------------------------------------------------
 	@RequestMapping(value = "/activation", method = RequestMethod.GET)
-	public ModelAndView activation(final Integer id) {
+	public ModelAndView activation(final Integer id, Integer pageSize){
 		ModelAndView result;
 
+        pageSize = (pageSize != null) ? pageSize : 5;
 		final Actor actor = this.actorService.findOne(id);
 		try {
 			actorService.toggleActivation(actor);
-			result = new ModelAndView("redirect:/actor/responsible/list.do?id=");
+			result = new ModelAndView("redirect:/actor/responsible/list.do?pageSize=" + pageSize);
 		} catch (Throwable oops) {
 			if (oops.getMessage().startsWith("msg.")) {
-				result = createMessageModelAndView(oops.getLocalizedMessage(), "/actor/responsible/list.do");
+				result = createMessageModelAndView(oops.getLocalizedMessage(), "/actor/responsible/list.do?pageSize=" + pageSize);
 			} else
-				result = this.createMessageModelAndView("msg.commit.error", "/actor/responsible/list.do");
+				result = this.createMessageModelAndView("msg.commit.error", "/actor/responsible/list.do?pageSize=" + pageSize);
 		}
 		return result;
 	}
 	// activate deactivate All members ------------------------------------------------------------------
 	@RequestMapping(value = "/activateAll", method = RequestMethod.GET)
-	public ModelAndView activateAll() {
+	public ModelAndView activateAll(Integer pageSize) {
 		ModelAndView result;
+        pageSize = (pageSize != null) ? pageSize : 5;
 
 		try {
 			Assert.isTrue(this.customerService.activateAllMembers());
-			result = new ModelAndView("redirect:/actor/responsible/list.do");
+			result = new ModelAndView("redirect:/actor/responsible/list.do?pageSize=" + pageSize);
 		} catch (final Throwable oops) {
-			result = this.createMessageModelAndView( "msg.commit.error","/actor/responsible/list.do" );
+			result = this.createMessageModelAndView( "msg.commit.error","/actor/responsible/list.do?pageSize=" + pageSize);
 		}
 		return result;
 	}
 
 	// activate deactivate All members ------------------------------------------------------------------
 	@RequestMapping(value = "/deactivateAll", method = RequestMethod.GET)
-	public ModelAndView deactivateAll() {
+	public ModelAndView deactivateAll(Integer pageSize) {
 		ModelAndView result;
+        pageSize = (pageSize != null) ? pageSize : 5;
 
 		try {
-			Assert.isTrue(this.customerService.deactivateAllMembers());
+			Assert.isTrue(this.actorService.setAllUsersActivationTo(false));
 			result = new ModelAndView("redirect:/actor/responsible/list.do");
 		} catch (final Throwable oops) {
-			result = this.createMessageModelAndView( "msg.commit.error","/actor/responsible/list.do" );
+			result = this.createMessageModelAndView( "msg.commit.error","/actor/responsible/list.do?pageSize=" + pageSize);
 		}
 		return result;
 	}

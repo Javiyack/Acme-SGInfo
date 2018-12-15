@@ -55,14 +55,12 @@
 
 
         <spring:message code="label.name" var="title"/>
-        <display:column property="name" title="${title}" sortable="true"
-                        class="${classTd}"/>
+        <display:column property="name" title="${title}" sortable="true" />
         <acme:column property="description" title="label.description"/>
         <acme:column property="webSite" title="customer.website"/>
         <acme:column property="fechaAlta" title="customer.registration.date" format="moment.format"/>
         <acme:imgColumn src="${row.logo}" title="label.logo" css="tableImg"/>
-
-        <display:column class="${classTd}">
+        <display:column>
             <jstl:set var="owns"
                       value="${rol=='manager' or logedCustomerId==row.id}"/>
 
@@ -81,7 +79,7 @@
                 </div>
             </jstl:if>
         </display:column>
-        <display:column class="${classTd}">
+        <display:column>
             <jstl:if test="${rol=='manager' or rol=='technician'}">
                 <div>
                     <a href="incidence/internal/create.do?customerId=${row.id}"> <i
@@ -90,6 +88,17 @@
                 </div>
             </jstl:if>
         </display:column>
+        <security:authorize access="hasAnyRole('MANAGER')">
+        <jstl:set var="activeIcon" value="fa fa-square-o fw font-awesome w3-xlarge"/>
+        <jstl:if test="${row.active}">
+            <jstl:set var="activeIcon" value="fa fa-check-square-o fw font-awesome w3-xlarge"/>
+        </jstl:if>
+        <acme:urlColumn value="" href="customer/${rol}/activation.do?id=${row.id}&pageSize=${pageSize}" title="label.active" css="iButton"
+                        icon="${activeIcon}" style="max-widht:2em;"/>
+
+    </security:authorize>
+
+
 
     </display:table>
 

@@ -89,6 +89,10 @@
                     class="fa fa-diamond fa-fw w3-margin-right"></i><spring:message
                     code="label.customers"/>
             </a>
+            <a href="actor/responsible/list.do" name="menuItem"
+               class="w3-bar-item w3-button w3-padding w3-xlarge" id="actors"><i
+                    class="fa fa-users fa-fw w3-margin-right w3-margin-right"></i><spring:message code="label.users"/>
+            </a>
         </security:authorize>
         <security:authorize access="hasRole('USER')">
 
@@ -137,16 +141,16 @@
                     class="fa fa-users fa-fw w3-margin-right"></i><spring:message
                     code="label.billing"/>
             </a>
-            <a href="actor/responsible/list.do" name="menuItem"
-               class="w3-bar-item w3-button w3-padding w3-xlarge" id="actors"><i
-                    class="fa fa-users fa-fw w3-margin-right w3-margin-right"></i><spring:message code="label.users"/>
-            </a>
 
         </security:authorize>
 
         <security:authorize access="hasRole('ADMINISTRATOR')">
 
-            <a href="actor/administrator/list.do" name="menuItem"
+            <a href="customer/administrator/list.do"
+               class="w3-bar-item w3-button w3-padding w3-xlarge"><i
+                    class="fa fa-diamond fa-fw w3-margin-right"></i><spring:message
+                    code="label.customers"/>
+            </a> <a href="actor/administrator/list.do" name="menuItem"
                class="w3-bar-item w3-button w3-padding w3-xlarge" id="actors"><i
                     class="fa fa-users fa-fw w3-margin-right w3-margin-right"></i><spring:message code="label.users"/>
             </a>

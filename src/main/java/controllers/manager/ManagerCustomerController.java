@@ -45,7 +45,7 @@ public class ManagerCustomerController extends AbstractController {
 
 
     // Toggle activation  ----------------------------------------------------------
-    @RequestMapping(value = "/toggleActivation", method = RequestMethod.GET)
+    @RequestMapping(value = "/activation", method = RequestMethod.GET)
     public ModelAndView subscribe(@RequestParam final int customerId, String redirectUrl) {
         ModelAndView result;
         try{

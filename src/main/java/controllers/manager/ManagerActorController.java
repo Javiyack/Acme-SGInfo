@@ -45,6 +45,7 @@ public class ManagerActorController extends AbstractController {
 
         final Collection<Actor> actors = this.actorService.findAllTecnicians();
         actors.addAll(this.actorService.findAllResponsibles());
+        actors.addAll(this.actorService.findAllManagers());
         actors.addAll(this.actorService.findAllUsers());
 
         result = new ModelAndView("actor/list");
@@ -79,7 +80,8 @@ public class ManagerActorController extends AbstractController {
         pageSize = (pageSize != null) ? pageSize : 5;
 
         try {
-            Assert.isTrue(this.customerService.activateAllMembers());
+            Assert.isTrue(this.actorService.setAllResponsiblesActivationTo(true));
+            Assert.isTrue(this.actorService.setAllTechniciansActivationTo(true));
             result = new ModelAndView("redirect:/actor/manager/list.do?pageSize=" + pageSize);
         } catch (final Throwable oops) {
             if (oops.getMessage().startsWith("msg.")) {
@@ -92,12 +94,13 @@ public class ManagerActorController extends AbstractController {
 
     // activate deactivate All members ------------------------------------------------------------------
     @RequestMapping(value = "/deactivateAll", method = RequestMethod.GET)
-    public ModelAndView deactivateAll(Integer pageSize) {
+    public ModelAndView deactivateAllResponsibles(Integer pageSize) {
         ModelAndView result;
         pageSize = (pageSize != null) ? pageSize : 5;
 
         try {
-            Assert.isTrue(this.customerService.deactivateAllMembers());
+            Assert.isTrue(this.actorService.setAllResponsiblesActivationTo(false));
+            Assert.isTrue(this.actorService.setAllTechniciansActivationTo(false));
             result = new ModelAndView("redirect:/actor/manager/list.do?pageSize=" + pageSize);
         } catch (final Throwable oops) {
             if (oops.getMessage().startsWith("msg.")) {

@@ -391,7 +391,72 @@ public class ActorService {
         return result;
     }
 
-    public Collection<Actor> findManagers() {
+
+    public boolean setAllTechniciansActivationTo(boolean status) {
+        boolean result = true;
+        try {
+            Actor actor = this.findByPrincipal();
+            Assert.notNull(actor, "msg.not.logged.block");
+            Assert.isTrue(actor instanceof Manager, "msg.not.owned.block");
+            Collection<Actor> actores = this.findAllTecnicians();
+            actores.remove(actor);
+            for (Actor target : actores) {
+                target.getUserAccount().setActive(status);
+                this.userAccountService.save(target.getUserAccount());
+                this.userAccountService.flush();
+            }
+        } catch (Throwable oops) {
+            result = false;
+        }
+        return result;
+    }
+
+
+    public boolean setAllResponsiblesActivationTo(boolean status) {
+        boolean result = true;
+        try {
+            Actor actor = this.findByPrincipal();
+            Assert.notNull(actor, "msg.not.logged.block");
+            Assert.isTrue(actor instanceof Manager, "msg.not.owned.block");
+            Collection<Actor> actores = this.findAllResponsibles();
+            actores.remove(actor);
+            for (Actor target : actores) {
+                target.getUserAccount().setActive(status);
+                this.userAccountService.save(target.getUserAccount());
+                this.userAccountService.flush();
+            }
+        } catch (Throwable oops) {
+            result = false;
+        }
+        return result;
+    }
+
+
+
+    public boolean setAllUsersActivationTo(boolean status) {
+        boolean result = true;
+        try {
+            Actor actor = this.findByPrincipal();
+            Assert.notNull(actor, "msg.not.logged.block");
+            Assert.isTrue(actor instanceof Responsible, "msg.not.owned.block");
+            Collection<Actor> actores = this.findWorkers(actor);
+            actores.remove(actor);
+            for (Actor target : actores) {
+                if (actor.getCustomer().equals(target.getCustomer()) && target instanceof User) {
+                    target.getUserAccount().setActive(status);
+                    this.userAccountService.save(target.getUserAccount());
+                    this.userAccountService.flush();
+                }
+            }
+        } catch (Throwable oops) {
+            result = false;
+        }
+        return result;
+    }
+
+
+
+    public Collection<Actor> findAllManagers() {
         return actorRepository.findAllManagers();
     }
 
@@ -405,6 +470,9 @@ public class ActorService {
 
     public Collection<Actor> findAllUsers() {
         return actorRepository.findAllUsers();
+    }
+    public Collection<Actor> findAllUsersByCustomerId(int id) {
+        return actorRepository.findAllUsersByCustomerId(id);
     }
 
 }
