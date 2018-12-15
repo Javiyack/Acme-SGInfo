@@ -1,9 +1,7 @@
 $(document).ready(function () {
-
     $(function () {
         $(document).tooltip();
     });
-    markOpenLink();
     // Get the Sidebar
     var mySidebar = document.getElementById("mySidebar");
 
@@ -14,7 +12,7 @@ $(document).ready(function () {
 
     var slideIndex = 1;
     showSlides(1);
-    ajaxSearch(document.getElementById("combo"), "/Acme-Showroom")
+    markOpenLink();
 
 });
 
@@ -298,7 +296,7 @@ function ajaxSearch(element, contextPath) {
             }
         },
         error: function (e) {
-            alert(url);
+            alert("Algo ha fallado. " + url + "?id=" +id);
 
         }
     });

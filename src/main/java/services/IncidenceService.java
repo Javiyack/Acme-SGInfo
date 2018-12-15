@@ -133,7 +133,7 @@ public class IncidenceService {
             result.setStartingDate(form.getStartingDate());
             result.setEndingDate(form.getEndingDate());
             result.setServant(form.getServant());
-            result.setCancelled(form.getCancelled());
+            result.setCancelled(false);
             result.setCancellationReason(form.getCancellationReason());
         } else {
             result = this.incidenceRepository.findOne(form.getId());
@@ -296,7 +296,7 @@ public class IncidenceService {
 
     public Incidence start(int id) {
         Incidence result = findOne(id);
-        Assert.isTrue(result.getStartingDate().equals(null), "msg.incidence.starting.changing.block");
+        Assert.isTrue(result.getStartingDate() == null, "msg.incidence.starting.changing.block");
         result.setStartingDate(new Date(System.currentTimeMillis() - 100));
         return this.incidenceRepository.save(result);
     }

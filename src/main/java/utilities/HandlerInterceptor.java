@@ -13,27 +13,29 @@ import javax.servlet.http.HttpServletResponse;
 
 public class HandlerInterceptor extends org.springframework.web.servlet.i18n.LocaleChangeInterceptor {
 
-	@Autowired
-	ConfigurationService	configurationService;
-	@Autowired
-	ActorService	actorService;
+    @Autowired
+    ConfigurationService configurationService;
+    @Autowired
+    ActorService actorService;
 
 
-	@Override
-	public void postHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler, final ModelAndView modelAndView) throws Exception {
-		// TODO Auto-generated method stub
-		super.postHandle(request, response, handler, modelAndView);
-if(modelAndView!=null) {
-	modelAndView.addObject("enterpriseLogo", this.configurationService.findLogo());
-	try {
-		Actor actor = actorService.findByPrincipal();
-		Assert.notNull(actor, "msg.not.loged.block");	
-		modelAndView.addObject("enterpriseLogo", actor.getCustomer().getLogo());		
-	} catch (final Throwable oops) {
-		modelAndView.addObject("enterpriseLogo", this.configurationService.findLogo());		
-	}
-	modelAndView.addObject("nameB", this.configurationService.findName());	
-}
-	}
+    @Override
+    public void postHandle(final HttpServletRequest request, final HttpServletResponse response, final Object handler, final ModelAndView modelAndView) throws Exception {
+        // TODO Auto-generated method stub
+        super.postHandle(request, response, handler, modelAndView);
+        if (modelAndView != null) {
+            modelAndView.addObject("enterpriseLogo", this.configurationService.findLogo());
+            try {
+                Actor actor = actorService.findByPrincipal();
+                Assert.notNull(actor);
+                Assert.notNull(actor.getCustomer().getLogo());
+                Assert.isTrue(!actor.getCustomer().getLogo().isEmpty());
+                modelAndView.addObject("enterpriseLogo", actor.getCustomer().getLogo());
+            } catch (final Throwable oops) {
+                modelAndView.addObject("enterpriseLogo", this.configurationService.findLogo());
+            }
+            modelAndView.addObject("nameB", this.configurationService.findName());
+        }
+    }
 
 }

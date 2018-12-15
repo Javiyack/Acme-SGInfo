@@ -14,6 +14,7 @@
 <%@ page import="java.util.Date" %>
 <%@taglib prefix="jstl" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 <%@taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -21,7 +22,28 @@
           uri="http://www.springframework.org/security/tags" %>
 <%@taglib prefix="display" uri="http://displaytag.sf.net" %>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags" %>
+
+
+<security:authorize access="isAuthenticated()">
+    <jstl:set var="colom" value=", "/>
+    <security:authentication property="principal.username" var="username"/>
+    <security:authentication property="principal" var="logedAccount"/>
+    <security:authentication property="principal.authorities[0]"
+                             var="permiso"/>
+    <jstl:set var="rol" value="${fn:toLowerCase(permiso)}"/>
+</security:authorize>
+
 <div class="seccion w3-light-gray">
+    <jstl:if test="${pageSize == null}">
+        <jstl:set value="20" var="pageSize"/>
+    </jstl:if>
+    <form:form action="${requestUri}" method="GET">
+        <spring:message code="pagination.size"/>
+        <input hidden="true" name="word" value="${word}">
+        <input type="number" name="pageSize" min="1" max="100"
+               value="${pageSize}">
+        <input type="submit" value=">">
+    </form:form>
     <display:table pagesize="${pageSize}"
                    class="flat-table0 flat-table-1 w3-light-grey" name="actors"
                    requestURI="${requestUri}" id="row">
@@ -30,50 +52,34 @@
         <jstl:if test="${row.userAccount.active}">
             <jstl:set var="activeIcon" value="fa fa-check-square-o fw font-awesome w3-xlarge"/>
         </jstl:if>
-        <security:authorize access="hasRole('MANAGER')">
-            <jstl:set var="url" value="servant/manager/edit.do?id=${row.id}"/>
-        </security:authorize>
         <acme:urlColumn value="${row.userAccount.username}" href="${url}" title="label.name" css="iButton"/>
+        <acme:urlColumn value="${row.customer.name}" href="${url}" title="label.customer" css="iButton"/>
         <acme:urlColumn value="${row.userAccount.authorities[0]}" href="${url}" title="label.name" css="iButton"/>
         <acme:urlColumn value="${row.surname}, ${row.name}" href="${url}" title="label.surname" css="iButton"/>
-        <acme:urlColumn value="" href="actor/responsible/activation.do?id=${row.id}" title="label.active" css="iButton"
+
+        <security:authorize access="hasAnyRole('MANAGER', 'RESPONSIBLE', 'ADMINISTRATOR')">
+            <acme:urlColumn value="" href="actor/${rol}/activation.do?id=${row.id}&pageSize=${pageSize}" title="label.active" css="iButton"
                         icon="${activeIcon}" style="max-widht:2em;"/>
 
+        </security:authorize>
     </display:table>
     <hr>
 
     <div class="row">
         <div class="col-100">
-            <security:authorize access="hasRole('RESPONSIBLE')">
-                <acme:button url="actor/responsible/activateAll.do"
+            <security:authorize access="hasAnyRole('MANAGER', 'RESPONSIBLE', 'ADMINISTRATOR')">
+                <acme:button url="actor/${rol}/deactivateAll.do?pageSize=${pageSize}"
                              text="label.activation.false.all"
                              css="formButton toLeft"/>
-                <acme:button url="actor/responsible/deactivateAll.do"
+                <acme:button url="actor/${rol}/activateAll.do?pageSize=${pageSize}"
                              text="label.activation.true.all"
                              css="formButton toLeft"/>
             </security:authorize>
-
-            <spring:message code="label.new" var="newTitle"/>
-            <spring:message code="label.service" var="sernvantTitle"/>
-            <security:authorize access="hasRole('MANAGER')">
-            <div>
-                <i class="fa fa-plus-square w3-xxlarge w3-text-dark-grey w3-hover-text-orange iButton w3-padding w3-margin-right"
-                   onclick="relativeRedir('servant/manager/create.do');" title="${newTitle} ${sernvantTitle}"></i>
-                <jstl:if test="${requestableOnly==null}">
-                    <a href="servant/list.do">
-                        <i class="fa fa fa-filter w3-xxlarge css-unchecked iButton w3-padding w3-margin-right"
-                           title="<spring:message code="label.available"/>">
-                        </i></a>
-                </jstl:if>
-                <jstl:if test="${requestableOnly}">
-                    <a href="servant/manager/list.do">
-                        <i class="fa fa fa-filter w3-xxlarge css-checked iButton w3-padding w3-margin-right"
-                           title="<spring:message code="label.show.all"/>"></i>
-                    </a>
-
-                </jstl:if>
-                </security:authorize>
-            </div>
+            <security:authorize access="hasAnyRole('ADMINISTRATOR')">
+                <acme:button url="actor/${rol}/create.do"
+                             text="label.new.administrator"
+                             css="formButton toLeft"/>
+            </security:authorize>
 
         </div>
     </div>

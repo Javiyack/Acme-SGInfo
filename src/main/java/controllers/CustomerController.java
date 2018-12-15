@@ -189,12 +189,10 @@ public class CustomerController extends AbstractController {
         result.addObject("requestUri", "customer/create.do");
         result.addObject("actor", actor);
         result.addObject("owns", false);
-        if (actor != null && actor instanceof Responsible) {
-            if (customer.getId() == actor.getCustomer().getId()) {
+        if (actor != null && actor instanceof Responsible && customer.getId() == actor.getCustomer().getId()) {
                 result.addObject("actor", (Responsible) actor);
                 result.addObject("owns", true);
-            }
-        } else if (actor != null && actor instanceof Manager) {
+        } else if (actor != null && actor instanceof Manager && customer.getId() == actor.getCustomer().getId()) {
             result.addObject("actor", actor);
             result.addObject("owns", true);
         }

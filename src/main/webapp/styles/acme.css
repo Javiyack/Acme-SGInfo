@@ -215,7 +215,7 @@ select {
     display: block;
     border: 1px solid #ccc;
     min-width: 100%;
-    min-height: 94px;
+    min-height: 104px;
     max-width: 100%;
     max-height: 250px;
     resize: vertical;
@@ -307,6 +307,17 @@ select {
 
 .iButton:hover {
     color: darkorange !important;
+}
+
+.iLink {
+    margin: 0px;
+    padding: 0px;
+    cursor: pointer;
+
+}
+
+.iLink:hover {
+    color: #133066 !important;
 }
 
 .iOverSize {

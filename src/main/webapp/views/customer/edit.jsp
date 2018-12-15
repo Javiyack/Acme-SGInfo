@@ -20,6 +20,8 @@
 
 <jstl:set var="readonly"
           value="${(display || !owns) && customerForm.id != 0}"/>
+<jstl:set var="disabled"
+          value="${(!customerForm.active) && customerForm.id != 0}"/>
 
 
 <div class="seccion w3-light-grey">
@@ -30,18 +32,18 @@
 
         <div class="row">
             <div class="col-50">
-                <acme:textbox code="label.name" path="name" readonly="${readonly}" disabled="${!customerForm.active}"/>
+                <acme:textbox code="label.name" path="name" readonly="${readonly}" disabled="${}"/>
                 <acme:textbox code="customer.address" path="address"
-                              readonly="${readonly}" disabled="${!customerForm.active}"/>
+                              readonly="${readonly}" disabled="${disabled}"/>
                 <acme:textbox code="customer.website" path="webSite"
-                              readonly="${readonly}" disabled="${!customerForm.active}"/>
+                              readonly="${readonly}" disabled="${disabled}"/>
                 <acme:textbox code="actor.email" path="email" readonly="${readonly}"
-                              disabled="${!customerForm.active}"/>
+                              disabled="${disabled}"/>
                 <acme:moment code="customer.registration.date" path="fechaAlta"
                              placeholder="dd-MM-yyyyTHH:mm" css="formInput" readonly="true"
-                             disabled="${!customerForm.active}"/>
+                             disabled="${disabled}"/>
                 <acme:textarea code="label.description" path="description"
-                               css="formTextArea" readonly="${readonly}" disabled="${!customerForm.active}"/>
+                               css="formTextArea" readonly="${readonly}" disabled="${disabled}"/>
                 <br>
                 <acme:checkBox code="label.active" path="active"
                                readonly="true" css="w3-check"/>
@@ -52,12 +54,12 @@
 
                 <jstl:if test="${!readonly}">
                     <acme:textbox code="label.passkey" path="passKey" readonly="true"
-                                  disabled="${!customerForm.active}"/>
+                                  disabled="${disabled}"/>
                     <acme:textbox code="label.nif" path="nif" readonly="${readonly}"
-                                  disabled="${!customerForm.active}"/>
+                                  disabled="${disabled}"/>
 
                     <acme:textbox code="customer.billing.address" path="billingAddress"
-                                  readonly="${readonly}" disabled="${!customerForm.active}"/>
+                                  readonly="${readonly}" disabled="${disabled}"/>
 
                 </jstl:if>
 
@@ -72,7 +74,7 @@
                                  class="imgCentered" style="max-height: 20em; max-width: 20em;">
                             <div class="w3-container w3-white">
                                 <acme:textbox code="label.none" path="logo" css="w3-border-0" readonly="${readonly}"
-                                              placeholder="Logo" disabled="${!customerForm.active}"/>
+                                              placeholder="Logo" disabled="${disabled}"/>
                             </div>
                         </div>
                     </div>
@@ -85,18 +87,16 @@
         </div>
         <div class="row">
             <div class="col-100">
-                <jstl:if test="${!readonly}">
                     <hr>
-                    <jstl:if test="${rol eq 'responsible'}">
+                    <jstl:if test="${owns or !readonly}">
                         <acme:submit name="save" code="rendezvous.save"
                                      css="formButton toLeft"/>
                     </jstl:if>
                     <jstl:if test="${rol eq 'manager'}">
                         <acme:button url="customer/manager/toggleActivation.do?customerId=${customerForm.id}"
                                      text="label.activation.${!customerForm.active}"
-                                     css="formButton toLeft"/>
+                                     css="formButton toLeft" confirmation="sa" confirmationMsg="msg.deactivation.confirmation.msg"/>
                     </jstl:if>
-                </jstl:if>
 
             </div>
 

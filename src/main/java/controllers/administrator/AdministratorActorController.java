@@ -1,9 +1,8 @@
 
-package controllers.responsible;
+package controllers.administrator;
 
 import controllers.AbstractController;
-import domain.Actor;
-import domain.Customer;
+import domain.*;
 import forms.ActorForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,8 +19,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 @Controller
-@RequestMapping("/actor/responsible")
-public class ResponsibleActorController extends AbstractController {
+@RequestMapping("/actor/administrator")
+public class AdministratorActorController extends AbstractController {
 
 	// Supporting services -----------------------------------------------------
 
@@ -33,7 +32,7 @@ public class ResponsibleActorController extends AbstractController {
 
 	// Constructors -----------------------------------------------------------
 
-	public ResponsibleActorController() {
+	public AdministratorActorController() {
 		super();
 	}
 
@@ -42,55 +41,63 @@ public class ResponsibleActorController extends AbstractController {
 	public ModelAndView list(final Integer pageSize) {
 		ModelAndView result;
 
-		final Collection<Actor> actors = this.actorService.findWorkers();
+		final Collection<Actor> actors = this.actorService.findAll();
 
 		result = new ModelAndView("actor/list");
 		result.addObject("actors", actors);
-		result.addObject("requestUri", "actor/responsible/list.do");
+		result.addObject("requestUri", "actor/administrator/list.do?pageSize="+ pageSize);
 		result.addObject("pageSize", (pageSize != null) ? pageSize : 5);
 		return result;
 	}
 	// Activate deactivate members ------------------------------------------------------------------
 	@RequestMapping(value = "/activation", method = RequestMethod.GET)
-	public ModelAndView activation(final Integer id) {
+	public ModelAndView activation(final Integer id, Integer pageSize) {
 		ModelAndView result;
-
+		pageSize = (pageSize != null) ? pageSize : 5;
 		final Actor actor = this.actorService.findOne(id);
 		try {
 			actorService.toggleActivation(actor);
-			result = new ModelAndView("redirect:/actor/responsible/list.do?id=");
+			result = new ModelAndView("redirect:/actor/administrator/list.do?pageSize="+ pageSize);
 		} catch (Throwable oops) {
 			if (oops.getMessage().startsWith("msg.")) {
-				result = createMessageModelAndView(oops.getLocalizedMessage(), "/actor/responsible/list.do");
+				result = createMessageModelAndView(oops.getLocalizedMessage(), "/actor/administrator/list.do?pageSize="+ pageSize);
 			} else
-				result = this.createMessageModelAndView("msg.commit.error", "/actor/responsible/list.do");
+				result = this.createMessageModelAndView("msg.commit.error", "/actor/administrator/list.do?pageSize="+ pageSize);
 		}
 		return result;
 	}
 	// activate deactivate All members ------------------------------------------------------------------
 	@RequestMapping(value = "/activateAll", method = RequestMethod.GET)
-	public ModelAndView activateAll() {
+	public ModelAndView activateAll(Integer pageSize) {
 		ModelAndView result;
+		pageSize = (pageSize != null) ? pageSize : 5;
 
 		try {
-			Assert.isTrue(this.customerService.activateAllMembers());
-			result = new ModelAndView("redirect:/actor/responsible/list.do");
+			Assert.isTrue(this.actorService.setAllActivationTo(true));
+			result = new ModelAndView("redirect:/actor/administrator/list.do?pageSize="+ pageSize);
 		} catch (final Throwable oops) {
-			result = this.createMessageModelAndView( "msg.commit.error","/actor/responsible/list.do" );
+			if (oops.getMessage().startsWith("msg.")) {
+				result = createMessageModelAndView(oops.getLocalizedMessage(), "/actor/administrator/list.do?pageSize="+ pageSize);
+			} else
+				result = this.createMessageModelAndView( "msg.commit.error","/actor/administrator/list.do?pageSize="+ pageSize );
 		}
 		return result;
 	}
 
 	// activate deactivate All members ------------------------------------------------------------------
 	@RequestMapping(value = "/deactivateAll", method = RequestMethod.GET)
-	public ModelAndView deactivateAll() {
+	public ModelAndView deactivateAll(Integer pageSize) {
 		ModelAndView result;
+		pageSize = (pageSize != null) ? pageSize : 5;
 
 		try {
-			Assert.isTrue(this.customerService.deactivateAllMembers());
-			result = new ModelAndView("redirect:/actor/responsible/list.do");
+			Assert.isTrue(this.actorService.setAllActivationTo(false));
+			result = new ModelAndView("redirect:/actor/administrator/list.do?pageSize="+ pageSize);
 		} catch (final Throwable oops) {
-			result = this.createMessageModelAndView( "msg.commit.error","/actor/responsible/list.do" );
+			if (oops.getMessage().startsWith("msg.")) {
+				result = createMessageModelAndView(oops.getLocalizedMessage(), "/actor/administrator/list.do?pageSize="+ pageSize);
+			} else
+				result = this.createMessageModelAndView( "msg.commit.error","/actor/administrator/list.do?pageSize="+ pageSize );
 		}
 		return result;
 	}
@@ -102,6 +109,7 @@ public class ResponsibleActorController extends AbstractController {
 	public ModelAndView create() {
 		ModelAndView result;
 		final ActorForm registerForm = new ActorForm();
+		registerForm.setAuthority(Authority.ADMINISTRATOR);
 		result = this.createEditModelAndView(registerForm, null);
 		return result;
 	}
@@ -120,10 +128,11 @@ public class ResponsibleActorController extends AbstractController {
 				result = this.createEditModelAndView(actorForm);
 			else
 				try {
+					Assert.isTrue(actor instanceof Administrator || actor instanceof Manager, "msg.not.owned.block");
 					actor = this.actorService.save(actor);
 					actor.getUserAccount().setActive(true);
 					this.actorService.save(actor);
-					result = new ModelAndView("redirect:/actor/responsible/list.do");
+					result = new ModelAndView("redirect:/actor/administrator/list.do?pageSize=20");
 				} catch (final Throwable oops) {
 					if (oops.getMessage().startsWith("msg.")) {
 						return createMessageModelAndView(oops.getLocalizedMessage(), "/");
@@ -159,12 +168,12 @@ public class ResponsibleActorController extends AbstractController {
 		final Collection<Authority> permisos = new ArrayList<>();
 		final Collection<Customer> customers = new ArrayList<>();
 		final Authority authority = new Authority();
-		authority.setAuthority(Authority.USER);
+		authority.setAuthority(Authority.ADMINISTRATOR);
 		permisos.add(authority);
 		customers.add(actorService.findByPrincipal().getCustomer());
 		result = new ModelAndView("actor/create");
 		result.addObject("actorForm", model);
-		result.addObject("requestUri", "actor/responsible/create.do");
+		result.addObject("requestUri", "actor/administrator/create.do");
 		result.addObject("permisos", permisos);
 		result.addObject("customers", customers);
 		result.addObject("edition", true);

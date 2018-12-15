@@ -49,49 +49,51 @@
                 <input type="submit" value=">">
             </form:form>
 
+<div style="overflow-x:auto;">
+    <display:table pagesize="${pageSize}" class="flat-table0 flat-table-1 w3-light-grey"
+                   name="customers" requestURI="${requestUri}" id="row">
 
-            <display:table pagesize="${pageSize}" class="flat-table0 flat-table-1 w3-light-grey"
-                           name="customers" requestURI="${requestUri}" id="row">
 
+        <spring:message code="label.name" var="title"/>
+        <display:column property="name" title="${title}" sortable="true"
+                        class="${classTd}"/>
+        <acme:column property="description" title="label.description"/>
+        <acme:column property="webSite" title="customer.website"/>
+        <acme:column property="fechaAlta" title="customer.registration.date" format="moment.format"/>
+        <acme:imgColumn src="${row.logo}" title="label.logo" css="tableImg"/>
 
-                <spring:message code="label.name" var="title"/>
-                <display:column property="name" title="${title}" sortable="true"
-                                class="${classTd}"/>
-                <acme:column property="description" title="label.description"/>
-                <acme:column property="webSite" title="customer.website"/>
-                <acme:column property="fechaAlta" title="customer.registration.date" format="moment.format"/>
-                <acme:imgColumn src="${row.logo}" title="label.logo" css="tableImg"/>
+        <display:column class="${classTd}">
+            <jstl:set var="owns"
+                      value="${rol=='manager' or logedCustomerId==row.id}"/>
 
-                <display:column class="${classTd}">
-                    <jstl:set var="owns"
-                              value="${rol=='manager' or logedCustomerId==row.id}"/>
+            <jstl:if test="${owns}">
+                <div>
+                    <a href="customer/edit.do?id=${row.id}"> <i
+                            class="fa fa-edit w3-xlarge"></i>
+                    </a>
+                </div>
+            </jstl:if>
+            <jstl:if test="${!owns}">
+                <div>
+                    <a href="customer/display.do?id=${row.id}"> <i
+                            class="fa fa-eye w3-xlarge"></i>
+                    </a>
+                </div>
+            </jstl:if>
+        </display:column>
+        <display:column class="${classTd}">
+            <jstl:if test="${rol=='manager' or rol=='technician'}">
+                <div>
+                    <a href="incidence/internal/create.do?customerId=${row.id}"> <i
+                            class="	fa fa-ambulance w3-xlarge"></i>
+                    </a>
+                </div>
+            </jstl:if>
+        </display:column>
 
-                    <jstl:if test="${owns}">
-                        <div>
-                            <a href="customer/edit.do?id=${row.id}"> <i
-                                    class="fa fa-edit w3-xlarge"></i>
-                            </a>
-                        </div>
-                    </jstl:if>
-                    <jstl:if test="${!owns}">
-                        <div>
-                            <a href="customer/display.do?id=${row.id}"> <i
-                                    class="fa fa-eye w3-xlarge"></i>
-                            </a>
-                        </div>
-                    </jstl:if>
-                </display:column>
-                <display:column class="${classTd}">
-                    <jstl:if test="${rol=='manager' or rol=='technician'}">
-                        <div>
-                            <a href="incidence/internal/create.do?customerId=${row.id}"> <i
-                                    class="	fa fa-ambulance w3-xlarge"></i>
-                            </a>
-                        </div>
-                    </jstl:if>
-                </display:column>
+    </display:table>
 
-            </display:table>
+</div>
 
             <acme:backButton text="label.back" css="formButton toLeft"/>
             <acme:button url="/customer/create.do" text="label.new"/>

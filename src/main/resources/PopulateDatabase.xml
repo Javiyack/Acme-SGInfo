@@ -300,6 +300,7 @@
 
 	<bean id="customer1" class="domain.Customer">
 		<property name="name" value="Acme-CRM" />
+		<property name="biller" value="true" />
 		<property name="description"
 			value="Sistemas y Gestión informática" />
 		<property name="webSite" value="www.acme-crm.es" />
@@ -310,6 +311,7 @@
 		<property name="billingAddress" value="C/ Estancos 30" />
 		<property name="nif" value="28614080X" />
 		<property name="active" value="true" />
+		<property name="logo" value="https://www.acmeticketing.com/wp-content/uploads/2017/08/logo_rev@3x.png" />
 	</bean>
 
 	<bean id="customer2" class="domain.Customer">
@@ -324,6 +326,7 @@
 		<property name="billingAddress" value="C/ Angustia 99" />
 		<property name="nif" value="G41623679" />
 		<property name="active" value="true" />
+		<property name="logo" value="https://www.gmkfreelogos.com/logos/K/img/KA_International.gif" />
 	</bean>
 
 	<bean id="customer3" class="domain.Customer">
@@ -339,6 +342,7 @@
 			value="C/ San Jose Obrero s/n" />
 		<property name="nif" value="A22623679" />
 		<property name="active" value="true" />
+		<property name="logo" value="https://coop57.coop/sites/default/files/853_256_256_3.jpg" />
 	</bean>
 
 	<!-- Incidences -->
@@ -363,7 +367,7 @@
 		<property name="endingDate" value="2018/06/15 15:30" />
 		<property name="user" ref="user2" />
 		<property name="technician" ref="technician2" />
-		<property name="cancelled" value="false" />
+		<property name="cancelled" value="true" />
 	</bean>
 
 	<bean id="incidence3" class="domain.Incidence">
@@ -375,7 +379,7 @@
 		<property name="endingDate" value="2018/04/17 12:00" />
 		<property name="user" ref="user3" />
 		<property name="technician" ref="technician1" />
-		<property name="cancelled" value="true" />
+		<property name="cancelled" value="false" />
 		<property name="cancellationReason" value="El problema ha desaarecio espontaneamente" />
 	</bean>
 

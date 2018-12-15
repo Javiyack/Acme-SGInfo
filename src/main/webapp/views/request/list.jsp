@@ -68,11 +68,12 @@
             <fmt:formatDate value="${row.startingDay}" pattern="${intercionalizedDatePattern}" var="startingDay"/>
             <fmt:formatDate value="${row.endingDay}" pattern="${intercionalizedDatePattern}" var="endingDay"/>
             <acme:urlColumn value="${row.responsible.name}" title="actor.authority.RESPONSIBLE" href="${url}" css="iButton"/>
+            <acme:imgColumn src="${row.servant.picture}" href="${url}" title="label.service" css="iButton tableImg"
+                            style="width:9em;"/>
             <acme:urlColumn value="${creationMoment}" title="label.moment" href="${url}" css="iButton"/>
+            <acme:urlColumn value="${row.status}" title="label.status" sortable="true" href="${url}" css="iButton"/>
             <acme:urlColumn value="${startingDay}" title="label.starting.on" href="${url}" css="iButton"/>
             <acme:urlColumn value="${endingDay}" title="label.ending.on" href="${url}" css="iButton"/>
-            <acme:urlColumn value="${row.servant.name}" title="label.service" href="${url}" css="iButton" sortable="true"/>
-            <acme:urlColumn value="${row.status}" title="label.status" sortable="true" href="${url}" css="iButton"/>
             <acme:urlColumn value="" title="label.none" href="${url}" css="iButton" icon="${icono}"/>
 
 

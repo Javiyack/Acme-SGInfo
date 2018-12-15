@@ -140,7 +140,9 @@ public class ActorController extends AbstractController {
 					else
 						result = new ModelAndView("redirect:/");
 				} catch (final Throwable oops) {
-					if (oops.getCause().getCause() != null
+					if (oops.getMessage().startsWith("msg.")) {
+						return createMessageModelAndView(oops.getLocalizedMessage(), "/");
+					} else if (oops.getCause().getCause() != null
 							&& oops.getCause().getCause().getMessage().startsWith("Duplicate"))
 						result = this.createEditModelAndView(actorForm, "msg.duplicate.username");
 					else
@@ -170,7 +172,7 @@ public class ActorController extends AbstractController {
 	protected ModelAndView createEditModelAndView(final ActorForm model, final String message) {
 		final ModelAndView result;
 		final Collection<Authority> permisos = Authority.listAuthorities();
-		final Collection<Customer> customers = customerService.findAll();
+		final Collection<Customer> customers = customerService.findAllActive();
 		final Authority authority = new Authority();
 		authority.setAuthority(Authority.ADMINISTRATOR);
 		permisos.remove(authority);

@@ -16,29 +16,19 @@ import java.util.Date;
 @Access(AccessType.PROPERTY)
 public class Customer extends DomainEntity {
 
-	private String name;
-
-	private String description;
-
-	private Date fechaAlta;
-
-	private String webSite;
-
-	private String address;
-
-	private String billingAddress;
-	
-	private String nif;
-
-	private String passKey;
-
+	private String 	name;
+	private String 	description;
+	private Date 	fechaAlta;
+	private String 	webSite;
+	private String 	address;
+	private String 	billingAddress;
+	private String 	nif;
+	private String 	passKey;
 	private Boolean active;
-
-	private String email;
-
-	private String phone;
-
-	private String logo;
+	private Boolean biller;
+	private String 	email;
+	private String 	phone;
+	private String 	logo;
 	
 	@URL
 	public String getLogo() {
@@ -165,5 +155,12 @@ public class Customer extends DomainEntity {
 		this.nif = nif;
 	}
 
-	
+
+	public Boolean isBiller() {
+		return biller;
+	}
+
+	public void setBiller(Boolean biller) {
+		this.biller = biller;
+	}
 }

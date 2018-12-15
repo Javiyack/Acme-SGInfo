@@ -42,7 +42,7 @@
 		 <security:authorize
                  access="isAuthenticated()">
 			<a href="customer/displayOwn.do"><img src="${enterpriseLogo}"
-                                                  class="iconoenlace w3-circle w3-border iButton zoom"
+                                                  class="iconoenlace w3-circle w3-border iButton zoom w3-margin-right"
                                                   style="margin-bottom: 22px;"/></a>
          </security:authorize>
 			<a href="${url}" style="color:${color};"> <i

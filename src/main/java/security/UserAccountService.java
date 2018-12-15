@@ -48,4 +48,8 @@ public class UserAccountService {
 	public void delete(final UserAccount userAccount) {
 		this.userAccountRepository.delete(userAccount);
 	}
+
+	public void flush() {
+		this.userAccountRepository.flush();
+	}
 }

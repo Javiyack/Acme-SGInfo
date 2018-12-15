@@ -161,3 +161,8 @@
     </form:form>
 
 </div>
+<script>
+    $(document).ready(function () {
+        ajaxSearch(document.getElementById("combo"), '${pageContext.request.contextPath}');
+    });
+</script>

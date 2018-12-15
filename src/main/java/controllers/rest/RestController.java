@@ -23,6 +23,7 @@ public class RestController {
 	public @ResponseBody Boolean ajaxPasskeyCheck(HttpServletRequest req, HttpServletResponse res) {
 		String passKey =this.configurationService.findPassKey();
 		String companyKey = customerService.findOne(Integer.parseInt(req.getParameter("id"))).getPassKey();
-		return passKey.equals(companyKey);
+		Boolean isBiller = customerService.findOne(Integer.parseInt(req.getParameter("id"))).isBiller();
+		return passKey.equals(companyKey ) && isBiller;
 	}
 }

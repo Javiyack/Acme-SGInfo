@@ -12,7 +12,7 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
-
+<div class="seccion w3-light-gray">
 
 <h3>
 	<spring:message code="administrator.rankingTop3Users" />
@@ -71,3 +71,4 @@
 <br />
 
 
+</div>

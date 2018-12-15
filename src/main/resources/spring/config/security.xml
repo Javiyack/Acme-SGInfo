@@ -53,9 +53,11 @@
 		<security:intercept-url
 				pattern="/customer/create.do" access="permitAll" />
 		<security:intercept-url
-			pattern="/customer/display.do" access="permitAll" />
-		
-		
+				pattern="/customer/display.do" access="permitAll" />
+		<security:intercept-url
+				pattern="/jquery/hostCheck.do" access="permitAll" />
+
+
 		<!-- IS ANONYMOUS -->
 		
 
