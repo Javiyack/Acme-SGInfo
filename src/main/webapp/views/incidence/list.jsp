@@ -66,9 +66,27 @@
                     </jstl:if>
                     <jstl:if test="${!owns}">
                         <jstl:set var="url" value="incidence/${accesscontrol}/display.do?id=${row.id}"/>
-
-
                     </jstl:if>
+                    
+                    <jstl:set var="resultIncidence" value="${row.endingDate<date}"/>
+                    <jstl:if test="${noVoted.contains(row) and logedActor.id == row.user.userAccount.id}">
+                    	<jstl:set var="rate" value="fa fa-star w3-xlarge"/>
+                    	<jstl:set var="urlRate" value="valuation/create.do?id=${row.id}"/>
+                    </jstl:if>
+                    <jstl:if test="${noVoted.contains(row) and logedActor.id != row.user.userAccount.id}">
+                    	<jstl:set var="rate" value=""/>
+                    	<jstl:if test="${owns}">
+	                        <jstl:set var="urlRate" value="incidence/${accesscontrol}/edit.do?id=${row.id}"/>
+	                    </jstl:if>
+	                    <jstl:if test="${!owns}">
+	                        <jstl:set var="urlRate" value="incidence/${accesscontrol}/display.do?id=${row.id}"/>
+	                    </jstl:if>
+                    </jstl:if>
+                    <jstl:if test="${!noVoted.contains(row)}">
+                    	<jstl:set var="rate" value="fa fa-eye w3-xlarge"/>
+                    	<jstl:set var="urlRate" value="valuation/display.do?id=${row.id}"/>
+                    </jstl:if>
+                    
                     <jstl:set var="rowcolor" value="background-color: rgba(255,0,0,0.6); color: white;"/>
                     <jstl:if test="${row.startingDate < date}">
                         <jstl:set var="rowcolor" value="background-color: rgba(255,180,0,0.5); color: red;"/>
@@ -111,6 +129,14 @@
                     </jstl:if>
                     <acme:urlColumn value="" title="label.sort" href="${url}"
                                     css="iButton" style="${rowcolor}" icon="${icono}"/>
+                                    
+                    
+                    
+                    <jstl:if test="${resultIncidence}">                    	
+                    	<acme:urlColumn value="" title="label.rate" href="${urlRate}"
+                                    css="iButton" style="${rowcolor}" icon="${rate}"/>
+                    </jstl:if>
+                    
                 </display:table>
             </div>
             <hr>

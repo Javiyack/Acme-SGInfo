@@ -32,7 +32,7 @@
 
         <div class="row">
             <div class="col-50">
-                <acme:textbox code="label.name" path="name" readonly="${readonly}" disabled="${}"/>
+                <acme:textbox code="label.name" path="name" readonly="${readonly}" disabled="${disabled}"/>
                 <acme:textbox code="customer.address" path="address"
                               readonly="${readonly}" disabled="${disabled}"/>
                 <acme:textbox code="customer.website" path="webSite"

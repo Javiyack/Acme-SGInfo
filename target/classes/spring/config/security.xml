@@ -53,9 +53,11 @@
 		<security:intercept-url
 				pattern="/customer/create.do" access="permitAll" />
 		<security:intercept-url
-			pattern="/customer/display.do" access="permitAll" />
-		
-		
+				pattern="/customer/display.do" access="permitAll" />
+		<security:intercept-url
+				pattern="/jquery/hostCheck.do" access="permitAll" />
+
+
 		<!-- IS ANONYMOUS -->
 		
 
@@ -69,6 +71,8 @@
 			access="isAuthenticated()" />
 		<security:intercept-url
 			pattern="/customer/displayOwn.do" access="isAuthenticated()" />
+		<security:intercept-url
+			pattern="/valuation/display.do" access="isAuthenticated()" />
 		
 
 		<!-- external -->
@@ -77,6 +81,8 @@
 			access="hasAnyRole('USER', 'RESPONSIBLE')" />
 
 		<!-- User -->
+		<security:intercept-url
+			pattern="/valuation/create.do" access="hasRole('USER')" />
 
 
 		<!-- Responsible -->

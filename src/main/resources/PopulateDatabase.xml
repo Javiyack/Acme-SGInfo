@@ -60,7 +60,7 @@
 	<bean id="userAccountUser3" class="security.UserAccount">
 		<property name="username" value="user3" />
 		<property name="password"
-			value="7e58d63b60197ceb55a1c487989a3720" />
+			value="92877af70a45fd6a2ed7fe81e1236b78" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -107,7 +107,7 @@
 	<bean id="userAccountResponsable1" class="security.UserAccount">
 		<property name="username" value="responsable1" />
 		<property name="password"
-			value="21232f297a57a5a743894a0e4a801fc3" />
+			value="d4ab1a6dd73792ba7675b344de9effe2" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -121,7 +121,7 @@
 	<bean id="userAccountResponsable2" class="security.UserAccount">
 		<property name="username" value="responsable2" />
 		<property name="password"
-			value="21232f297a57a5a743894a0e4a801fc3" />
+			value="e56e1cc9b6827f1c1a6ce2fae0f69bb3" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -135,7 +135,7 @@
 	<bean id="userAccountResponsable3" class="security.UserAccount">
 		<property name="username" value="responsable3" />
 		<property name="password"
-			value="21232f297a57a5a743894a0e4a801fc3" />
+			value="a38d3201ffa0c0e56e30924bea7de2ea" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -151,7 +151,7 @@
 	<bean id="userAccountTechnician1" class="security.UserAccount">
 		<property name="username" value="technician1" />
 		<property name="password"
-			value="c240642ddef994358c96da82c0361a58" />
+			value="be03514e16e38740e6fadcd0a9660de2" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -165,7 +165,7 @@
 	<bean id="userAccountTechnician2" class="security.UserAccount">
 		<property name="username" value="technician2" />
 		<property name="password"
-			value="8df5127cd164b5bc2d2b78410a7eea0c" />
+			value="26037ba55e09692a6d2526b13936080a" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -509,6 +509,35 @@
 		<property name="moment" value="2018/04/15 20:45" />
 		<property name="incidence" ref="incidence4" />
 	</bean>
+	<!-- Valuation -->
+	<bean id="valuation1" class="domain.Valuation">
+		<property name="value" value="1" />
+		<property name="comments"
+			value="Mi ordenador no rinde tanto como me gustaría" />
+		<property name="incidence" ref="incidence1" />
+	</bean>
+	
+	<bean id="valuation2" class="domain.Valuation">
+		<property name="value" value="4" />
+		<property name="comments"
+			value="Estoy bastante contenta con el servicio el ordenador vuelve a funcionar" />
+		<property name="incidence" ref="incidence2" />
+	</bean>
+	
+	<bean id="valuation3" class="domain.Valuation">
+		<property name="value" value="3" />
+		<property name="comments"
+			value="El ordenador funciona correctamente" />
+		<property name="incidence" ref="incidence3" />
+	</bean>
+	
+	<bean id="valuation4" class="domain.Valuation">
+		<property name="value" value="5" />
+		<property name="comments"
+			value="Siempre realizan un servicio rápido y eficaz" />
+		<property name="incidence" ref="incidence4" />
+	</bean>
+	
 	<!-- Categories -->
 
 

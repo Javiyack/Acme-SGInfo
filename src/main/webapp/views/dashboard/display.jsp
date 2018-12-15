@@ -70,5 +70,28 @@
 <jstl:out value="${stddevRequestByResponsable}"></jstl:out>
 <br />
 
+<h3>
+	<spring:message code="administrator.bestRatedIncidences" />
+</h3>
+<jstl:forEach var="c" items="${bestRatedIncidences}"
+	varStatus="loop">
+	<jstl:out value="${c[1]}" />:
+		<jstl:out value="${c[0]}"></jstl:out>
+	<jstl:if test="${!loop.last}">, </jstl:if>
+</jstl:forEach>
+<br />
+
+
+<h3>
+	<spring:message code="administrator.worstRatedTechnicianOfIncidences" />
+</h3>
+<jstl:forEach var="c" items="${worstRatedTechnicianOfIncidences}"
+	varStatus="loop">
+	<jstl:out value="${c[1]}" />:
+		<jstl:out value="${c[0]}"></jstl:out>
+	<jstl:if test="${!loop.last}">, </jstl:if>
+</jstl:forEach>
+<br />
+
 
 </div>

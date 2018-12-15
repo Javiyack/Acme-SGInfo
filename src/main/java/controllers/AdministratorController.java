@@ -67,6 +67,20 @@ public class AdministratorController extends AbstractController {
 			percMessagesSenderByActor = new ArrayList<Object[]>(0);
 		}
 		
+		List<Object[]> bestRatedIncidences;
+		if(administratorService.bestRatedIncidences()!=null){
+			bestRatedIncidences=administratorService.bestRatedIncidences();
+		}else{
+			bestRatedIncidences=new ArrayList<Object[]>(0);
+		}
+		
+		List<Object[]> worstRatedTechnicianOfIncidences;
+		if(administratorService.worstRatedTechnicianOfIncidences()!=null){
+			worstRatedTechnicianOfIncidences=administratorService.worstRatedTechnicianOfIncidences();
+		}else{
+			worstRatedTechnicianOfIncidences=new ArrayList<Object[]>(0);
+		}
+		
 		
 
 		// Ranking 3 users with more incidences
@@ -85,6 +99,12 @@ public class AdministratorController extends AbstractController {
 		result.addObject("minRequestByResponsable", administratorService.minRequestByResponsible());
 		result.addObject("maxRequestByResponsable", administratorService.maxRequestByResponsible());
 		result.addObject("stddevRequestByResponsable", administratorService.stddevRequestByResponsible());
+		
+		//Best rated incidences
+		result.addObject("bestRatedIncidences",bestRatedIncidences);
+		
+		//Technicians that have resulted in the worst rated incidences
+		result.addObject("worstRatedTechnicianOfIncidences",worstRatedTechnicianOfIncidences);
 
 		
 

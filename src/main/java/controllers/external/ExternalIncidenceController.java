@@ -13,7 +13,10 @@ import org.springframework.web.servlet.ModelAndView;
 import services.*;
 
 import javax.validation.Valid;
+
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Date;
 
 @Controller
@@ -26,11 +29,11 @@ public class ExternalIncidenceController extends AbstractController {
     @Autowired
     private TechnicianService technicianService;
     @Autowired
-    private UserService userService;
-    @Autowired
     private LaborService laborService;
     @Autowired
     private ActorService actorService;
+    @Autowired
+    private ValuationService valuationService;
     // Constructor
 
     public ExternalIncidenceController() {
@@ -45,9 +48,17 @@ public class ExternalIncidenceController extends AbstractController {
         final Collection<Incidence> inidencias = this.incidenceService.findAllByActor();
 
         result = new ModelAndView("incidence/list");
+        List<Incidence> noVoted = new ArrayList<Incidence>();
+        for(Incidence i: inidencias){
+        	if(valuationService.numValorationByUserInIncidence(i.getId())==0){
+        		noVoted.add(i);
+        	}
+        }
+        
         result.addObject("incidences", inidencias);
         result.addObject("requestUri", "incidence/external/list.do");
         result.addObject("pageSize", (pageSize != null) ? pageSize : 20);
+        result.addObject("noVoted",noVoted);
         return result;
     }
 

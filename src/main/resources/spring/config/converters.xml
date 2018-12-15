@@ -66,6 +66,9 @@
 		<bean class="converters.StringToTabooWordConverter" />	
 		<bean class="converters.StringToConfigurationConverter" />
 		<bean class="converters.StringToCurriculumConverter" />
+		
+		<bean class="converters.StringToValuationConverter" />
+		<bean class="converters.ValuationToStringConverter" />
 			
 			
 			

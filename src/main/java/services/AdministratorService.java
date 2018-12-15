@@ -124,5 +124,12 @@ public class AdministratorService {
 	public Double stddevRequestByResponsible(){
 		return administratorRepository.stddevRequestByResponsible();
 	}
+	
+	public List<Object[]> bestRatedIncidences(){
+		return administratorRepository.bestRatedIncidences();
+	}
+	public List<Object[]> worstRatedTechnicianOfIncidences(){
+		return administratorRepository.worstRatedTechnicianOfIncidences();
+	}
 
 }

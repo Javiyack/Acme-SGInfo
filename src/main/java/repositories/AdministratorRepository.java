@@ -46,6 +46,14 @@ public interface AdministratorRepository extends JpaRepository<Administrator, In
 	
 	@Query(value = "select stddev(requests.count) from (select r.name, count(re.id) count from `acme-crm`.Responsible r left join `acme-crm`.Request re on re.responsible_id=r.id group by r.id) as requests", nativeQuery = true)
 	Double stddevRequestByResponsible();
+	
+	//Best rated incidences
+	@Query("select v.value,v.incidence.title from Valuation v where v.value=(select max(va.value) from Valuation va)")
+	List<Object[]> bestRatedIncidences();
+	
+	//Technicians that have resulted in the worst rated incidences
+	@Query("select v.value,v.incidence.technician.name from Valuation v where v.value=(select min(va.value) from Valuation va)")
+	List<Object[]> worstRatedTechnicianOfIncidences();
 
 
 

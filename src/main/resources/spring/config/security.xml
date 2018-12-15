@@ -71,6 +71,8 @@
 			access="isAuthenticated()" />
 		<security:intercept-url
 			pattern="/customer/displayOwn.do" access="isAuthenticated()" />
+		<security:intercept-url
+			pattern="/valuation/display.do" access="isAuthenticated()" />
 		
 
 		<!-- external -->
@@ -79,6 +81,8 @@
 			access="hasAnyRole('USER', 'RESPONSIBLE')" />
 
 		<!-- User -->
+		<security:intercept-url
+			pattern="/valuation/create.do" access="hasRole('USER')" />
 
 
 		<!-- Responsible -->

@@ -95,7 +95,7 @@
 	<!-- Validator -->
 
 	<bean name="validator"
-		class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		  class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
 		<property name="validationMessageSource" ref="messageSource" />
 	</bean>
 

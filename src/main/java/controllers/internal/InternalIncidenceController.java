@@ -13,8 +13,11 @@ import org.springframework.web.servlet.ModelAndView;
 import services.*;
 
 import javax.validation.Valid;
+
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/incidence/internal")
@@ -31,6 +34,8 @@ public class InternalIncidenceController extends AbstractController {
     private ActorService actorService;
     @Autowired
     private LaborService laborService;
+    @Autowired
+    private ValuationService valuationService;
 
     // Constructor
 
@@ -54,11 +59,19 @@ public class InternalIncidenceController extends AbstractController {
                 return this.createMessageModelAndView("panic.message.text", "/");
             }
         }
+        
+        List<Incidence> noVoted = new ArrayList<Incidence>();
+        for(Incidence i: inidencias){
+        	if(valuationService.numValorationByUserInIncidence(i.getId())==0){
+        		noVoted.add(i);
+        	}
+        }
 
         result = new ModelAndView("incidence/list");
         result.addObject("incidences", inidencias);
         result.addObject("requestUri", "incidence/internal/list.do");
         result.addObject("pageSize", (pageSize != null) ? pageSize : 20);
+        result.addObject("noVoted",noVoted);
         return result;
     }
 
