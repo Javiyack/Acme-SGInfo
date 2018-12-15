@@ -187,6 +187,10 @@ public class BillingService {
 		Assert.isTrue(actor instanceof Responsible || actor instanceof Manager, "msg.not.owned.block");
 		return billingRepository.findPropperByCustomerId(((Responsible)actor).getCustomer().getId());
 	}
+	
+	public Collection<Object> findByCustomerId(Integer customerId){
+		return billingRepository.findByCustomerId(customerId);
+	}
 
 
 	public void checkOwns(Customer customer) {
