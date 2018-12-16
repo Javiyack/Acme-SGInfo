@@ -100,35 +100,44 @@ public class AdministratorService {
 	}
 	
 	public List<Object[]> usersWithMoreIncidences(){
+		Assert.isTrue(findByPrincipal() instanceof Administrator);
 		return administratorRepository.usersWithMoreIncidences();
 	}
 	
 	public List<Object[]> techniciansWithLessIncidences(){
+		Assert.isTrue(findByPrincipal() instanceof Administrator);
 		return administratorRepository.techniciansWithLessIncidences();		
 	}
 	
 	public List<Object[]> percMessagesSenderByActor(){
+		Assert.isTrue(findByPrincipal() instanceof Administrator);
 		return administratorRepository.percMessagesSenderByActor();
 	}
 	
 	public Double avgRequestByResponsible(){
+		Assert.isTrue(findByPrincipal() instanceof Administrator);
 		return administratorRepository.avgRequestByResponsible();
 	}
 	
 	public Double minRequestByResponsible(){
+		Assert.isTrue(findByPrincipal() instanceof Administrator);
 		return administratorRepository.minRequestByResponsible();
 	}
 	public Double maxRequestByResponsible(){
+		Assert.isTrue(findByPrincipal() instanceof Administrator);
 		return administratorRepository.maxRequestByResponsible();
 	}
 	public Double stddevRequestByResponsible(){
+		Assert.isTrue(findByPrincipal() instanceof Administrator);
 		return administratorRepository.stddevRequestByResponsible();
 	}
 	
 	public List<Object[]> bestRatedIncidences(){
+		Assert.isTrue(findByPrincipal() instanceof Administrator);
 		return administratorRepository.bestRatedIncidences();
 	}
 	public List<Object[]> worstRatedTechnicianOfIncidences(){
+		Assert.isTrue(findByPrincipal() instanceof Administrator);
 		return administratorRepository.worstRatedTechnicianOfIncidences();
 	}
 

@@ -13,14 +13,11 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import domain.Folder;
 import domain.Message;
-import domain.PostBox;
 
 import services.ActorService;
 import services.FolderService;
 import services.MessageService;
-import services.PostBoxService;
 import utilities.AbstractTest;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -38,9 +35,6 @@ public class MessageUseCaseTest extends AbstractTest{
 	
 	@Autowired
 	private FolderService folderService;
-	
-	@Autowired
-	private PostBoxService postBoxService;
 
     private Map <String, Object> testingDataMap;
 

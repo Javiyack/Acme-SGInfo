@@ -43,8 +43,9 @@ public class ManagerBillingController extends AbstractController {
 			Actor actor = actorService.findByPrincipal();
 			Assert.notNull(actor, "msg.not.logged.block");
 
-			final Collection<Object> bills = this.billingService.findAllPropper();
-			Map<Customer, List<Bill>> billsByCustomer = new HashMap<Customer, List<Bill>>();
+            final Collection<Object> bills = this.billingService.findAllPropperLaborBills();
+            bills.addAll(this.billingService.findAllPropperServiceBills());
+            Map<Customer, List<Bill>> billsByCustomer = new HashMap<Customer, List<Bill>>();
 			if (!bills.isEmpty()) {
 				for (Object object : bills) {
 					final Object[] entryCustomerBill = (Object[]) object;
@@ -94,32 +95,63 @@ public class ManagerBillingController extends AbstractController {
 	// ---------------------------------------------------------------
 	@RequestMapping("/display")
 	public ModelAndView edit(@Valid final int id) {
-		ModelAndView result;
+		ModelAndView result = new ModelAndView("billing/display");
 		Bill bill = billingService.findOne(id);
 		Collection<Labor> labors = this.laborService.findByBill(bill);
-//		Customer customer = this.customerService.findByBill(bill);
-		Labor anyLabor = labors.iterator().next();
-		Customer customer = anyLabor.getIncidence().getUser().getCustomer();
-		Customer biller = anyLabor.getIncidence().getTechnician().getCustomer();
 		Double iva = configurationService.findIVA();
-		Double precioHora = configurationService.findHourPrice();
-		result = new ModelAndView("billing/display");
-		result.addObject("bill", bill);
-		result.addObject("labors", labors);
-		result.addObject("customer", customer);
-		result.addObject("biller", biller);
-		result.addObject("precioHora", precioHora);
-		result.addObject("iva", iva);
-		result.addObject("backUrl", "/billing/manager/list.do");
-		try {
-			Actor actor = actorService.findByPrincipal();
-			Assert.notNull(actor, "msg.not.logged.block");
-			Assert.isTrue(actor instanceof Manager, "msg.not.owned.block");			
-		} catch (final Throwable oops) {
-			if (oops.getMessage().startsWith("msg."))
-				result = this.createMessageModelAndView(oops.getLocalizedMessage(), "/");
-			else
-				result = this.createMessageModelAndView("msg.commit.error", "/");
+		if(!labors.isEmpty()) {
+//		Customer customer = this.customerService.findByBill(bill);
+			Labor anyLabor = labors.iterator().next();
+			Customer customer = anyLabor.getIncidence().getUser().getCustomer();
+			Customer biller = anyLabor.getIncidence().getTechnician().getCustomer();
+			result.addObject("bill", bill);
+			result.addObject("labors", labors);
+			result.addObject("customer", customer);
+			result.addObject("biller", biller);
+			Double precioHora = configurationService.findHourPrice();
+			result.addObject("precioHora", precioHora);
+			result.addObject("iva", iva);
+			result.addObject("backUrl", "/billing/manager/list.do");
+			try {
+				Actor actor = actorService.findByPrincipal();
+				Assert.notNull(actor, "msg.not.logged.block");
+				Assert.isTrue(actor instanceof Manager, "msg.not.owned.block");
+			} catch (final Throwable oops) {
+				if (oops.getMessage().startsWith("msg."))
+					result = this.createMessageModelAndView(oops.getLocalizedMessage(), "/");
+				else
+					result = this.createMessageModelAndView("msg.commit.error", "/");
+			}
+		}else{
+			Collection<MonthlyDue> dues = this.billingService.findDuesByBill(bill);
+			if(!dues.isEmpty()) {
+				MonthlyDue anyDue = dues.iterator().next();
+				Customer customer = anyDue.getRequest().getResponsible().getCustomer();
+				Customer biller = actorService.findAllTecnicians().iterator().next().getCustomer();
+				Map<Request, Double> dueAmountMap = new HashMap<>();
+				for(MonthlyDue due: dues){
+					dueAmountMap.put(due.getRequest(), billingService.calculaImporte(due, bill.getYear(), bill.getMonth()));
+				}
+				result.addObject("bill", bill);
+				result.addObject("dues", dues);
+				result.addObject("dueAmount", dueAmountMap);
+				result.addObject("customer", customer);
+				result.addObject("biller", biller);
+				result.addObject("iva", iva);
+				result.addObject("backUrl", "/billing/manager/list.do");
+				try {
+					Actor actor = actorService.findByPrincipal();
+					Assert.notNull(actor, "msg.not.logged.block");
+					Assert.isTrue(actor instanceof Manager, "msg.not.owned.block");
+				} catch (final Throwable oops) {
+					if (oops.getMessage().startsWith("msg."))
+						result = this.createMessageModelAndView(oops.getLocalizedMessage(), "/");
+					else
+						result = this.createMessageModelAndView("msg.commit.error", "/");
+				}
+			}
+
+
 		}
 		return result;
 	}

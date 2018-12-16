@@ -1,12 +1,14 @@
 package usecases;
 
+import java.text.ParseException;
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.transaction.Transactional;
-import javax.validation.ConstraintViolationException;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.util.Assert;
@@ -16,9 +18,7 @@ import org.springframework.validation.DataBinder;
 import domain.Actor;
 import forms.ActorForm;
 
-import security.UserAccount;
 import services.ActorService;
-import services.CustomerService;
 import utilities.AbstractTest;
 
 
@@ -29,110 +29,177 @@ import utilities.AbstractTest;
 @Transactional
 public class ActorUseCaseTest extends AbstractTest {
 	
-	// System under test ------------------------------------------------------
-	
-	@Autowired
-	private ActorService actorService;
-	
-	@Autowired
-	private CustomerService customerService;
-	
-	//Create user	
-	protected void templateReconstructAndSave(final String name, final String surname, final String email, final String phone, final String address, final String username, final String password, 
-			final String confirmPassword, final String customer, final String passKey, final String authority, final boolean agree, final Class<?> expected) {
+    @Autowired
+    private ActorService actorService;
 
-			Class<?> caught;
+    private Map <String, Object> testingDataMap;
 
-			caught = null;
+    /* 
+     * Edit actor
+     */
+    @Test
+    public void editActorTest() throws ParseException {
+        /*
+         * Aquí cargamos  los datos a probar y el error esperado en 'testingDataMap'
+         * y llamamos a la plantilla 'templateCreateCustomerTest'
+         */
 
-			try {
-				ActorForm actorform = new ActorForm();
-				Actor actor;
-				UserAccount useraccount = new UserAccount();
-				useraccount.setPassword(password);
-				actorform.setName(name);
-				actorform.setSurname(surname);
-				actorform.setEmail(email);
-				actorform.setPhone(phone);
-				actorform.setAddress(address);
-				actorform.getAccount().setUsername(username);
-				actorform.getAccount().setPassword(password);
-				actorform.getAccount().setNewPassword(password);
-				actorform.getAccount().setConfirmPassword(confirmPassword);
-				actorform.getAccount().setAuthority(authority);
-				actorform.setCustomer(customerService.findOne(super.getEntityId(customer)));
-				actorform.setPassKey(passKey);
-				actorform.setAgree(agree);
-				
-				 DataBinder dataBinder = new DataBinder(actorform);
-		         BindingResult binding = dataBinder.getBindingResult();
-		         actor = actorService.reconstruct(actorform, binding);
-		         Assert.isTrue(!binding.hasErrors());
-		         actor = this.actorService.save(actor);
-		         this.actorService.flush();
+        Object userData[][] = (Object[][]) getEditionTestingData();
+        for (int i = 0; i < userData.length; i++) {
+            testingDataMap = new HashMap <String, Object>();
+            testingDataMap.put("username", userData[i][0]);
+            testingDataMap.put("name", userData[i][1]);
+            testingDataMap.put("surname", userData[i][2]);
+            testingDataMap.put("email", userData[i][3]);
+            testingDataMap.put("phone", userData[i][4]);
+            testingDataMap.put("address", userData[i][5]);
+            testingDataMap.put("editusername", userData[i][6]);
+            testingDataMap.put("password", userData[i][7]);
+            testingDataMap.put("newpassword", userData[i][8]);
+            testingDataMap.put("confirmpassword", userData[i][9]);
+            testingDataMap.put("expected", userData[i][10]);
+            this.templateEditActorTest();
+        }
+    }
 
-			} catch (Throwable oops) {
-				caught = oops.getClass();
-			}
+    protected Object getEditionTestingData() {
+        final Object testingData[][] = {
+                {// Positive
+                	"admin",
+                   "name1", "surname1",
+                   "email@email.com","634543123",
+                   "address1", "admin1",
+                   "admin","password","password",
+                   null
+                }, {//Negative: without name
+                	"admin",
+                    "", "surname1",
+                    "email@email.com","634543123",
+                    "address1", "admin1",
+                    "admin","password","password",
+                    IllegalArgumentException.class
+                }, {// Negative: without surname
+                	"admin",
+                    "name1", "",
+                    "email@email.com","634543123",
+                    "address1", "admin1",
+                    "admin","password","password",
+                    IllegalArgumentException.class
+                },{// Negative: wrong email
+                	"admin",
+                    "name1", "surname1",
+                    "emailemail.com","634543123",
+                    "address1", "admin1",
+                    "admin","password","password",
+                    IllegalArgumentException.class
+                }, {//Negative: without email
+                	"admin",
+                    "name1", "surname1",
+                    "","634543123",
+                    "address1", "admin1",
+                    "admin","password","password",
+                    IllegalArgumentException.class
+                }, {// Negative: wrong phone
+                	"admin",
+                    "name1", "surname1",
+                    "email@email.com","6345431232",
+                    "address1", "admin1",
+                    "admin","password","password",
+                    IllegalArgumentException.class
+                }, {// Negative: without phone
+                	"admin",
+                    "name1", "surname1",
+                    "email@email.com","",
+                    "address1", "admin1",
+                    "admin","password","password",
+                    IllegalArgumentException.class
+                }, {// Negative: without address
+                	"admin",
+                    "name1", "surname1",
+                    "email@email.com","",
+                    "", "admin1",
+                    "admin","password","password",
+                    IllegalArgumentException.class
+                }, {// Negative: without username
+                	"admin",
+                    "name1", "surname1",
+                    "email@email.com","",
+                    "address1", "",
+                    "admin","password","password",
+                    IllegalArgumentException.class
+                }, {// Negative: without current password
+                	"admin",
+                    "name1", "surname1",
+                    "email@email.com","",
+                    "address1", "admin1",
+                    "","password","password",
+                    IllegalArgumentException.class
+                }, {// Negative: differents new passwords
+                	"admin",
+                    "name1", "surname1",
+                    "email@email.com","",
+                    "address1", "admin1",
+                    "admin","password","password1",
+                    IllegalArgumentException.class
+                }, {// Negative: without new password
+                	"admin",
+                    "name1", "surname1",
+                    "email@email.com","",
+                    "address1", "admin1",
+                    "admin","","password",
+                    IllegalArgumentException.class
+                }, {// Negative: without confirm password
+                	"admin",
+                    "name1", "surname1",
+                    "email@email.com","",
+                    "address1", "admin1",
+                    "admin","password","",
+                    IllegalArgumentException.class
+                }
+        
+        };
+        return testingData;
+    }
 
-			this.checkExceptions(expected, caught);
-		}
-	
-	
+    protected void templateEditActorTest() {
+        Class <?> caught;
+        /*
+            Simulamos la edición  de usuario con los datos cargados en 'testingDataMap'
+            y luego comprobamos el error esperado
+        */
+        caught = null;
+        try {
+            super.startTransaction();
+            super.authenticate((String) testingDataMap.get("username"));
+            
+            Actor actor = actorService.findByPrincipal();
+            ActorForm actorForm = new ActorForm(actor);
+           
+            actorForm.setName((String) testingDataMap.get("name"));
+            actorForm.setSurname((String) testingDataMap.get("surname"));
+            actorForm.setEmail((String) testingDataMap.get("email"));
+            actorForm.setPhone((String) testingDataMap.get("phone"));
+            actorForm.setAddress((String) testingDataMap.get("address"));
+            actorForm.setUsername((String) testingDataMap.get("editusername"));
+            actorForm.setPassword((String) testingDataMap.get("password"));
+            actorForm.setNewPassword((String) testingDataMap.get("newpassword"));
+            actorForm.setConfirmPassword((String) testingDataMap.get("confirmpassword"));
+            
+            DataBinder dataBinder = new DataBinder(actorForm);
+            BindingResult binding = dataBinder.getBindingResult();
+            actor = actorService.reconstruct(actorForm, binding);
+            Assert.isTrue(!binding.hasErrors());
+            actor = this.actorService.save(actor);
+            super.flushTransaction();
 
-	/**
-	 * En este caso test vamos a probar a guardar un usuario con distintos errores, como por ejemplo, no aceptar los terminos y condiciones o
-	 * guardar dos entidades con la misma id y recogeremos la excepcion que esperamos.
-	 */
-	@Test
-	public void TestReconstructAndSaveNegative() {
+        } catch (final Throwable oops) {
+            caught = oops.getClass();
+        }
+        super.checkExceptions((Class <?>) testingDataMap.get("expected"), caught);
+        super.unauthenticate();
+        super.rollbackTransaction();
+    }
 
-		Object testingReconstructSaveNegative[][] = {
-			{
-				"NAME", "SURNAME", "actor@hotmail.com", "QWEQWERQWRQ", "ADDRESS", "USERNAME", "PASSWORD", "PASSWORD", "TECHNICIAN", "customer1", "CUS-010100-00000001", true, 
-				ConstraintViolationException.class
-			}, {
-				"NAME", "SURNAME", "actor@hotmail.com", "666666666", "ADDRESS", "USERNAME", "PASSWORD", "PASSWORD", "TECHNICIAN", "customer2", "CUS-010100-00000001", true,  
-				IllegalArgumentException.class
-			}, {
-				"NAME", "SURNAME", "actor@hotmail.com", "666666666", "ADDRESS", "USERNAME", "PASSWORD", "DIFFERENTPASSWORD", "TECHNICIAN", "customer1", "CUS-010100-00000001", false,  
-				ConstraintViolationException.class
-			}, {
-				"NAME", "SURNAME", "actor@hotmail.com", "666666666", "ADDRESS", "USERNAME", "PASSWORD", "PASSWORD", "USER", "customer1", "CUS-010100-00000001", true,
-				DataIntegrityViolationException.class
-			}, {
-				"NAME", "SURNAME", "actor", "666666666", "ADDRESS", "USERNAME", "PASSWORD", "PASSWORD", "TECHNICIAN", "customer1", "CUS-010100-00000001", true,
-				ConstraintViolationException.class
-			}
-		};
-
-		for (int i = 0; i < testingReconstructSaveNegative.length; i++) {
-			this.templateReconstructAndSave((String) testingReconstructSaveNegative[i][0], (String) testingReconstructSaveNegative[i][1], (String) testingReconstructSaveNegative[i][2], (String) testingReconstructSaveNegative[i][3],
-				(String) testingReconstructSaveNegative[i][4], (String) testingReconstructSaveNegative[i][5], (String) testingReconstructSaveNegative[i][6], (String) testingReconstructSaveNegative[i][7], (String) testingReconstructSaveNegative[i][8],
-				(String) testingReconstructSaveNegative[i][9], (String) testingReconstructSaveNegative[i][10], (Boolean) testingReconstructSaveNegative[i][11], (Class<?>) testingReconstructSaveNegative[i][12]);
-		}
-
-	}
-
-	/**
-	 * En este caso test probaremos a guardar un usuario sin violar ninguna de las restricciones, por lo que el usuario se crea correctamente
-	 */
-	@Test
-	public void TestReconstructAndSavePositive() {
-
-		Object testingReconstructSavePositive[][] = {
-			{
-				"NAME", "SURNAME", "actor@hotmail.com", "666666666", "ADDRESS", "USERNAME", "PASSWORD", "PASSWORD", "customer1", "CUS-010100-00000001", "Authority.MANAGER", true, null
-			}
-		};
-
-		for (int i = 0; i < testingReconstructSavePositive.length; i++) {
-			this.templateReconstructAndSave((String) testingReconstructSavePositive[i][0], (String) testingReconstructSavePositive[i][1], (String) testingReconstructSavePositive[i][2], (String) testingReconstructSavePositive[i][3],
-				(String) testingReconstructSavePositive[i][4], (String) testingReconstructSavePositive[i][5], (String) testingReconstructSavePositive[i][6], (String) testingReconstructSavePositive[i][7], (String) testingReconstructSavePositive[i][8],
-				(String) testingReconstructSavePositive[i][9], (String) testingReconstructSavePositive[i][10], (Boolean) testingReconstructSavePositive[i][11], (Class<?>) testingReconstructSavePositive[i][12]);
-		}
-
-	}
 
 	
 }
