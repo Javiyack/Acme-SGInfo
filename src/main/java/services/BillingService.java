@@ -258,40 +258,7 @@ public class BillingService {
                     bill.setMoment(new Date());
                     for (MonthlyDue due : newDues) {
                         if (due.getYear() == year && due.getMonth() == month && due.getBill() == null) {
-
-                            Double parte = 1.0;
-
-                            Calendar periodStartingDay = Calendar.getInstance();
-                            Calendar periodEndingDay = Calendar.getInstance();
-                            Calendar requestStartingDay = Calendar.getInstance();
-                            Calendar requestEndingDay = Calendar.getInstance();
-
-                            periodStartingDay.set(year, month-1, 1);
-                            periodEndingDay.set(year, month-1, 1);
-                            periodEndingDay.add(Calendar.MONTH, 1);
-
-                            if (due.getRequest().getStartingDay() != null)
-                                requestStartingDay.setTime(due.getRequest().getStartingDay());
-                            else
-                                requestStartingDay.setTime(new Date());
-
-                            if (due.getRequest().getEndingDay() != null)
-                                requestEndingDay.setTime(due.getRequest().getEndingDay());
-                            else
-                                requestEndingDay.setTime(new Date());
-
-                            if (requestStartingDay.getTime().after(periodStartingDay.getTime())) {
-                                if (requestStartingDay.getTime().before(periodEndingDay.getTime())) {
-                                    parte = parte - (requestStartingDay.getTime().getTime() - periodStartingDay.getTime().getTime())*1.0 / (periodEndingDay.getTime().getTime() - periodStartingDay.getTime().getTime());
-                                }
-                            }
-                            if (requestEndingDay.getTime().before(periodEndingDay.getTime())) {
-                                if (requestEndingDay.getTime().after(periodStartingDay.getTime())) {
-                                    parte = parte -(periodEndingDay.getTime().getTime() - requestEndingDay.getTime().getTime())*1.0 /(periodEndingDay.getTime().getTime() - periodStartingDay.getTime().getTime());
-                                }
-
-                            }
-                            money.setAmount(due.getRequest().getServant().getPrice() * parte);
+                            money.setAmount(this.calculaImporte(due, year, month));
                             bill.getAmount().add(money);
                             bill = this.billingRepository.save(bill);
                             due.setBill(bill);
@@ -317,6 +284,42 @@ public class BillingService {
              * bill.getAmount().add(money); laborService.save(labor); } } }
              */
         }
+    }
+
+    public Double calculaImporte(MonthlyDue due, int year, int month){
+        Double parte = 1.0;
+
+        Calendar periodStartingDay = Calendar.getInstance();
+        Calendar periodEndingDay = Calendar.getInstance();
+        Calendar requestStartingDay = Calendar.getInstance();
+        Calendar requestEndingDay = Calendar.getInstance();
+
+        periodStartingDay.set(year, month-1, 1);
+        periodEndingDay.set(year, month-1, 1);
+        periodEndingDay.add(Calendar.MONTH, 1);
+
+        if (due.getRequest().getStartingDay() != null)
+            requestStartingDay.setTime(due.getRequest().getStartingDay());
+        else
+            requestStartingDay.setTime(new Date());
+
+        if (due.getRequest().getEndingDay() != null)
+            requestEndingDay.setTime(due.getRequest().getEndingDay());
+        else
+            requestEndingDay.setTime(new Date());
+
+        if (requestStartingDay.getTime().after(periodStartingDay.getTime())) {
+            if (requestStartingDay.getTime().before(periodEndingDay.getTime())) {
+                parte = parte - (requestStartingDay.getTime().getTime() - periodStartingDay.getTime().getTime())*1.0 / (periodEndingDay.getTime().getTime() - periodStartingDay.getTime().getTime());
+            }
+        }
+        if (requestEndingDay.getTime().before(periodEndingDay.getTime())) {
+            if (requestEndingDay.getTime().after(periodStartingDay.getTime())) {
+                parte = parte -(periodEndingDay.getTime().getTime() - requestEndingDay.getTime().getTime())*1.0 /(periodEndingDay.getTime().getTime() - periodStartingDay.getTime().getTime());
+            }
+
+        }
+        return due.getRequest().getServant().getPrice() * parte;
     }
 
     public MonthlyDue saveDue(MonthlyDue due) {
@@ -349,5 +352,9 @@ public class BillingService {
         Assert.notNull(logedActor, "msg.not.logged.block");
         Assert.isTrue(logedActor.getCustomer().equals(customer), "msg.not.owned.block");
 
+    }
+
+    public Collection<MonthlyDue> findDuesByBill(Bill bill) {
+        return billingRepository.findDuesByBill(bill);
     }
 }
