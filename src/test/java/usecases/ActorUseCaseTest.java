@@ -16,6 +16,7 @@ import org.springframework.validation.DataBinder;
 import domain.Actor;
 import forms.ActorForm;
 
+import security.UserAccount;
 import services.ActorService;
 import services.CustomerService;
 import utilities.AbstractTest;
@@ -38,7 +39,7 @@ public class ActorUseCaseTest extends AbstractTest {
 	
 	//Create user	
 	protected void templateReconstructAndSave(final String name, final String surname, final String email, final String phone, final String address, final String username, final String password, 
-			final String confirmPassword, final String authority, final String customer, final String passKey, final boolean agree, final Class<?> expected) {
+			final String confirmPassword, final String customer, final String passKey, final String authority, final boolean agree, final Class<?> expected) {
 
 			Class<?> caught;
 
@@ -47,16 +48,18 @@ public class ActorUseCaseTest extends AbstractTest {
 			try {
 				ActorForm actorform = new ActorForm();
 				Actor actor;
-
+				UserAccount useraccount = new UserAccount();
+				useraccount.setPassword(password);
 				actorform.setName(name);
 				actorform.setSurname(surname);
 				actorform.setEmail(email);
 				actorform.setPhone(phone);
 				actorform.setAddress(address);
-				actorform.setUsername(username);
-				actorform.setPassword(password);
-				actorform.setConfirmPassword(confirmPassword);
-				actorform.setAuthority(authority);
+				actorform.getAccount().setUsername(username);
+				actorform.getAccount().setPassword(password);
+				actorform.getAccount().setNewPassword(password);
+				actorform.getAccount().setConfirmPassword(confirmPassword);
+				actorform.getAccount().setAuthority(authority);
 				actorform.setCustomer(customerService.findOne(super.getEntityId(customer)));
 				actorform.setPassKey(passKey);
 				actorform.setAgree(agree);
@@ -119,7 +122,7 @@ public class ActorUseCaseTest extends AbstractTest {
 
 		Object testingReconstructSavePositive[][] = {
 			{
-				"NAME", "SURNAME", "actor@hotmail.com", "666666666", "ADDRESS", "USERNAME", "PASSWORD", "PASSWORD", "Authority.TECHNICIAN", "customer1", "CUS-010100-00000001", true, null
+				"NAME", "SURNAME", "actor@hotmail.com", "666666666", "ADDRESS", "USERNAME", "PASSWORD", "PASSWORD", "customer1", "CUS-010100-00000001", "Authority.MANAGER", true, null
 			}
 		};
 
