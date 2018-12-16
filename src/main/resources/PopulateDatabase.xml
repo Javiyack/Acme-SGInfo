@@ -405,6 +405,18 @@
 		<property name="technician" ref="technician2" />
 		<property name="cancelled" value="false" />
 	</bean>
+	
+	<bean id="incidence6" class="domain.Incidence">
+		<property name="title" value="Incidencia 6" />
+		<property name="description" value="No me entran correos" />
+		<property name="ticker" value="INC-190718-46986202" />
+		<property name="publicationDate" value="2018/01/22 11:00" />
+		<property name="startingDate" value="2018/02/16 09:15" />
+		<property name="endingDate" value="2018/03/16 18:30" />
+		<property name="user" ref="user2" />
+		<property name="technician" ref="technician2" />
+		<property name="cancelled" value="false" />
+	</bean>
 
 	<!-- Labors -->
 	<bean id="labor1" class="domain.Labor">
@@ -1021,6 +1033,86 @@
 	</bean>
 
 	<!-- Message -->
+	
+	<!-- Servant -->
+	<bean id="servant1" class="domain.Servant">
+		<property name="name" value="Formateamos tu ordenador" />
+		<property name="description" value="Sistemas operativos originales" />
+		<property name="price" value="30.0" />
+		<property name="picture" value="https://i.pinimg.com/564x/fd/72/7d/fd727db859403b1d94373ec4f118cd3f.jpg" />
+		<property name="cancelled" value="false" />
+		<property name="draft" value="false" />
+	</bean>
+	<bean id="servant2" class="domain.Servant">
+		<property name="name" value="Cambiamos tu disco duro" />
+		<property name="description" value="Los SSD más rápidos del mercado" />
+		<property name="price" value="60.0" />
+		<property name="picture" value="https://i.pinimg.com/564x/cb/3b/f8/cb3bf800207529bbca7bd18e356dba9f.jpg" />
+		<property name="cancelled" value="false" />
+		<property name="draft" value="false" />
+	</bean>
+	<bean id="servant3" class="domain.Servant">
+		<property name="name" value="Montamos tu ordenador" />
+		<property name="description" value="Las piezas que decidas" />
+		<property name="price" value="80.0" />
+		<property name="picture" value="https://i.pinimg.com/564x/1e/0c/84/1e0c8472cb7fe2f47cfac9463680b4a1.jpg" />
+		<property name="cancelled" value="false" />
+		<property name="draft" value="false" />
+	</bean>
+	<bean id="servant4" class="domain.Servant">
+		<property name="name" value="Servicio de red" />
+		<property name="description" value="Cableado de su empresa" />
+		<property name="price" value="90.0" />
+		<property name="picture" value="https://i.pinimg.com/564x/4f/88/0b/4f880b5bbec5d7cc86248467cc1c4f01.jpg" />
+		<property name="cancelled" value="true" />
+		<property name="draft" value="false" />
+	</bean>
+	<bean id="servant5" class="domain.Servant">
+		<property name="name" value="Páginas web" />
+		<property name="description" value="Páginas webs personalizadas" />
+		<property name="price" value="200.0" />
+		<property name="picture" value="https://i.pinimg.com/564x/35/54/21/3554210cc630998d6b189a19929e9875.jpg" />
+		<property name="cancelled" value="false" />
+		<property name="draft" value="true" />
+	</bean>
+	<bean id="servant6" class="domain.Servant">
+		<property name="name" value="Aires acondicionados" />
+		<property name="description" value="Ponemos la calefacción de su oficina" />
+		<property name="price" value="80.0" />
+		<property name="picture" value="https://i.pinimg.com/564x/b5/d5/d9/b5d5d9ccf9e00469db7ea946a0c62a9e.jpg" />
+		<property name="cancelled" value="true" />
+		<property name="draft" value="true" />
+	</bean>
+	
+	<!-- Request -->
+	<bean id="request1" class="domain.Request">
+		<property name="status" value="ACCEPTED" />
+		<property name="comments" value="Me viene bien este servicio" />
+		<property name="servant" ref="servant1" />
+		<property name="responsible" ref="responsable1" />
+		<property name="creationMoment" value="2018/04/15 01:50" />
+		<property name="startingDay" value="2018/04/16 01:50" />
+		<property name="endingDay" value="2018/04/18 01:50" />
+	</bean>
+	
+	<bean id="request2" class="domain.Request">
+		<property name="status" value="PENDING" />
+		<property name="comments" value="Me viene bien este servicio" />
+		<property name="servant" ref="servant1" />
+		<property name="responsible" ref="responsable2" />
+		<property name="creationMoment" value="2018/04/15 01:50" />
+	</bean>
+	
+	<bean id="request3" class="domain.Request">
+		<property name="status" value="REJECTED" />
+		<property name="rejectionReason" value="No me gusta hacer este trabajo" />
+		<property name="comments" value="Me viene bien este servicio" />
+		<property name="servant" ref="servant2" />
+		<property name="responsible" ref="responsable3" />
+		<property name="creationMoment" value="2018/04/15 01:50" />
+		<property name="startingDay" value="2018/04/16 01:50" />
+		<property name="endingDay" value="2018/04/16 01:50" />
+	</bean>
 
 
 </beans>

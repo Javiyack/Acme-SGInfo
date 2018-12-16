@@ -7,19 +7,12 @@ import java.util.Map;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.Assert;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.DataBinder;
 
-import domain.Customer;
 import domain.Request;
-import forms.CustomerForm;
 
-import services.CustomerService;
 import services.RequestService;
 import utilities.AbstractTest;
 
@@ -69,9 +62,11 @@ public class RequestUseCaseTest extends AbstractTest {
                 }, {//Negative: without username
                 	"",
                     "servant1", "comments1",
+                    IllegalArgumentException.class
                 }, {// Negative: without service
                 	"responsable1",
                     "", "comments1",
+                    AssertionError.class
                 }
         
         };
@@ -89,7 +84,7 @@ public class RequestUseCaseTest extends AbstractTest {
             super.startTransaction();
             super.authenticate((String) testingDataMap.get("username"));
             
-            Request request = requestService.create(super.getEntityId("servant"));
+            Request request = requestService.create(super.getEntityId((String) testingDataMap.get("servant")));
             
             request.setComments((String) testingDataMap.get("comments"));
            

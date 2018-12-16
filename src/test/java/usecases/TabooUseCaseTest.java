@@ -15,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import domain.TabooWord;
 
-import services.BillingService;
 import services.TabooWordService;
 import utilities.AbstractTest;
 
