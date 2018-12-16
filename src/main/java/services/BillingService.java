@@ -282,12 +282,12 @@ public class BillingService {
 
                             if (requestStartingDay.getTime().after(periodStartingDay.getTime())) {
                                 if (requestStartingDay.getTime().before(periodEndingDay.getTime())) {
-                                    factor = factor - (periodEndingDay.getTime().getTime() - periodStartingDay.getTime().getTime())*1.0 / (requestStartingDay.getTime().getTime() - periodStartingDay.getTime().getTime());
+                                    factor = factor - (requestStartingDay.getTime().getTime() - periodStartingDay.getTime().getTime())*1.0 / (periodEndingDay.getTime().getTime() - periodStartingDay.getTime().getTime());
                                 }
                             }
                             if (requestEndingDay.getTime().before(periodEndingDay.getTime())) {
                                 if (requestEndingDay.getTime().after(periodStartingDay.getTime())) {
-                                    factor = factor - (periodEndingDay.getTime().getTime() - periodStartingDay.getTime().getTime())*1.0 / (periodEndingDay.getTime().getTime() - requestEndingDay.getTime().getTime());
+                                    factor = factor -(periodEndingDay.getTime().getTime() - requestEndingDay.getTime().getTime())*1.0 /(periodEndingDay.getTime().getTime() - periodStartingDay.getTime().getTime());
                                 }
                             }
                             money.setAmount(due.getRequest().getServant().getPrice() * factor);
