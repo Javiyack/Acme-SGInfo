@@ -178,14 +178,27 @@ public class MessageService {
 		}
 	}
 
-	public void saveOnSender(Message message) {
+	public void saveOnSenderIfPrincipal(Message message) {
 		Actor principal;
 		principal = this.actorService.findByPrincipal();
+		Assert.isTrue(message.getSender().equals(principal));
 		Folder folder;
 		if(message.isSpam())
 			folder = folderService.findSpamBoxByActor(principal);
 		else
 			folder = folderService.findOutBoxByActor(principal);
+		PostBox postBox = postBoxService.create();
+		postBox.setFolder(folder);
+		postBox.setMessage(message);
+		postBoxService.save(postBox);
+	}
+
+	public void saveOnSender(Message message) {
+		Folder folder;
+		if(message.isSpam())
+			folder = folderService.findSpamBoxByActor(message.getSender());
+		else
+			folder = folderService.findOutBoxByActor(message.getSender());
 		PostBox postBox = postBoxService.create();
 		postBox.setFolder(folder);
 		postBox.setMessage(message);

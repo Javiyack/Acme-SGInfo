@@ -33,6 +33,10 @@
 <%@ attribute name="icon" required="false" %>
 <%@ attribute name="tooltip" required="false" %>
 
+
+<jstl:if test="${tooltip != null and tooltip!=''}">
+	<spring:message code="${tooltip}" var="tooltip" />
+</jstl:if>
 <%-- Definition --%>
 
 <spring:message code="${title}" var="intercionalizedTitle"/>

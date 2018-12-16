@@ -16,7 +16,13 @@
 		<form:hidden path="id" />
 		<form:hidden path="version" />
 		<div class="floating-box">
-
+<div class="row">
+	<div class="col-100">
+		<spring:message code="date.pattern" var="patron"/>
+		<fmt:formatDate value="${bill.moment}" type="date" var="fecha"/>
+		<span class="toRight"><jstl:out value="${fecha}"/></span>
+	</div>
+</div>
 <div clasS="w3-row">
 			<div class="w3-col m2 w3-left" >
 				<ul style="list-style-type:none;padding-left:1em;margin-left:0em;" >

@@ -138,4 +138,16 @@ public class RequestService {
     public Request findOne(int requestId) {
         return requestRepository.findOne(requestId);
     }
+
+    public Collection<Request> findFacturables(Date limit) {
+        return requestRepository.findFacturables(limit);
+    }
+
+    public Collection<MonthlyDue> findAllMonthlyDues(int requestId) {
+        return requestRepository.findAllMonthlyDues(requestId);
+    }
+
+    public Collection<Request> findFacturablesByCustomerId(Date limit, int id) {
+        return requestRepository.findFacturablesByCustomerId(limit, id);
+    }
 }

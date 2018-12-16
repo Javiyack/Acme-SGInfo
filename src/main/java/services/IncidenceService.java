@@ -13,9 +13,7 @@ import org.springframework.validation.Validator;
 import repositories.IncidenceRepository;
 import security.Authority;
 
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
+import java.util.*;
 
 @Service
 @Transactional
@@ -81,11 +79,15 @@ public class IncidenceService {
     }
 
     // Save
-    public Incidence save(final Incidence incidence) {
+    public Incidence save(final Incidence incidence, final IncidenceForm oldIncidence) {
         Incidence result;
         Assert.notNull(incidence);
         Actor actor = actorService.findByPrincipal();
         Assert.notNull(actor, "msg.not.logged.block");
+        Map<String, String> changes = new HashMap<>();
+
+        String subject = "";
+        String body = "";
         Assert.isTrue(
                 actor instanceof Manager || actor instanceof Technician
                         || incidence.getUser().getId() == (actor.getId())
@@ -94,6 +96,11 @@ public class IncidenceService {
                 "msg.not.owned.block");
         if (incidence.getId() == 0) {
             incidence.setPublicationDate(new Date(System.currentTimeMillis() - 999));
+            subject = "Incidencia Creada";
+            body = "Se ha creado la incidencia '" + incidence.getTitle() + "'. "
+                    + "Usuario:" + incidence.getUser().getSurname() + ", " + incidence.getUser().getName() + ". "
+                    + "Ténico  asignado: " + incidence.getTechnician().getSurname() + ", " + incidence.getTechnician().getName() + ".";
+            changes.put(subject, body);
         } else {
             result = this.incidenceRepository.findOne(incidence.getId());
             Assert.isTrue(incidence.getUser().getCustomer().equals(result.getUser().getCustomer()),
@@ -101,26 +108,113 @@ public class IncidenceService {
             if (actor instanceof Technician) {
                 Assert.isTrue(incidence.getTechnician().getId() == (result.getTechnician().getId()),
                         "msg.not.owned.block");
-                Message savedMessage = new Message();
-                Message message = messageService.create();
-                message.setBody("La incidencia " + incidence.getTitle() + " cambió de estado");
-                message.setRecipient(incidence.getUser());
-                message.setSubject("Aviso Incidencia");
-                message.setPriority("NEUTRAL");
-                savedMessage = messageService.save(message);
-                messageService.saveOnSender(savedMessage);
-                messageService.saveOnRecipient(savedMessage);
             }
             if (incidence.getCancelled()) {
                 Assert.notNull(incidence.getCancellationReason(), "msg.missing.cancel.reason.block");
                 Assert.isTrue(!incidence.getCancellationReason().isEmpty(), "msg.missing.cancel.reason.block");
             }
+            if (oldIncidence != null)
+                changes.putAll(checkChanges(incidence, oldIncidence));
+
+        }
+        checkMoments(incidence);
+        result = this.incidenceRepository.save(incidence);
+        incidenceRepository.flush();
+        for (Map.Entry<String, String> change : changes.entrySet()) {
+            sendMessage(result, change.getKey(), change.getValue());
+        }
+        return result;
+    }
+
+    public Map<String, String> checkChanges(Incidence incidence, IncidenceForm dbObject) {
+        Map<String, String> result = new HashMap<>();
+        String subject = "";
+        String body = "";
+        if (dbObject.getPublicationDate() != incidence.getPublicationDate()) {
+            result.put("Fecha se publicacion", "La fecha de publicacion ha cambiado");
+        }
+        if (incidence.getStartingDate() != null)
+            if (!incidence.getStartingDate().equals(dbObject.getStartingDate()))
+                if (dbObject.getStartingDate() == null) {
+                    subject = "Incidencia en curso";
+                    body = "Estamos trabajando en la resolucion de la incidencia '" + incidence.getTitle()
+                            + "'. Atentamente, " + incidence.getTechnician().getName() + " " + incidence.getTechnician().getSurname();
+                    result.put(subject, body);
+                } else {
+                    subject = "Momento de inicio";
+                    body = "Ha cambiado el momento de inicio de la incidencia '" + incidence.getTitle()
+                            + "'. Atentamente, " + incidence.getTechnician().getName() + " " + incidence.getTechnician().getSurname();
+                    result.put(subject, body);
+                }
+
+        if (incidence.getEndingDate() != null)
+            if (!incidence.getEndingDate().equals(dbObject.getEndingDate()))
+                if (dbObject.getEndingDate() == null) {
+                    subject = "Incidencia cerrada";
+                    body = "Hemos terminado los trabajos sobre la incidencia '" + incidence.getTitle()
+                            + "'. Atentamente, " + incidence.getTechnician().getName()
+                            + " " + incidence.getTechnician().getSurname();
+                    result.put(subject, body);
+                } else {
+                    subject = "Momento de cierre";
+                    body = "Ha cambiado el momento de cierre de la incidencia '" + incidence.getTitle()
+                            + "'. Atentamente, " + incidence.getTechnician().getName() + " " + incidence.getTechnician().getSurname();
+                    result.put(subject, body);
+                }
+
+        if (incidence.getCancelled() != dbObject.getCancelled()) {
+            if (incidence.getCancelled()) {
+                result.put("Cancelacion", "La incidencia '" + incidence.getTitle() +"' está cancelada. Motivo de la cancelacion: '"
+                        + incidence.getCancellationReason()
+                        + "'. Atentamente, " + incidence.getTechnician().getName() + " " + incidence.getTechnician().getSurname());
+                if (!incidence.getCancellationReason().equals(dbObject.getCancellationReason()) && dbObject.getCancellationReason()!=null) {
+                    result.put("Motivo de la cancelacion", "El Motivo de la cancelacion  de la incidencia '" + incidence.getTitle() +"' ha cambiado: '"
+                            + incidence.getCancellationReason()
+                            + "'. Atentamente " + incidence.getTechnician().getName() + " " + incidence.getTechnician().getSurname());
+                }
+            } else {
+                result.put("Cancelacion", "La incidencia '" + incidence.getTitle() +"' ha dejado de estar cancelada"
+                        + ". Atentamente, " + incidence.getTechnician().getName() + " " + incidence.getTechnician().getSurname());
+            }
 
         }
 
-        checkMoments(incidence);
-        result = this.incidenceRepository.save(incidence);
+        if (incidence.getTitle() != dbObject.getTitle()) {
+        }
+        if (incidence.getDescription() != dbObject.getDescription()) {
+
+        }
+        if (incidence.getUser() != dbObject.getUser()) {
+
+        }
+        if (incidence.getTicker() != dbObject.getTicker()) {
+        }
+        if (!incidence.getTechnician().equals(dbObject.getTechnician())) {
+            result.put("Cambio de técnico", "El tecnico asignado a la incidencia '" + incidence.getTitle() + "' ha pasado de "
+                    + dbObject.getTechnician().getName() + dbObject.getTechnician().getName()
+                    + " a " + incidence.getTechnician().getName() + incidence.getTechnician().getName()
+                    + "'. Atentamente, " + incidence.getTechnician().getName() + " " + incidence.getTechnician().getSurname());
+
+        }
         return result;
+    }
+
+    public void sendMessage(Incidence incidence, String subject, String body) {
+        Message savedMessage = new Message();
+        Message message = messageService.create();
+        if (incidence.getVersion() == 0) {
+            message.setSender(incidence.getUser());
+            message.setRecipient(incidence.getTechnician());
+        } else {
+            message.setSender(incidence.getTechnician());
+            message.setRecipient(incidence.getUser());
+        }
+        message.setPriority("NEUTRAL");
+        message.setSubject(subject);
+        message.setBody(body);
+        savedMessage = messageService.save(message);
+        messageService.saveOnSender(savedMessage);
+        messageService.saveOnRecipient(savedMessage);
     }
 
     public Collection<Incidence> findAll() {
@@ -307,15 +401,17 @@ public class IncidenceService {
 
     public Incidence start(int id) {
         Incidence result = findOne(id);
+        IncidenceForm dbObject = new IncidenceForm(result);
         Assert.isTrue(result.getStartingDate() == null, "msg.incidence.starting.changing.block");
         result.setStartingDate(new Date(System.currentTimeMillis() - 100));
-        return this.incidenceRepository.save(result);
+        return this.save(result, dbObject);
     }
 
     public Incidence close(int id) {
         Incidence result = findOne(id);
+        IncidenceForm dbObject = new IncidenceForm(result);
         Assert.isTrue(result.getEndingDate() == null, "msg.incidence.ending.changing.block");
         result.setEndingDate(new Date(System.currentTimeMillis() - 100));
-        return this.incidenceRepository.save(result);
+        return this.save(result, dbObject);
     }
 }

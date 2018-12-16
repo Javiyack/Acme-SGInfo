@@ -31,6 +31,8 @@
 
     <jstl:set var="readonly"
               value="${(display || !owns || closed) && incidenceForm.id != 0}"/>
+    <jstl:set var="disabled"
+              value="${(incidenceForm.cancelled) && incidenceForm.id != 0}"/>
 
     <form:form action="${requestUri}" modelAttribute="incidenceForm">
 
@@ -44,11 +46,11 @@
             <div class="w3-row-padding w3-margin-top">
                 <div class="w3-third">
                     <acme:textbox code="incidencia.ticker" path="ticker"
-                                  readonly="true"/>
+                                  readonly="true" disabled="${disabled}"/>
                     <acme:textbox code="incidencia.name" path="title"
-                                  readonly="${readonly}"/>
+                                  readonly="${readonly}" disabled="${disabled}"/>
                     <acme:textbox code="incidencia.service" path="servant"
-                                  readonly="${readonly}"/>
+                                  readonly="${ readonly}" disabled="${disabled}"/>
                     <jstl:if test="${rol == 'user' || readonly}">
 
                         <form:hidden path="user"/>
@@ -60,7 +62,7 @@
 
                     <acme:select items="${users}" itemLabel="name"
                                  code="incidencia.user" path="user"
-                                 readonly="${rol == 'user' || readonly}" css="formSelect"/>
+                                 readonly="${rol == 'user' ||  readonly || disabled}" css="formSelect"/>
                 </div>
                 <div class="w3-third">
                     <acme:moment code="incidencia.publication.moment"
@@ -75,12 +77,12 @@
                         <div class="w3-quarter" style="padding-left: 10%;margin-top: 3em;">
                             <spring:message code="incidencia.start" var="title"/>
                             <jstl:if test="${owns and rol eq 'technician'}">
-                                <jstl:if test="${!readonly}">
+                                <jstl:if test="${!readonly || disabled}">
                                     <a href="incidence/technician/start.do?id=${incidenceForm.id}">
                                         <i class="fa fa-play fw w3-xlarge w3-text-green iButton zoom" title="${title}"></i>
                                     </a>
                                 </jstl:if>
-                                <jstl:if test="${readonly}">
+                                <jstl:if test="${readonly || disabled}">
                                     <i class="fa fa-play fw w3-xlarge w3-text-grey" title="${title}"></i>
                                 </jstl:if></jstl:if>
                         </div>
@@ -94,13 +96,13 @@
                         <div class="w3-quarter" style="padding-left: 10%;margin-top: 3em;">
                             <spring:message code="label.cerrar" var="title"/>
                             <jstl:if test="${owns and rol eq 'technician'}">
-                                <jstl:if test="${!readonly}">
-                                    <a href="incidence/technician/start.do?id=${incidenceForm.id}">
+                                <jstl:if test="${!readonly || disabled}">
+                                    <a href="incidence/technician/close.do?id=${incidenceForm.id}">
                                         <i class="fa fa-stop fw w3-xlarge w3-text-green iButton zoom"
                                            title="${title}"></i>
                                     </a>
                                 </jstl:if>
-                                <jstl:if test="${readonly}">
+                                <jstl:if test="${readonly || disabled}">
                                     <i class="fa fa-stop fw w3-xlarge w3-text-grey" title="${title}"></i>
                                 </jstl:if>
                             </jstl:if>
@@ -109,12 +111,12 @@
 
                     <acme:select items="${technicians}" itemLabel="name"
                                  code="incidencia.technician" path="technician"
-                                 readonly="${rol == 'user' || rol == 'responsible'  || rol == 'technician' || readonly}"
+                                 readonly="${rol == 'user' or rol == 'responsible'  or rol == 'technician' or  readonly}"
                                  css="formSelect"/>
                 </div>
                 <div class="w3-third">
                     <acme:textarea code="incidencia.description" path="description"
-                                   css="formTextArea" readonly="${readonly}"/>
+                                   css="formTextArea" readonly="${readonly}" disabled="${disabled}"/>
                     <br>
 
                     <div onclick="toggleDisabled('reason')">
@@ -127,8 +129,8 @@
                         <jstl:set var="ifNoCancelled" value="false"/>
                     </jstl:if>
                     <acme:textarea code="empty" path="cancellationReason"
-                                   css="formTextArea" disabled="${ifNoCancelled}"
-                                   placeholder="${placeholder}" readonly="${readonly}"
+                                   css="formTextArea" disabled="${ifNoCancelled or disabled}"
+                                   placeholder="${placeholder}" readonly="${ readonly}"
                                    id="reason"/>
                 </div>
 

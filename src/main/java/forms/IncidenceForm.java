@@ -1,10 +1,7 @@
 
 package forms;
 
-import domain.Incidence;
-import domain.Servant;
-import domain.Technician;
-import domain.User;
+import domain.*;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.SafeHtml;
 import org.hibernate.validator.constraints.SafeHtml.WhiteListType;
@@ -26,7 +23,7 @@ public class IncidenceForm {
 	private Date		endingDate;
 	private Servant		Servant;
 	private Technician	technician;
-	private User		user;
+	private Actor user;
 	private Integer		customerId;
 	private boolean		cancelled;
 	private String 		cancellationReason;
@@ -119,11 +116,11 @@ public class IncidenceForm {
 		this.technician = technician;
 	}
 
-	public User getUser() {
+	public Actor getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(Actor user) {
 		this.user = user;
 	}
 

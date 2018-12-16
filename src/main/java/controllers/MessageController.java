@@ -79,7 +79,7 @@ public class MessageController extends AbstractController {
                     message.setRecipient(message.getSender());
                     messageService.broadcastMessage(message);
                 } else {
-                    messageService.saveOnSender(message);
+                    messageService.saveOnSenderIfPrincipal(message);
                     messageService.saveOnRecipient(message);
                     result = new ModelAndView("redirect:/folder/list.do");
                 }

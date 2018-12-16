@@ -87,38 +87,38 @@
                     	<jstl:set var="urlRate" value="valuation/display.do?id=${row.id}"/>
                     </jstl:if>
                     
-                    <jstl:set var="rowcolor" value="background-color: rgba(255,0,0,0.6); color: white;"/>
+                    <jstl:set var="rowcolor" value="cssOpen iPointer"/>
                     <jstl:if test="${row.startingDate < date}">
-                        <jstl:set var="rowcolor" value="background-color: rgba(255,180,0,0.5); color: red;"/>
+                        <jstl:set var="rowcolor" value="cssAttended iPointer"/>
                     </jstl:if>
                     <jstl:if test="${row.endingDate < date}">
-                        <jstl:set var="rowcolor" value="background-color: rgba(0,255,0,0.2); color: green;"/>
+                        <jstl:set var="rowcolor" value="cssClosed iPointer"/>
                     </jstl:if>
                     <jstl:if test="${row.cancelled == true}">
-                        <jstl:set var="rowcolor" value="background-color: rgba(0,0,0,0.1); color: grey;"/>
+                        <jstl:set var="rowcolor" value="cssCancelled iPointer"/>
                     </jstl:if>
                     <acme:urlColumn value="${row.ticker}" title="incidencia.ticker" href="${url}"
-                                    css="iButton" style="${rowcolor}"/>
+                                    css="${rowcolor}"/>
 
                     <acme:urlColumn value="${row.user.customer.name}" title="label.customer" href="${url}"
 
-                                    css="iButton" style="${rowcolor}"/>
+                                    css="${rowcolor}"/>
                     <acme:urlColumn value="${row.user.userAccount.username}" title="incidencia.user"
                                     href="actor/display.do?actorId=${row.user.id}"
-                                    css="" style="${rowcolor}"/>
+                                     css="${rowcolor} iButton"/>
                     <acme:urlColumn value="${row.technician.userAccount.username}" title="incidencia.technician"
                                     href="actor/display.do?actorId=${row.technician.id}"
-                                    style="${rowcolor}" css="iLink" />
+                                    css="${rowcolor} iButton" />
                     <acme:urlColumn value="${row.title}" title="incidencia.name"
-                                    href="actor/display.do?actorId=${row.technician.id}"
-                                    style="${rowcolor}" css="iLink"/>
+                                    href="${url}"
+                                    css="${rowcolor}"/>
                     <spring:message code="moment.pattern" var="momentPattern"/>
                     <fmt:formatDate value="${row.publicationDate}" pattern="${momentPattern}" var="creationMoment"/>
-                    <acme:urlColumn value="${creationMoment}." title="label.moment" href="${url}" css="iButton"
-                                    style="${rowcolor}"/>
+                    <acme:urlColumn value="${creationMoment}." title="label.moment" href="${url}"
+                                    css="${rowcolor}"/>
                     <fmt:formatDate value="${row.endingDate}" pattern="${momentPattern}" var="endingDate"/>
-                    <acme:urlColumn value="${endingDate}." title="label.ending.on" href="${url}" css="iButton" icon=""
-                                    style="${rowcolor}" />
+                    <acme:urlColumn value="${endingDate}." title="label.ending.on" href="${url}" icon=""
+                                    css="${rowcolor}" />
 
                     <jstl:set var="owns" value="${logedActor.id == row.user.userAccount.id or logedActor.id == row.technician.userAccount.id}"/>
                     <jstl:if test="${owns}">
@@ -127,14 +127,11 @@
                     <jstl:if test="${!owns}">
                         <jstl:set var="icono" value="fa fa-eye w3-xlarge"/>
                     </jstl:if>
-                    <acme:urlColumn value="" title="label.sort" href="${url}"
-                                    css="iButton" style="${rowcolor}" icon="${icono}"/>
-                                    
-                    
-                    
+                    <acme:urlColumn value="" title="label.action" href="${url}"
+                                    css="${rowcolor} iButton" icon="${icono}"/>
                     <jstl:if test="${resultIncidence}">                    	
                     	<acme:urlColumn value="" title="label.rate" href="${urlRate}"
-                                    css="iButton" style="${rowcolor}" icon="${rate}"/>
+                                   css="${rowcolor} iButton" icon="${rate}"/>
                     </jstl:if>
                     
                 </display:table>

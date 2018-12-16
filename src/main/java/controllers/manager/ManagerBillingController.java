@@ -74,7 +74,8 @@ public class ManagerBillingController extends AbstractController {
 		ModelAndView result;
 		String message;
 		try {
-			billingService.generate();
+			billingService.generateIncidenceBills();
+			billingService.generateServiceBills();
 			message =  "msg.commit.ok";
 		} catch (Throwable oops) {
 			if (oops.getMessage().startsWith("msg.")) {

@@ -87,26 +87,35 @@
         </div>
         <div class="row">
             <div class="col-100">
-                    <hr>
-                    <jstl:if test="${owns or !readonly}">
-                        <acme:submit name="save" code="rendezvous.save"
-                                     css="formButton toLeft"/>
+                <hr>
+
+                <jstl:if test="${owns or !readonly}">
+                    <acme:submit name="save" code="label.save"
+                                 css="formButton toLeft"/>
+                </jstl:if>
+                <jstl:if test="${rol eq 'manager'}">
+                    <jstl:if test="${customerForm.active}">
+                        <acme:button url="customer/manager/activation.do?customerId=${customerForm.id}"
+                                     text="label.activation.${!customerForm.active}" css="formButton toLeft"
+                                     confirmation="sa" confirmationMsg="msg.deactivation.confirmation.msg"/>
                     </jstl:if>
-                    <jstl:if test="${rol eq 'manager'}">
-                        <acme:button url="customer/manager/toggleActivation.do?customerId=${customerForm.id}"
-                                     text="label.activation.${!customerForm.active}"
-                                     css="formButton toLeft" confirmation="sa" confirmationMsg="msg.deactivation.confirmation.msg"/>
+                    <jstl:if test="${!customerForm.active}">
+                        <acme:button url="customer/manager/activation.do?customerId=${customerForm.id}"
+                                     text="label.activation.${!customerForm.active}" css="formButton toLeft"/>
                     </jstl:if>
+
+
+                </jstl:if>
 
             </div>
 
         </div>
         <security:authorize access="hasRole('MANAGER')">
-	        <div class="titulo" style="padding-left: 0.5em; padding-top: 0px;">
-	            <strong><spring:message code="label.invoices"/></strong>
-	        </div>
-        
-        	<%@ include file="/views/billing/list.jsp" %>
+            <div class="titulo" style="padding-left: 0.5em; padding-top: 0px;">
+                <strong><spring:message code="label.invoices"/></strong>
+            </div>
+
+            <%@ include file="/views/billing/list.jsp" %>
         </security:authorize>
     </form:form>
 

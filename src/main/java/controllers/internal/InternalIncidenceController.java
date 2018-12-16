@@ -123,6 +123,11 @@ public class InternalIncidenceController extends AbstractController {
     @RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
     public ModelAndView save(@Valid final IncidenceForm incidence, final BindingResult binding) {
         ModelAndView result;
+        Incidence dbObject = this.incidenceService.findOne(incidence.getId());
+
+        IncidenceForm bdObjectCopy = null;
+        if (dbObject != null)
+            bdObjectCopy = new IncidenceForm(dbObject);
         if (binding.hasErrors())
             result = this.createEditModelAndView(incidence, incidence.getCustomerId());
         else {
@@ -132,7 +137,7 @@ public class InternalIncidenceController extends AbstractController {
                     result = this.createEditModelAndView(incidence, incidence.getCustomerId());
                 else
                     try {
-                        incidencia = this.incidenceService.save(incidencia);
+                        incidencia = this.incidenceService.save(incidencia,bdObjectCopy);
                         incidence.setId(incidencia.getId());
                         result = this.createEditModelAndView(incidence,
                                 incidence.getUser().getCustomer().getId());
@@ -169,6 +174,11 @@ public class InternalIncidenceController extends AbstractController {
     @RequestMapping(value = "/edit", method = RequestMethod.POST, params = "close")
     public ModelAndView close(@Valid final IncidenceForm incidence, final BindingResult binding) {
         ModelAndView result;
+        Incidence dbObject = this.incidenceService.findOne(incidence.getId());
+
+        IncidenceForm bdObjectCopy = null;
+        if (dbObject != null)
+            bdObjectCopy = new IncidenceForm(dbObject);
         if (binding.hasErrors())
             result = this.createEditModelAndView(incidence, incidence.getUser().getCustomer().getId());
         else {
@@ -179,7 +189,7 @@ public class InternalIncidenceController extends AbstractController {
             else
                 try {
                     incidencia.setEndingDate(new Date(System.currentTimeMillis() - 1000));
-                    this.incidenceService.save(incidencia);
+                    this.incidenceService.save(incidencia,bdObjectCopy);
                     result = new ModelAndView("redirect:/incidence/internal/list.do");
                 } catch (final Throwable oops) {
                     result = redirectOnError(incidence, oops);
@@ -193,6 +203,11 @@ public class InternalIncidenceController extends AbstractController {
     @RequestMapping(value = "/edit", method = RequestMethod.POST, params = "reopen")
     public ModelAndView reopen(@Valid final IncidenceForm incidence, final BindingResult binding) {
         ModelAndView result;
+        Incidence dbObject = this.incidenceService.findOne(incidence.getId());
+
+        IncidenceForm bdObjectCopy = null;
+        if (dbObject != null)
+            bdObjectCopy = new IncidenceForm(dbObject);;
         if (binding.hasErrors())
             result = this.createEditModelAndView(incidence, incidence.getUser().getCustomer().getId());
         else {
@@ -204,7 +219,7 @@ public class InternalIncidenceController extends AbstractController {
                 try {
                     incidencia.setEndingDate(null);
                     incidence.setEndingDate(null);
-                    this.incidenceService.save(incidencia);
+                    this.incidenceService.save(incidencia,bdObjectCopy);
                     this.laborService.setBillToNull(incidencia);
                     result = this.createEditModelAndView(incidence, incidence.getUser().getCustomer().getId());
                     result.addObject("info", "msg.commit.ok");

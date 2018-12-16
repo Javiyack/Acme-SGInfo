@@ -203,8 +203,8 @@
 	<!-- Technician -->
 
 	<bean id="technician1" class="domain.Technician">
-		<property name="name" value="Juana" />
-		<property name="surname" value="García" />
+		<property name="name" value="Adrés" />
+		<property name="surname" value="Pérez" />
 		<property name="email" value="juana@gmail.com" />
 		<property name="phone" value="675646446" />
 		<property name="address" value="C/ Lago 98" />
@@ -213,8 +213,8 @@
 	</bean>
 
 	<bean id="technician2" class="domain.Technician">
-		<property name="name" value="Jose María" />
-		<property name="surname" value="Bermúdez" />
+		<property name="name" value="Miguel Angel" />
+		<property name="surname" value="Correa" />
 		<property name="email" value="jmb@gmail.com" />
 		<property name="phone" value="657463525" />
 		<property name="address" value="C/ Reina Mercedes 34" />
@@ -237,8 +237,8 @@
 	<!-- Responsables -->
 
 	<bean id="responsable1" class="domain.Responsible">
-		<property name="name" value="Nombre Responsable 1" />
-		<property name="surname" value="Apellidos usuario 1" />
+		<property name="name" value="Matesa" />
+		<property name="surname" value="Calvo" />
 		<property name="email" value="usuario1@gmail.com" />
 		<property name="phone" value="666999666" />
 		<property name="address" value="C/ Calvario 66" />
@@ -246,8 +246,8 @@
 		<property name="customer" ref="customer2" />
 	</bean>
 	<bean id="responsable2" class="domain.Responsible">
-		<property name="name" value="Nombre Responsable 2" />
-		<property name="surname" value="Apellidos usuario 1" />
+		<property name="name" value="Vicente" />
+		<property name="surname" value="Amigo" />
 		<property name="email" value="usuario1@gmail.com" />
 		<property name="phone" value="666999666" />
 		<property name="address" value="C/ Calvario 66" />
@@ -267,8 +267,8 @@
 	<!-- Users -->
 
 	<bean id="user1" class="domain.User">
-		<property name="name" value="Nombre usuario 1" />
-		<property name="surname" value="Apellidos usuario 1" />
+		<property name="name" value="Cristina" />
+		<property name="surname" value="Lopez" />
 		<property name="email" value="usuario1@gmail.com" />
 		<property name="phone" value="666999666" />
 		<property name="address" value="C/ Calvario 66" />
@@ -277,8 +277,8 @@
 	</bean>
 
 	<bean id="user2" class="domain.User">
-		<property name="name" value="Nombre usuario 2" />
-		<property name="surname" value="Apellidos usuario 2" />
+		<property name="name" value="Felipe" />
+		<property name="surname" value="Manrrique" />
 		<property name="email" value="usuario2@gmail.com" />
 		<property name="phone" value="618399522" />
 		<property name="address" value="C/ Suplicio 77" />
@@ -367,7 +367,7 @@
 		<property name="endingDate" value="2018/06/15 15:30" />
 		<property name="user" ref="user2" />
 		<property name="technician" ref="technician2" />
-		<property name="cancelled" value="true" />
+		<property name="cancelled" value="false" />
 	</bean>
 
 	<bean id="incidence3" class="domain.Incidence">
@@ -390,6 +390,17 @@
 		<property name="publicationDate" value="2018/07/22 11:00" />
 		<property name="startingDate" value="2018/07/23 09:15" />
 		<property name="endingDate" value="2018/07/23 19:33" />
+		<property name="user" ref="user2" />
+		<property name="technician" ref="technician2" />
+		<property name="cancelled" value="false" />
+	</bean>
+
+	<bean id="incidence5" class="domain.Incidence">
+		<property name="title" value="Incidencia 5" />
+		<property name="description" value="No me entran correos" />
+		<property name="ticker" value="INC-190718-46986201" />
+		<property name="publicationDate" value="2018/01/22 11:00" />
+		<property name="startingDate" value="2018/02/16 09:15" />
 		<property name="user" ref="user2" />
 		<property name="technician" ref="technician2" />
 		<property name="cancelled" value="false" />

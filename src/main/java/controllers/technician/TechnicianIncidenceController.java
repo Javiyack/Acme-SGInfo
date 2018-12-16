@@ -15,6 +15,8 @@ import services.*;
 import javax.validation.Valid;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/incidence/technician")
@@ -141,7 +143,7 @@ public class TechnicianIncidenceController extends AbstractController {
             incidencia = this.incidenceService.close(id);
             info = "msg.commit.ok";
         } catch (final Throwable oops) {
-            incidencia=incidenceService.findOne(id);
+            incidencia = incidenceService.findOne(id);
             if (oops.getMessage().startsWith("msg."))
                 error = oops.getLocalizedMessage();
             else
@@ -183,6 +185,11 @@ public class TechnicianIncidenceController extends AbstractController {
     @RequestMapping(value = "/edit", method = RequestMethod.POST, params = "reopen")
     public ModelAndView reopen(@Valid final IncidenceForm incidence, final BindingResult binding) {
         ModelAndView result;
+        Incidence dbObject = this.incidenceService.findOne(incidence.getId());
+
+        IncidenceForm bdObjectCopy = null;
+        if (dbObject != null)
+            bdObjectCopy = new IncidenceForm(dbObject);
         if (binding.hasErrors())
             result = this.createEditModelAndView(incidence, incidence.getUser().getCustomer().getId());
         else {
@@ -194,7 +201,7 @@ public class TechnicianIncidenceController extends AbstractController {
                 try {
                     incidencia.setEndingDate(null);
                     incidence.setEndingDate(null);
-                    this.incidenceService.save(incidencia);
+                    this.incidenceService.save(incidencia, bdObjectCopy);
                     this.laborService.setBillToNull(incidencia);
                     result = this.createEditModelAndView(incidence, "msg.commit.ok",
                             incidence.getUser().getCustomer().getId());
@@ -204,6 +211,8 @@ public class TechnicianIncidenceController extends AbstractController {
         }
         return result;
     }
+
+
 
     protected ModelAndView redirectOnError(IncidenceForm incidence, Throwable oops) {
         ModelAndView result;

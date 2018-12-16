@@ -309,15 +309,38 @@ select {
     color: darkorange !important;
 }
 
+.iPointer {
+    margin: 0px;
+    padding: 0px;
+    cursor: pointer;
+}
+
 .iLink {
     margin: 0px;
     padding: 0px;
     cursor: pointer;
-
 }
 
 .iLink:hover {
     color: #133066 !important;
+}
+.cssOpen{
+    background-color: rgba(255,0,0,0.6);
+    color: white;
+}
+
+.cssAttended{
+    background-color: rgba(255,180,0,0.5);
+    color: red;
+}
+
+.cssClosed{
+    background-color: rgba(0,255,0,0.2); color: green;
+}
+
+.cssCancelled{
+    background-color: rgba(0,0,0,0.1);
+    color: grey;
 }
 
 .iOverSize {

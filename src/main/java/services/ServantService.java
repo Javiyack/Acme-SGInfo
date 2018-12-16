@@ -1,9 +1,6 @@
 package services;
 
-import domain.Actor;
-import domain.Manager;
-import domain.Request;
-import domain.Servant;
+import domain.*;
 import forms.ServantForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,7 +10,9 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.Validator;
 import repositories.ServantRepository;
 
+import java.util.Calendar;
 import java.util.Collection;
+import java.util.Date;
 
 @Service
 @Transactional
@@ -106,6 +105,12 @@ public class ServantService {
         return servantRepository.findOne(id);
     }
 
+    public Collection<Request> findFacturables() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), 1, 0, 0, 0);
+        Date limit = calendar.getTime();
+        return this.requestService.findFacturables(limit);
+    }
 
     public void cancel(Servant servant) {
         servant.setCancelled(true);
@@ -114,5 +119,16 @@ public class ServantService {
 
     public Collection<Servant> findRequestableServants() {
         return servantRepository.findRequestableServants();
+    }
+
+    public Collection<MonthlyDue> findAllMonthlyDues(int requestId) {
+        return requestService.findAllMonthlyDues(requestId);
+    }
+
+    public Collection<Request> findFacturablesByCustomerId(int id) {
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), 1, 0, 0, 0);
+        Date limit = calendar.getTime();
+        return this.requestService.findFacturablesByCustomerId(limit, id);
     }
 }

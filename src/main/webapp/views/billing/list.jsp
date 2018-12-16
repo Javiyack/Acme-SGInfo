@@ -107,8 +107,8 @@
 </ul>
 <br />
 <br />
-<spring:message code="label.create" var="texto"/>
+<spring:message code="tooltip.billing.generate" var="tooltip"/>
 <acme:backButton text="label.back" css="formButton toLeft" />
-<acme:button url="/billing/manager/generate.do" text="label.create" />
+<acme:button url="/billing/manager/generate.do" text="label.generate" title="${tooltip}"/>
 <br />
 <br />

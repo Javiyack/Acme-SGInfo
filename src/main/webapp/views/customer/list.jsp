@@ -90,11 +90,13 @@
         </display:column>
         <security:authorize access="hasAnyRole('MANAGER')">
         <jstl:set var="activeIcon" value="fa fa-square-o fw font-awesome w3-xlarge"/>
+            <jstl:set var="tooltip" value=""/>
         <jstl:if test="${row.active}">
             <jstl:set var="activeIcon" value="fa fa-check-square-o fw font-awesome w3-xlarge"/>
+            <jstl:set var="tooltip" value="msg.deactivation.confirmation.msg"/>
         </jstl:if>
-        <acme:urlColumn value="" href="customer/${rol}/activation.do?id=${row.id}&pageSize=${pageSize}" title="label.active" css="iButton"
-                        icon="${activeIcon}" style="max-widht:2em;"/>
+        <acme:urlColumn value="" href="customer/${rol}/activation.do?customerId=${row.id}&pageSize=${pageSize}" title="label.active" css="iButton"
+                        icon="${activeIcon}" style="max-widht:2em;" tooltip="${tooltip}"/>
 
     </security:authorize>
 

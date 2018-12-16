@@ -49,16 +49,16 @@ public class ExternalIncidenceController extends AbstractController {
 
         result = new ModelAndView("incidence/list");
         List<Incidence> noVoted = new ArrayList<Incidence>();
-        for(Incidence i: inidencias){
-        	if(valuationService.numValorationByUserInIncidence(i.getId())==0){
-        		noVoted.add(i);
-        	}
+        for (Incidence i : inidencias) {
+            if (valuationService.numValorationByUserInIncidence(i.getId()) == 0) {
+                noVoted.add(i);
+            }
         }
-        
+
         result.addObject("incidences", inidencias);
         result.addObject("requestUri", "incidence/external/list.do");
         result.addObject("pageSize", (pageSize != null) ? pageSize : 20);
-        result.addObject("noVoted",noVoted);
+        result.addObject("noVoted", noVoted);
         return result;
     }
 
@@ -115,6 +115,11 @@ public class ExternalIncidenceController extends AbstractController {
     @RequestMapping(value = "/edit", method = RequestMethod.POST, params = "save")
     public ModelAndView save(@Valid final IncidenceForm incidence, final BindingResult binding) {
         ModelAndView result;
+        Incidence dbObject = this.incidenceService.findOne(incidence.getId());
+
+        IncidenceForm bdObjectCopy = null;
+        if (dbObject != null)
+            bdObjectCopy = new IncidenceForm(dbObject);
         if (binding.hasErrors())
             result = this.createEditModelAndView(incidence);
         else {
@@ -124,7 +129,7 @@ public class ExternalIncidenceController extends AbstractController {
                     result = this.createEditModelAndView(incidence);
                 else
                     try {
-                        incidencia = this.incidenceService.save(incidencia);
+                        incidencia = this.incidenceService.save(incidencia, bdObjectCopy);
                         incidence.setId(incidencia.getId());
                         result = this.createEditModelAndView(incidence);
                         result.addObject("info", "msg.commit.ok");

@@ -43,7 +43,7 @@
 </jstl:if>
 <spring:message code="${confirmationMsg}" var="msg"/>
 <jstl:if test="${confirmation != null}">
-    <jstl:set var="js" value="javascript: showConfirmationAlert('${msg}')"/>
+    <jstl:set var="js" value="javascript: showConfirmationAlert('','${msg}','${url}')"/>
 </jstl:if>
 <jstl:if test="${confirmation == null}">
     <jstl:set var="js" value="javascript: relativeRedir('${url}')"/>

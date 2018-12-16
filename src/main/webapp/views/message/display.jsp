@@ -13,7 +13,7 @@
 <fmt:formatDate value="${m.moment}" pattern="${momentFormat}"
 	var="momentVar" />
 
-<div class="seccion">
+<div class="seccion w3-light-gray">
 <ul style="list-style-type: disc">
 
 	<li><b><spring:message code="ms.moment"></spring:message>:</b> <jstl:out

@@ -31,7 +31,7 @@ public class Incidence extends DomainEntity {
 
 	private Servant Servant;
 
-	private User user;
+	private Actor user;
 
 	private Technician technician;
 
@@ -126,11 +126,11 @@ public class Incidence extends DomainEntity {
 
 	@NotNull
 	@ManyToOne(optional = false)
-	public User getUser() {
+	public Actor getUser() {
 		return user;
 	}
 
-	public void setUser(User user) {
+	public void setUser(Actor user) {
 		this.user = user;
 	}
 
