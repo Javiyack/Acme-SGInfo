@@ -259,7 +259,7 @@ public class BillingService {
                     for (MonthlyDue due : newDues) {
                         if (due.getYear() == year && due.getMonth() == month && due.getBill() == null) {
 
-                            Double factor = 1.0;
+                            Double parte = 1.0;
 
                             Calendar periodStartingDay = Calendar.getInstance();
                             Calendar periodEndingDay = Calendar.getInstance();
@@ -282,15 +282,16 @@ public class BillingService {
 
                             if (requestStartingDay.getTime().after(periodStartingDay.getTime())) {
                                 if (requestStartingDay.getTime().before(periodEndingDay.getTime())) {
-                                    factor = factor - (requestStartingDay.getTime().getTime() - periodStartingDay.getTime().getTime())*1.0 / (periodEndingDay.getTime().getTime() - periodStartingDay.getTime().getTime());
+                                    parte = parte - (requestStartingDay.getTime().getTime() - periodStartingDay.getTime().getTime())*1.0 / (periodEndingDay.getTime().getTime() - periodStartingDay.getTime().getTime());
                                 }
                             }
                             if (requestEndingDay.getTime().before(periodEndingDay.getTime())) {
                                 if (requestEndingDay.getTime().after(periodStartingDay.getTime())) {
-                                    factor = factor -(periodEndingDay.getTime().getTime() - requestEndingDay.getTime().getTime())*1.0 /(periodEndingDay.getTime().getTime() - periodStartingDay.getTime().getTime());
+                                    parte = parte -(periodEndingDay.getTime().getTime() - requestEndingDay.getTime().getTime())*1.0 /(periodEndingDay.getTime().getTime() - periodStartingDay.getTime().getTime());
                                 }
+
                             }
-                            money.setAmount(due.getRequest().getServant().getPrice() * factor);
+                            money.setAmount(due.getRequest().getServant().getPrice() * parte);
                             bill.getAmount().add(money);
                             bill = this.billingRepository.save(bill);
                             due.setBill(bill);
@@ -322,9 +323,13 @@ public class BillingService {
         return monthlyDueRepository.save(due);
     }
 
-    public Collection<Object> findAllPropper() {
+    public Collection<Object> findAllPropperLaborBills() {
         // TODO Auto-generated method stub
-        return billingRepository.findAllPropper();
+        return billingRepository.findAllPropperLaborBills();
+    }
+    public Collection<Object> findAllPropperServiceBills() {
+        // TODO Auto-generated method stub
+        return billingRepository.findAllPropperServiceBills();
     }
 
     public Collection<Object> findPropperByCustomer() {

@@ -43,8 +43,9 @@ public class ManagerBillingController extends AbstractController {
 			Actor actor = actorService.findByPrincipal();
 			Assert.notNull(actor, "msg.not.logged.block");
 
-			final Collection<Object> bills = this.billingService.findAllPropper();
-			Map<Customer, List<Bill>> billsByCustomer = new HashMap<Customer, List<Bill>>();
+            final Collection<Object> bills = this.billingService.findAllPropperLaborBills();
+            bills.addAll(this.billingService.findAllPropperServiceBills());
+            Map<Customer, List<Bill>> billsByCustomer = new HashMap<Customer, List<Bill>>();
 			if (!bills.isEmpty()) {
 				for (Object object : bills) {
 					final Object[] entryCustomerBill = (Object[]) object;

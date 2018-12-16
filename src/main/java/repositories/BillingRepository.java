@@ -22,6 +22,8 @@ public interface BillingRepository extends JpaRepository<Bill, Integer> {
 	Collection<Object> findPropperByCustomerId(int customerId);
 
 	@Query("select distinct(l.bill), l.incidence.user.customer from Labor l where l.incidence.cancelled=false")
-	Collection<Object> findAllPropper();
+	Collection<Object> findAllPropperLaborBills();
 
+	@Query("select distinct(due.bill), due.request.responsible.customer from MonthlyDue due")
+	Collection<Object> findAllPropperServiceBills();
 }
