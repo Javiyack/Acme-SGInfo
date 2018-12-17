@@ -2,6 +2,7 @@
 package services;
 
 import domain.Administrator;
+import domain.Message;
 import domain.TabooWord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -82,6 +83,11 @@ public class TabooWordService {
 		Assert.notNull(admin);
 		this.tabooWordRepository.delete(tabooWord);
 	}
+	public void deleteById(final int tabooWordId) {
+		final Administrator admin = this.administratorService.findByPrincipal();
+		Assert.notNull(admin);
+		this.tabooWordRepository.delete(tabooWordId);
+	}
 
 	public void flush() {
 		this.tabooWordRepository.flush();
@@ -96,4 +102,5 @@ public class TabooWordService {
 		return this.tabooWordRepository.getTabooWordFromMessageSubjectAndBody(subject, body);
 
 	}
+
 }

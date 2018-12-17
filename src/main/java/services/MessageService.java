@@ -218,4 +218,7 @@ public class MessageService {
 
 	}
 
+	public Collection<Message> findMessagesWithTabooWords() {
+		return messageRepository.findMessagesWithTabooWords();
+	}
 }
