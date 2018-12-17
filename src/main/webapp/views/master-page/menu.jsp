@@ -117,7 +117,7 @@
             </a>
             <div id="billingAcc" class="w3-hide w3-card sombra" name="accordion">
 
-                <a href="billing/manager/incidence/list.do"
+                <a href="billing/manager/labor/list.do"
                    class="w3-bar-item w3-button w3-padding w3-large w3-light-gray"
                    style="padding-left: 2em !important;"><i
                         class="far fa-money-bill-alt fa-fw w3-margin-right"></i><spring:message code="label.incidence"/>

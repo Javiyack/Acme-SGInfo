@@ -42,6 +42,18 @@
             <form:hidden path="id"/>
             <form:hidden path="version"/>
             <form:hidden path="customerId"/>
+            
+            <div class="row">
+	            <div class="col-100" style="padding-bottom: 0px!important;">
+	                <a href="" class="iButton" style="padding-bottom: 0px!important;"><i class="fa fa-home font-awesome"></i></a> >
+	                <a href="incidence/${accesscontrol}/list.do" class="iButton" style="padding-bottom: 0px!important;">
+	                    <i class="fas fa-shield-alt fa-fw"></i></a> >
+	                <a href="incidence/${accesscontrol}/display.do?id=${incidenceForm.id}" class="iButton"
+	                   style="padding-bottom: 0px!important;">
+	                    <jstl:out value="${incidenceForm.title}"/></a> >
+	                <hr style="margin-top: 0.2em;">
+	            </div>
+	        </div>
 
             <div class="w3-row-padding w3-margin-top">
                 <div class="w3-third">
@@ -138,8 +150,6 @@
         </div>
         <div class="seccion w3-light-grey">
             <div class="w3-row-padding">
-                <acme:cancelButton url="/incidence/${accesscontrol}/list.do" code="label.back"
-                                   css="formButton toLeft"/>
 
 
                 <jstl:if test="${readonly && owns && (rol == 'manager' || rol == 'technician')}">

@@ -11,6 +11,8 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 
+<spring:message code="valuation" var="valuationText" />
+
 <security:authorize access="isAuthenticated()">
 	<security:authorize access="isAuthenticated()">
 		<jstl:set var="colom" value=", " />
@@ -18,6 +20,13 @@
 		<security:authentication property="principal" var="logedActor" />
 		<security:authentication property="principal.authorities[0]"
 			var="permiso" />
+		<jstl:set var="rol" value="${fn:toLowerCase(permiso)}"/>
+        <jstl:if test="${rol == 'user' || rol == 'responsible'}">
+            <jstl:set var="accesscontrol" value="external"/>
+        </jstl:if>
+        <jstl:if test="${rol == 'technician' || rol == 'manager'}">
+            <jstl:set var="accesscontrol" value="internal"/>
+        </jstl:if>
 	</security:authorize>
 
 	<jstl:set var="readonly"
@@ -31,6 +40,18 @@
 			<form:hidden path="id" />
 			<form:hidden path="version" />
 			<form:hidden path="incidence" />
+			
+			<div class="row">
+	            <div class="col-100" style="padding-bottom: 0px!important;">
+	                <a href="" class="iButton" style="padding-bottom: 0px!important;"><i class="fa fa-home font-awesome"></i></a> >
+	                <a href="incidence/${accesscontrol }/list.do" class="iButton" style="padding-bottom: 0px!important;">
+	                    <i class="fas fa-shield-alt fa-fw"></i></a> >
+	                <a href="valuation/display.do?id=${valuationForm.incidence.id}" class="iButton"
+	                   style="padding-bottom: 0px!important;">
+	                    <jstl:out value="${valuationText}"/></a> >
+	                <hr style="margin-top: 0.2em;">
+	            </div>
+	        </div>
 
 			<div class="w3-row-padding w3-margin-top">
 				<div class="w3-quarter"></div>
@@ -45,7 +66,7 @@
 			</div>
 			
 			<div class="w3-row-padding">
-	            <acme:backButton text="label.back" css="formButton toLeft" />
+	            
 				<jstl:if test="${!readonly}">
 					<acme:submit name="save" code="label.save" css="formButton toLeft" />
 				</jstl:if>

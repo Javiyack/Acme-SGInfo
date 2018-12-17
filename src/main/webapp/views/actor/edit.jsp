@@ -15,8 +15,21 @@
     <form:form action="${requestUri}" modelAttribute="actorForm">
         <form:hidden path="id"/>
         <br>
+        
+        
 
         <div class="seccion w3-light-grey">
+        <div class="row">
+	            <div class="col-100" style="padding-bottom: 0px!important;">
+	                <a href="" class="iButton" style="padding-bottom: 0px!important;"><i class="fa fa-home font-awesome"></i></a> >
+	                <a href="actor/responsible/list.do" class="iButton" style="padding-bottom: 0px!important;">
+	                    <i class="fas fa-shield-alt fa-fw"></i></a> >
+	                <a href="actor/display.do?actorId=${actorForm.id}" class="iButton"
+	                   style="padding-bottom: 0px!important;">
+	                    <jstl:out value="${actorForm.name}"/></a> >
+	                <hr style="margin-top: 0.2em;">
+	            </div>
+	        </div>
             <legend>
                 <spring:message code="actor.personal.data"/>
             </legend>
@@ -49,15 +62,6 @@
                 </div>
             </div>
         </div>
-        <jstl:if test="${!edition}">
-            <div class="seccion w3-light-grey">
-                <div class="row">
-                    <div class="col-50">
-                        <acme:backButton text="actor.back" css="formButton toLeft"/>
-                    </div>
-                </div>
-            </div>
-        </jstl:if>
         <jstl:if test="${edition}">
             <div class="seccion w3-light-grey">
 
