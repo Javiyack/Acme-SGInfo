@@ -140,7 +140,7 @@ public class MessageService {
 	public void checkPrincipal(final Message message, final Actor actor) {
 		final Collection<Message> messages = this.messageRepository.findAllByActor(actor.getId());
 		if(!message.getBroadcast()) {
-			Assert.isTrue(messages.contains(message),"msg.not.owned.block");
+			Assert.isTrue(messages.contains(message) || actor instanceof Administrator,"msg.not.owned.block");
 		}
 	}
 

@@ -89,9 +89,9 @@
     </jstl:if>
     <jstl:if test="${info != null}">
         <li class="w3-display-container seccion  w3-amber"
-            style="padding: 0.5em 2em; margin: 0em 1.5em;"><spring:message
-                code="${info}"/> <span
-                onclick="this.parentElement.style.display='none'"
+            style="padding: 0.5em 2em; margin: 0em 1.5em;">
+            <spring:message code="${info}"/>
+            <span onclick="this.parentElement.style.display='none'"
                 class="fas fa-times fw w3-large w3-transparent w3-display-right w3-padding iButton w3-hover-text-gray"/>
         </li>
     </jstl:if>

@@ -187,6 +187,10 @@
             <a href="configuration/administrator/edit.do"
                class="w3-bar-item w3-button w3-padding w3-xlarge" id="configuration">
                 <i class="fa fa-cog fa-fw w3-margin-right"></i>Settings </a>
+            <a href="tabooWord/administrator/list.do"
+               class="w3-bar-item w3-button w3-padding w3-xlarge" id="configuration">
+                <i class="fas fa-toilet-paper fa-fw w3-margin-right"></i><spring:message
+                    code="label.tabooWords"/> </a>
         </security:authorize>
 
         <security:authorize access="isAnonymous()">

@@ -2,13 +2,16 @@
 package controllers.administrator;
 
 import controllers.AbstractController;
+import domain.Folder;
 import domain.Message;
+import domain.PostBox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import services.MessageService;
 
@@ -50,6 +53,28 @@ public class MessageAdminController extends AbstractController {
 			}
 		return result;
 	}
+
+
+	// Delete
+	@RequestMapping(value = "/delete", method = RequestMethod.GET)
+	public ModelAndView delete(@RequestParam int messageId) {
+		ModelAndView result;
+		Message message;
+		message = messageService.findOne(messageId);
+		try {
+			this.messageService.delete(message);
+			result = new ModelAndView("redirect:/tabooWord/administrator/seek.do");
+		} catch (final Throwable oops) {
+			if (oops.getMessage().startsWith("msg."))
+				result = this.createMessageModelAndView(oops.getLocalizedMessage(), "/");
+			else
+				result = this.createMessageModelAndView("msg.commit.error", "/");
+		}
+
+		return result;
+
+	}
+
 
 	//Ancillary Methods
 

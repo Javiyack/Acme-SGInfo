@@ -22,20 +22,31 @@
 <%@taglib prefix="display" uri="http://displaytag.sf.net"%>
 <%@ taglib prefix="acme" tagdir="/WEB-INF/tags"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<security:authorize access="hasRole('ADMINISTRATOR')">
+	<spring:message code="msg.delete.confirmation" var="deleteConfirmation" />
+	<div class="seccion w3-light-grey">
+		<legend>
+			<spring:message code="label.tabooWords"/>
+		</legend><ul class="w3-ul">
 
-<display:table pagesize="5" class="flat-table0 flat-table-1 w3-light-grey" name="tabooWords" requestURI="tabooWord/administrator/list.do" id="row">
+		<jstl:forEach items="${tabooWords}" var="row">
+			<jstl:set var="deleteUrl" value="tabooWord/administrator/delete.do?tabooWordId=${row.id}" />
+			<li class="w3-display-container iButton w3-hover-white">
+				<div onclick="relativeRedir('tabooWord/administrator/edit.do?tabooWordId=${row.id}');">
+					<jstl:out value="${row.text}" />
+				</div>
+				<span class="fas fa-times fw w3-large w3-transparent w3-display-right w3-padding iButton w3-hover-text-gray"
+					  onclick="showConfirmationAlert('${deleteConfirmation}', '${row.text}', '${deleteUrl}');"/>
+			</li>
+		</jstl:forEach>
+	</ul>
+		<hr>
+		<acme:button url="tabooWord/administrator/create.do"
+					 text="tabooWord.create" css="formButton toLeft" />
+<spring:message code="tabooWord.seek.tooltip" var="tooltip"/>
+		<acme:button url="tabooWord/administrator/seek.do"
+					 text="tabooWord.seek" css="formButton toLeft" title="${tooltip}" />
 
-	<acme:column property="text" title="tabooWord.text" sortable="true"/>
-
-	<display:column >
-		<div>
-			<a href="tabooWord/administrator/edit.do?tabooWordId=${row.id}">
-				<spring:message code="master.page.edit" />
-			</a>
-		</div>
-	</display:column>
-
-</display:table>
-<br />
-<acme:button url="tabooWord/administrator/create.do" text="tabooWord.create" css="formButton toLeft"/>
-
+		<br />
+	</div>
+</security:authorize>

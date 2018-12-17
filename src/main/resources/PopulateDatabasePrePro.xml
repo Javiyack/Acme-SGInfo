@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- * PopulateDatabase.xml * * Copyright (C) 2017 Universidad de Sevilla 
+	* * The use of this project is hereby consipained to the conditions of the 
+	* TDG Licence, a copy of which you may download from * http://www.tdg-seville.info/License.html -->
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="
+		http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- Admin accounts -->
+
+	<bean id="userAccountAdmin" class="security.UserAccount">
+		<property name="username" value="admin" />
+		<property name="password"
+				  value="21232f297a57a5a743894a0e4a801fc3" />
+		<property name="authorities">
+			<list>
+				<bean class="security.Authority">
+					<property name="authority" value="ADMINISTRATOR" />
+				</bean>
+			</list>
+		</property>
+		<property name="active" value="true" />
+	</bean>
+	<!-- Administrators -->
+	<bean id="administrator1" class="domain.Administrator">
+		<property name="name" value="Javier" />
+		<property name="surname" value="Llach" />
+		<property name="email" value="javillach@gmail.com" />
+		<property name="phone" value="658357522" />
+		<property name="address" value="C/ Amargura 55" />
+		<property name="userAccount" ref="userAccountAdmin" />
+		<property name="customer" ref="customer1" />
+	</bean>
+
+
+	<!-- Customers -->
+
+	<bean id="customer1" class="domain.Customer">
+		<property name="name" value="Acme-CRM" />
+		<property name="biller" value="true" />
+		<property name="description"
+				  value="Sistemas y Gestión informática" />
+		<property name="webSite" value="www.acme-crm.es" />
+		<property name="email" value="sginfo@sginfo.es" />
+		<property name="fechaAlta" value="19/08/2018 14:10" />
+		<property name="passKey" value="CUS-010100-00000001" />
+		<property name="address" value="C/ Estancos 30" />
+		<property name="billingAddress" value="C/ Estancos 30" />
+		<property name="nif" value="28614080X" />
+		<property name="active" value="true" />
+		<property name="logo" value="https://www.acmeticketing.com/wp-content/uploads/2017/08/logo_rev@3x.png" />
+	</bean>
+
+
+	<!-- admin folders -->
+	<bean id="inbox9" class="domain.Folder">
+		<property name="name" value="inbox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="administrator1" />
+	</bean>
+
+	<bean id="outbox9" class="domain.Folder">
+		<property name="name" value="outbox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="administrator1" />
+	</bean>
+
+	<bean id="notificationbox9" class="domain.Folder">
+		<property name="name" value="notificationbox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="administrator1" />
+	</bean>
+
+	<bean id="spambox9" class="domain.Folder">
+		<property name="name" value="spambox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="administrator1" />
+	</bean>
+
+	<bean id="trashbox9" class="domain.Folder">
+		<property name="name" value="trashbox" />
+		<property name="systemFolder" value="true" />
+		<property name="actor" ref="administrator1" />
+	</bean>
+
+	<bean id="custombox9" class="domain.Folder">
+		<property name="name" value="work" />
+		<property name="systemFolder" value="false" />
+		<property name="parent" ref="inbox9" />
+		<property name="actor" ref="administrator1" />
+	</bean>
+
+
+	<!-- TabooWords -->
+
+	<bean id="tabooWord1" class="domain.TabooWord">
+		<property name="text" value="sex" />
+	</bean>
+
+	<bean id="tabooWord2" class="domain.TabooWord">
+		<property name="text" value="sexo" />
+	</bean>
+
+	<bean id="tabooWord3" class="domain.TabooWord">
+		<property name="text" value="viagra" />
+	</bean>
+
+	<bean id="tabooWord4" class="domain.TabooWord">
+		<property name="text" value="cialis" />
+	</bean>
+
+	<bean id="tabooWord5" class="domain.TabooWord">
+		<property name="text" value="jes extender" />
+	</bean>
+
+	<!-- CONFIGURATION -->
+	<bean id="configuration" class="domain.Configuration">
+		<property name="companyName" value="Acme CRM" />
+		<property name="passKey" value="CUS-010100-00000001" />
+		<property name="logo" value="images/logo.png" />
+		<property name="defaultCurrency" value="EUR" />
+		<property name="welcomeMessageEs"
+				  value="Pruebalo!" />
+		<property name="welcomeMessageEn"
+				  value="Check it out!" />
+		<property name="iva" value="21" />
+		<property name="hourPrice" value="28" />
+		<property name="folderNames">
+			<list>
+				<value>inbox</value>
+				<value>outbox</value>
+				<value>notification</value>
+				<value>spambox</value>
+				<value>trash</value>
+			</list>
+
+		</property>
+	</bean>
+
+</beans>
