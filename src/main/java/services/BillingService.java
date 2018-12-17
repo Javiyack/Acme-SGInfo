@@ -6,7 +6,6 @@ import forms.LaborForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -15,7 +14,6 @@ import org.springframework.validation.Validator;
 import repositories.BillingRepository;
 import repositories.MonthlyDueRepository;
 
-import javax.persistence.criteria.Order;
 import java.util.*;
 
 @Service
@@ -348,11 +346,6 @@ public class BillingService {
         return savedDue;
     }
 
-    public Collection<Object> findAllPropperLaborBills() {
-        // TODO Auto-generated method stub
-        return billingRepository.findAllPropperLaborBills();
-    }
-
     public Collection<Object> findAllPropperServiceBills() {
         // TODO Auto-generated method stub
         return billingRepository.findAllPropperServiceBills();
@@ -417,5 +410,11 @@ public class BillingService {
 
     public Collection<MonthlyDue> findDuesByBill(Bill bill) {
         return billingRepository.findDuesByBill(bill);
+    }
+
+    public Set<Bill> findBillsByCustomerId(int customerId) {
+        Set<Bill> bills = billingRepository.findServantBillsByCustomerId(customerId);
+        bills.addAll(billingRepository.findLaborBillsByCustomerId(customerId));
+        return bills;
     }
 }

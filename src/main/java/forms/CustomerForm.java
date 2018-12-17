@@ -32,9 +32,10 @@ public class CustomerForm {
 	private String passKey;
 	
 	private String nif;
-	
-	private Boolean active;	
-	
+
+	private Boolean active;
+	private Boolean biller;
+
 	private String email;
 	
 	private String logo;
@@ -74,6 +75,7 @@ public class CustomerForm {
 		this.setNif(cust.getNif());
 		this.setFechaAlta(cust.getFechaAlta());
 		this.setActive(cust.isActive());
+		this.setBiller(cust.isBiller());
 		this.setEmail(cust.getEmail());
 		this.setPassKey(cust.getPassKey());
 		this.setLogo(cust.getLogo());
@@ -178,4 +180,11 @@ public class CustomerForm {
 		this.nif = nif;
 	}
 
+	public Boolean getBiller() {
+		return biller;
+	}
+
+	public void setBiller(Boolean biller) {
+		this.biller = biller;
+	}
 }

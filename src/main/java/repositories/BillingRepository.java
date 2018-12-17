@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
+import java.util.Set;
 
 @Repository
 public interface BillingRepository extends JpaRepository<Bill, Integer> {
@@ -34,4 +35,11 @@ public interface BillingRepository extends JpaRepository<Bill, Integer> {
 
 	@Query("select distinct(due) from MonthlyDue due where due.bill=?1")
 	Collection<MonthlyDue> findDuesByBill(Bill bill);
+
+	@Query("select distinct(due.bill) from MonthlyDue due where due.request.responsible.customer.id=?1")
+	Set<Bill> findServantBillsByCustomerId(int customerId);
+
+	@Query("select distinct(l.bill) from Labor l where l.incidence.user.customer.id=?1"
+			+ " and l.incidence.cancelled=false")
+	Set<Bill> findLaborBillsByCustomerId(int customerId);
 }

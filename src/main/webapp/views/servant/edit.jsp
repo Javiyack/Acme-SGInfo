@@ -24,6 +24,17 @@
         <form:hidden path="id"/>
         <form:hidden path="version"/>
         <div class="row">
+            <div class="col-100" style="padding-bottom: 0px!important;">
+                <a href="" class="iButton" style="padding-bottom: 0px!important;"><i class="fa fa-home font-awesome"></i></a> >
+                <a href="servant/list.do" class="iButton" style="padding-bottom: 0px!important;">
+                    <i class="fas fa-shield-alt fa-fw"></i></a> >
+                <a href="servant/display.do?id=${servantForm.id}" class="iButton"
+                   style="padding-bottom: 0px!important;">
+                    <jstl:out value="${servantForm.name}"/></a> >
+                <hr style="margin-top: 0.2em;">
+            </div>
+        </div>
+        <div class="row">
             <div class="col-50">
                 <acme:textbox code="servant.name" path="name" readonly="${readonly}"/>
                 <acme:textarea code="servant.description" path="description" readonly="${readonly}" css="formTextArea"/>

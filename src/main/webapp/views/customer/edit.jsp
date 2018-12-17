@@ -29,6 +29,18 @@
 
         <form:hidden path="id"/>
         <form:hidden path="version"/>
+        
+        <div class="row">
+	            <div class="col-100" style="padding-bottom: 0px!important;">
+	                <a href="" class="iButton" style="padding-bottom: 0px!important;"><i class="fa fa-home font-awesome"></i></a> >
+	                <a href="customer/list.do" class="iButton" style="padding-bottom: 0px!important;">
+	                    <i class="fa fa-diamond fa-fw"></i></a> >
+	                <a href="customer/display.do?id=${customerForm.id}" class="iButton"
+	                   style="padding-bottom: 0px!important;">
+	                    <jstl:out value="${customerForm.name}"/></a> >
+	                <hr style="margin-top: 0.2em;">
+	            </div>
+	        </div>
 
         <div class="row">
             <div class="col-50">
@@ -107,16 +119,14 @@
 
                 </jstl:if>
 
+                <jstl:if test="${owns or rol eq 'manager'}">
+                    <acme:button url="billing/${rol}/customer/list.do?customerId=${customerForm.id}"
+                                 text="label.billing.bills" css="formButton toLeft"/>
+                </jstl:if>
+
             </div>
 
         </div>
-        <security:authorize access="hasRole('MANAGER')">
-            <div class="titulo" style="padding-left: 0.5em; padding-top: 0px;">
-                <strong><spring:message code="label.invoices"/></strong>
-            </div>
-
-            <%@ include file="/views/billing/list.jsp" %>
-        </security:authorize>
     </form:form>
 
 </div>

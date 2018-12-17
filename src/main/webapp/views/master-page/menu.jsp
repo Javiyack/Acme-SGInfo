@@ -62,8 +62,8 @@
             <security:authorize access="isAuthenticated()">
                 <a href="actor/edit.do"><i
                         class="fa fa-user w3-bar-item w3-large"></i></a>
+                <a href="customer/displayOwn.do"><i class="fa fa-cog w3-bar-item w3-large"></i></a>
             </security:authorize>
-            <a href="#"><i class="fa fa-cog w3-bar-item w3-large"></i></a>
         </div>
     </div>
     <hr>
@@ -117,7 +117,7 @@
             </a>
             <div id="billingAcc" class="w3-hide w3-card sombra" name="accordion">
 
-                <a href="billing/manager/incidence/list.do"
+                <a href="billing/manager/labor/list.do"
                    class="w3-bar-item w3-button w3-padding w3-large w3-light-gray"
                    style="padding-left: 2em !important;"><i
                         class="far fa-money-bill-alt fa-fw w3-margin-right"></i><spring:message code="label.incidence"/>
