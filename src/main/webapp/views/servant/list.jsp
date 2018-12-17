@@ -34,8 +34,8 @@
         <acme:urlColumn value="${row.name}" href="${url}" title="label.name" css="iButton"/>
         <acme:urlColumn value="${row.description}" href="${url}" title="label.description" css="iButton"
                         style="width:60%;"/>
-        <fmt:formatNumber value="${row.price}" type="currency" var="precio"/>
-        <acme:urlColumn value="${precio}" href="${url}" title="label.price" css="iButton" style="max-widht:4em;"/>
+        <fmt:formatNumber value="${row.price}" type="number" maxFractionDigits="2" minFractionDigits="2" var="precio"/>
+        <acme:urlColumn value="${precio}" href="${url}" title="label.price" css="iButton" style="max-widht:4em;" icon="fa fa-euro fw font-awesome"/>
     </display:table>
     <br>
     <spring:message code="label.new" var="newTitle"/>

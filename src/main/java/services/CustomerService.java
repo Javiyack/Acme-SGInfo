@@ -205,4 +205,8 @@ public class CustomerService {
     public Collection<Customer> findAllActive() {
         return customerRepository.findAllActive();
     }
+
+    public Customer findBiller() {
+        return customerRepository.findBiller();
+    }
 }

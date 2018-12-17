@@ -28,6 +28,9 @@ public interface BillingRepository extends JpaRepository<Bill, Integer> {
 	@Query("select distinct(due.bill), due.request.responsible.customer from MonthlyDue due")
 	Collection<Object> findAllPropperServiceBills();
 
+	@Query("select distinct(due.bill), due.request.responsible.customer from MonthlyDue due where due.request.responsible.customer.id=?1")
+	Collection<Object> findAllPropperServiceBillsByCustomerId(int customerId);
+
 	@Query("select distinct(due) from MonthlyDue due where due.bill=?1")
 	Collection<MonthlyDue> findDuesByBill(Bill bill);
 }

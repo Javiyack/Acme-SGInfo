@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 
 @Repository
 public interface RequestRepository extends JpaRepository<Request, Integer> {
@@ -32,9 +33,9 @@ public interface RequestRepository extends JpaRepository<Request, Integer> {
     Collection<Request> findFacturables(Date limit);
 
     @Query("select distinct(due) from MonthlyDue due where due.request.id=?1")
-    Collection<MonthlyDue> findAllMonthlyDues(int requestId);
+    Set<MonthlyDue> findAllMonthlyDues(int requestId);
 
     @Query("select distinct(r) from Request r where r.status='ACCEPTED' and r.startingDay<?1 and r.responsible.customer.id=?2")
-    Collection<Request> findFacturablesByCustomerId(Date limit, int id);
+    Set<Request> findFacturablesByCustomerId(Date limit, int id);
 }
 

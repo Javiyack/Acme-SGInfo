@@ -13,6 +13,7 @@ import repositories.ServantRepository;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.Set;
 
 @Service
 @Transactional
@@ -121,7 +122,7 @@ public class ServantService {
         return servantRepository.findRequestableServants();
     }
 
-    public Collection<MonthlyDue> findAllMonthlyDues(int requestId) {
+    public Set<MonthlyDue> findAllMonthlyDues(int requestId) {
         return requestService.findAllMonthlyDues(requestId);
     }
 

@@ -102,20 +102,26 @@
             <jstl:if test="${dues!=null}">
                 <div>
                     <div class="row">
+                        <div class="col-12-5">Año</div>
+                        <div class="col-12-5">Mes</div>
                         <div class="col-25">Servicio</div>
-                        <div class="col-25">Fecha de contratacion</div>
-                        <div class="col-25">Precio</div>
-                        <div class="col-25">Importe</div>
+                        <div class="col-12-5">Fecha de contratacion</div>
+                        <div class="col-12-5">Fecha de finalizacion del servicio</div>
+                        <div class="col-12-5">Precio</div>
+                        <div class="col-12-5">Importe</div>
                     </div>
                 </div>
                 <div>
                     <jstl:forEach items="${dueAmount}" var="due">
                         <spring:message code="label.amount" var="labelAmount"/>
                         <div class="row">
-                            <div class="col-25">${due.key.servant.name} </div>
-                            <div class="col-25">${due.key.startingDay}</div>
-                            <div class="col-25">${due.key.servant.price}</div>
-                            <div class="col-25">${due.value}</div>
+                            <div class="col-12-5">${due.key.year}</div>
+                            <div class="col-12-5">${due.key.month}</div>
+                            <div class="col-25">${due.key.request.servant.name} </div>
+                            <div class="col-12-5">${due.key.request.startingDay}</div>
+                            <div class="col-12-5">${due.key.request.endingDay}</div>
+                            <div class="col-12-5">${due.key.request.servant.price}</div>
+                            <div class="col-12-5"><fmt:formatNumber value="${due.value}" type="number" maxFractionDigits="2" minFractionDigits="2"/></div>
                         </div>
                         <br/>
                     </jstl:forEach>

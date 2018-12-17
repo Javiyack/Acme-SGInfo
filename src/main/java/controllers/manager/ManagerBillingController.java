@@ -7,10 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import services.ActorService;
-import services.BillingService;
-import services.ConfigurationService;
-import services.LaborService;
+import services.*;
 
 import javax.validation.Valid;
 import java.util.*;
@@ -28,6 +25,8 @@ public class ManagerBillingController extends AbstractController {
 	ConfigurationService configurationService;
 	@Autowired
 	private ActorService actorService;
+	@Autowired
+	private CustomerService customerService;
 	// Constructor
 
 	public ManagerBillingController() {
@@ -43,8 +42,7 @@ public class ManagerBillingController extends AbstractController {
 			Actor actor = actorService.findByPrincipal();
 			Assert.notNull(actor, "msg.not.logged.block");
 
-            final Collection<Object> bills = this.billingService.findAllPropperLaborBills();
-            bills.addAll(this.billingService.findAllPropperServiceBills());
+            final Collection<Object> bills = this.billingService.findOwnedBills();
             Map<Customer, List<Bill>> billsByCustomer = new HashMap<Customer, List<Bill>>();
 			if (!bills.isEmpty()) {
 				for (Object object : bills) {
@@ -127,10 +125,10 @@ public class ManagerBillingController extends AbstractController {
 			if(!dues.isEmpty()) {
 				MonthlyDue anyDue = dues.iterator().next();
 				Customer customer = anyDue.getRequest().getResponsible().getCustomer();
-				Customer biller = actorService.findAllTecnicians().iterator().next().getCustomer();
-				Map<Request, Double> dueAmountMap = new HashMap<>();
+				Customer biller = customerService.findBiller();
+				Map<MonthlyDue, Double> dueAmountMap = new HashMap<>();
 				for(MonthlyDue due: dues){
-					dueAmountMap.put(due.getRequest(), billingService.calculaImporte(due, bill.getYear(), bill.getMonth()));
+					dueAmountMap.put(due, billingService.calculaImporte(due, bill.getMonth(), bill.getYear()));
 				}
 				result.addObject("bill", bill);
 				result.addObject("dues", dues);

@@ -7,10 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
-import services.ActorService;
-import services.BillingService;
-import services.ConfigurationService;
-import services.LaborService;
+import services.*;
 
 import javax.validation.Valid;
 import java.util.*;
@@ -28,6 +25,8 @@ public class ResponsibleBillingController extends AbstractController {
     ConfigurationService configurationService;
     @Autowired
     private ActorService actorService;
+    @Autowired
+    private CustomerService customerService;
 
     // Constructor
 
@@ -41,6 +40,8 @@ public class ResponsibleBillingController extends AbstractController {
     public ModelAndView list() {
         ModelAndView result;
         final Collection<Object> bills = this.billingService.findPropperByCustomer();
+        bills.addAll(this.billingService.findAllPropperServiceBills());
+
         Map<Customer, List<Bill>> billsByCustomer = new HashMap<Customer, List<Bill>>();
         if (!bills.isEmpty()) {
             for (Object object : bills) {
@@ -75,34 +76,56 @@ public class ResponsibleBillingController extends AbstractController {
         ModelAndView result;
 
         Bill bill = billingService.findOne(id);
-
+        Double iva = configurationService.findIVA();
+        Double precioHora = configurationService.findHourPrice();
+        Customer biller = customerService.findBiller();
+        result = new ModelAndView("billing/display");
+        result.addObject("bill", bill);
+        result.addObject("iva", iva);
+        result.addObject("backUrl", "/billing/responsible/list.do");
         Collection<Labor> labors = this.laborService.findByBill(bill);
+        Customer customer;
+        if (!labors.isEmpty()) {
 
-//		Customer customer = this.customerService.findByBill(bill);
-		Labor anyLabor = labors.iterator().next();
-		Customer customer = anyLabor.getIncidence().getUser().getCustomer();
-		try {
-			billingService.checkOwns(customer);
-		} catch (Throwable oops) {
-			if (oops.getMessage().startsWith("msg.")) {
-				return createMessageModelAndView(oops.getLocalizedMessage(), "/");
-			} else {
-				return this.createMessageModelAndView("panic.message.text", "/");
-			}
-		}
-	Customer biller = anyLabor.getIncidence().getTechnician().getCustomer();
-		Double iva = configurationService.findIVA();
-		Double precioHora = configurationService.findHourPrice();
-		result = new ModelAndView("billing/display");
-		result.addObject("bill", bill);
-		result.addObject("labors", labors);
-		result.addObject("customer", customer);
-		result.addObject("biller", biller);
-		result.addObject("precioHora", precioHora);
-		result.addObject("iva", iva);
-		result.addObject("backUrl", "/billing/responsible/list.do");
-		return result;
-	}
+            //		Customer customer = this.customerService.findByBill(bill);
+            Labor anyLabor = labors.iterator().next();
+            customer = anyLabor.getIncidence().getUser().getCustomer();
+            result.addObject("labors", labors);
+            result.addObject("biller", biller);
+            result.addObject("precioHora", precioHora);
+            result = checkPermisos(customer, result);
+        } else {
+            Collection<MonthlyDue> dues = this.billingService.findDuesByBill(bill);
+            if (!dues.isEmpty()) {
+                MonthlyDue anyDue = dues.iterator().next();
+                customer = anyDue.getRequest().getResponsible().getCustomer();
+                Map<MonthlyDue, Double> dueAmountMap = new HashMap<>();
+                for (MonthlyDue due : dues) {
+                    dueAmountMap.put(due, billingService.calculaImporte(due, bill.getMonth(), bill.getYear()));
+                }
+                result.addObject("dues", dues);
+                result.addObject("dueAmount", dueAmountMap);
+                result.addObject("biller", biller);
+                result = checkPermisos(customer, result);
+            }
+        }
+        return result;
+    }
+
+    private ModelAndView checkPermisos(Customer customer, ModelAndView result) {
+        try {
+            Actor actor = actorService.findByPrincipal();
+            Assert.notNull(actor, "msg.not.logged.block");
+            Assert.isTrue(actor instanceof Responsible, "msg.not.owned.block");
+            Assert.isTrue(actor.getCustomer().equals(customer), "msg.not.owned.block");
+        } catch (final Throwable oops) {
+            if (oops.getMessage().startsWith("msg."))
+                result = this.createMessageModelAndView(oops.getLocalizedMessage(), "/");
+            else
+                result = this.createMessageModelAndView("msg.commit.error", "/");
+        }
+        return result;
+    }
 
 
     // Auxiliary methods

@@ -14,10 +14,7 @@ import org.springframework.validation.Validator;
 import repositories.BillingRepository;
 import repositories.MonthlyDueRepository;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
-import java.util.Date;
+import java.util.*;
 
 @Service
 @Transactional
@@ -190,62 +187,68 @@ public class BillingService {
         Actor actor = actorService.findByPrincipal();
         Assert.notNull(actor, "msg.not.logged.block");
         Assert.isTrue(actor instanceof Manager, "msg.not.owned.block");
-        // Recuperamos los servicios facturables
+        // Por cada customer ...
         Collection<Customer> customers = customerService.findAll();
         for (Customer customer : customers) {
-            Collection<MonthlyDue> newDues = new ArrayList<MonthlyDue>();
+            int minAnioInicial = Calendar.getInstance().get(Calendar.YEAR);
+            int minMesInicial = Calendar.getInstance().get(Calendar.MONTH) + 1;
+
+            // Aqui vamos almacenando las nuevas deudas
+            Set<MonthlyDue> newDues = new HashSet<MonthlyDue>();
+
+            // Requests. Recuperamos las solicitudes facturables
             Collection<Request> requests = this.servantService.findFacturablesByCustomerId(customer.getId());
-            int minAnioInicial = 2018;
-            int minMesInicial = 12;
-            if (!requests.isEmpty()) {
-                // Buscamos las deudas de los servicio
 
-                for (Request request : requests) {
+            // REQUEST. Por cada request facturable
+            for (Request request : requests) {
+                // Buscamos las deudas de ese servicio
+                Set<MonthlyDue> monthlyDues = this.servantService.findAllMonthlyDues(request.getId());
 
-                    // Buscamos las deudas de ese servicio
-                    Collection<MonthlyDue> monthlyDues = this.servantService.findAllMonthlyDues(request.getId());
+                //comprobamos que estan todas la deudas desde su comienzo
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(request.getStartingDay());
+                int mesInicial = calendar.get(Calendar.MONTH) + 1;
+                int anioInicial = calendar.get(Calendar.YEAR);
+                minAnioInicial = Math.min(minAnioInicial, anioInicial);
+                minMesInicial = Math.min(minMesInicial, mesInicial);
+                calendar = Calendar.getInstance();
+                int mesFinal = calendar.get(Calendar.MONTH) + 1;
+                int anioFinal = calendar.get(Calendar.YEAR);
+                for (int anio = anioInicial; anio <= anioFinal; anio++) {
+                    for (int mes = mesInicial; mes <= 12; mes++) {
+                        // Comprobamos que sea facturable por las fechas
+                        if (checkFacturable(request, mes, anio)) {
 
-                    //comprobamos que estan todas la deudas desde su comienzo
-                    Calendar calendar = Calendar.getInstance();
-                    calendar.setTime(request.getStartingDay());
-                    int mesInicial = calendar.get(Calendar.MONTH) + 1;
-                    int anioInicial = calendar.get(Calendar.YEAR);
-                    minAnioInicial = Math.min(minAnioInicial, anioInicial);
-                    minMesInicial = Math.min(minMesInicial, mesInicial);
-                    calendar = Calendar.getInstance();
-                    int mesFinal = calendar.get(Calendar.MONTH) + 1;
-                    int anioFinal = calendar.get(Calendar.YEAR);
-                    calendar.set(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), 1, 0, 0, 0);
-                    Date limit = calendar.getTime();
-                    for (int anio = anioInicial; anio <= anioFinal; anio++) {
-                        for (int mes = mesInicial; mes <= 12; mes++) {
-                            boolean exists = false;
-                            for (MonthlyDue monthlyDue : monthlyDues) {
-
-                                if (monthlyDue.getMonth() == mes && monthlyDue.getYear() == anio) {
-                                    exists = true;
-                                    break;
-                                }
-                            }
-                            if (!exists) {
-                                if(!(anio==anioFinal && mes>=mesFinal)){
-                                    MonthlyDue due = new MonthlyDue();
-                                    due.setYear(anio);
-                                    due.setMonth(mes);
-                                    due.setRequest(request);
-                                    newDues.add(due);
-                                }
+                            // Creamos una deuda por mes
+                            MonthlyDue newDue = new MonthlyDue();
+                            newDue.setYear(anio);
+                            newDue.setMonth(mes);
+                            newDue.setRequest(request);
+                            // Conprobamos que no exista ya la deuda (ahora no hace falta esto porque usamos un set.
+                            // TODO Comprobar que sigue funcionando si quitamos este check pues monthly Due es un Set
+                            if (!monthlyDues.contains(newDue)) {
+                                // añadimos la nueva deuda
+                                newDues.add(newDue);
                             }
                         }
+
                     }
                 }
+
+                // En este punto tenemos todas la nuevas deudas para ese request
+
             }
-            // Creamos una factura por cada cliente y  mes contodos los servicios activos en ese momento
+            // En este punto tenemos todas la nuevas deudas para todos los requests facturables de ese customer
+
+            // Creamos una factura por cada cliente y  mes con todos las deudas de ese mes
             Calendar calendar = Calendar.getInstance();
             int mesFinal = calendar.get(Calendar.MONTH) + 1;
             int anioFinal = calendar.get(Calendar.YEAR);
+            Set<MonthlyDue> billedDues = new HashSet<>();
+            // Recorremos los meses
             for (int year = minAnioInicial; year <= anioFinal; year++) {
                 for (int month = 1; month <= 12; month++) {
+                    // Creamos una factura
                     Bill bill = this.create();
                     Money money = new Money();
                     Double precioHora = configurationService.findHourPrice();
@@ -255,47 +258,61 @@ public class BillingService {
                     bill.setAmount(money);
                     bill.setYear(year);
                     bill.setMonth(month);
-                    bill.setMoment(new Date());
+                    bill.setMoment(new Date(System.currentTimeMillis() - 100));
+                    Double amount = 0.0;
                     for (MonthlyDue due : newDues) {
+                        //Si la deuda es del mes y año entonces la añadimos a la factura del mes y año
                         if (due.getYear() == year && due.getMonth() == month && due.getBill() == null) {
-                            money.setAmount(this.calculaImporte(due, year, month));
-                            bill.getAmount().add(money);
-                            bill = this.billingRepository.save(bill);
+                            amount += this.calculaImporte(due, month, year);
+                            bill.getAmount().setAmount(amount);
+                            bill = this.billingRepository.saveAndFlush(bill);
                             due.setBill(bill);
                             this.saveDue(due);
-
+                            this.monthlyDueRepository.flush();
+                            billedDues.add(due);
                         }
                     }
+                    // Quitamos las deudas que ya tengan factura
+                    newDues.removeAll(billedDues);
                 }
             }
-            /*
-             * // recuperamos los cutomers Collection<Customer> customers =
-             * this.customerService.findAll(); // por cada uno recuperamos las labores sin
-             * facturar hasta el mes pasado for (Customer customer : customers) {
-             * Collection<Labor> labors =
-             * this.laborService.findFacturableByCustomer(customer); if (!labors.isEmpty())
-             * { // creamos una factura con esas labores Bill bill = this.create(); Money
-             * money = new Money(); money.setCurrency(Constant.CURRENCY_EURO);
-             * money.setAmount(0.0); Double precioHora = 28.0; Calendar calendar =
-             * Calendar.getInstance(); bill = this.billingRepository.save(bill); for (Labor
-             * labor : labors) { labor.setBill(bill); calendar.setTime(labor.getTime());
-             * money.setAmount(precioHora * calendar.get(Calendar.HOUR_OF_DAY) +
-             * calendar.get(Calendar.MINUTE) * precioHora / 60);
-             * bill.getAmount().add(money); laborService.save(labor); } } }
-             */
         }
     }
 
-    public Double calculaImporte(MonthlyDue due, int year, int month){
-        Double parte = 1.0;
-
+    private boolean checkFacturable(Request request, int month, int year) {
+        boolean isFacturable = false;
         Calendar periodStartingDay = Calendar.getInstance();
         Calendar periodEndingDay = Calendar.getInstance();
         Calendar requestStartingDay = Calendar.getInstance();
         Calendar requestEndingDay = Calendar.getInstance();
 
-        periodStartingDay.set(year, month-1, 1);
-        periodEndingDay.set(year, month-1, 1);
+        periodStartingDay.set(year, month - 1, 1);
+        periodEndingDay.set(year, month - 1, 1);
+        periodEndingDay.add(Calendar.MONTH, 1);
+        if (request.getStartingDay() != null)
+            requestStartingDay.setTime(request.getStartingDay());
+        else
+            requestStartingDay.setTime(new Date());
+
+        if (request.getEndingDay() != null)
+            requestEndingDay.setTime(request.getEndingDay());
+        else
+            requestEndingDay.setTime(new Date());
+        if (requestStartingDay.before(requestEndingDay) && requestStartingDay.before(periodEndingDay) && requestEndingDay.after(periodStartingDay))
+            isFacturable = true;
+        return isFacturable;
+    }
+
+    public Double calculaImporte(MonthlyDue due, int month, int year) {
+        Double importe = 0.0;
+        Double fracion = 1.0;
+        Calendar periodStartingDay = Calendar.getInstance();
+        Calendar periodEndingDay = Calendar.getInstance();
+        Calendar requestStartingDay = Calendar.getInstance();
+        Calendar requestEndingDay = Calendar.getInstance();
+
+        periodStartingDay.set(year, month - 1, 1);
+        periodEndingDay.set(year, month - 1, 1);
         periodEndingDay.add(Calendar.MONTH, 1);
 
         if (due.getRequest().getStartingDay() != null)
@@ -308,28 +325,34 @@ public class BillingService {
         else
             requestEndingDay.setTime(new Date());
 
-        if (requestStartingDay.getTime().after(periodStartingDay.getTime())) {
-            if (requestStartingDay.getTime().before(periodEndingDay.getTime())) {
-                parte = parte - (requestStartingDay.getTime().getTime() - periodStartingDay.getTime().getTime())*1.0 / (periodEndingDay.getTime().getTime() - periodStartingDay.getTime().getTime());
+        if (requestStartingDay.before(requestEndingDay) && requestStartingDay.before(periodEndingDay) && requestEndingDay.after(periodStartingDay)){
+            if (requestStartingDay.getTime().after(periodStartingDay.getTime())) {
+                if (requestStartingDay.getTime().before(periodEndingDay.getTime())) {
+                    fracion = fracion - (requestStartingDay.getTime().getTime() - periodStartingDay.getTime().getTime()) * 1.0 / (periodEndingDay.getTime().getTime() - periodStartingDay.getTime().getTime());
+                }
+            }
+            if (requestEndingDay.getTime().before(periodEndingDay.getTime())) {
+                if (requestEndingDay.getTime().after(periodStartingDay.getTime())) {
+                    fracion = fracion - (periodEndingDay.getTime().getTime() - requestEndingDay.getTime().getTime()) * 1.0 / (periodEndingDay.getTime().getTime() - periodStartingDay.getTime().getTime());
+                }
             }
         }
-        if (requestEndingDay.getTime().before(periodEndingDay.getTime())) {
-            if (requestEndingDay.getTime().after(periodStartingDay.getTime())) {
-                parte = parte -(periodEndingDay.getTime().getTime() - requestEndingDay.getTime().getTime())*1.0 /(periodEndingDay.getTime().getTime() - periodStartingDay.getTime().getTime());
-            }
-
-        }
-        return due.getRequest().getServant().getPrice() * parte;
+        importe = due.getRequest().getServant().getPrice() * fracion;
+        return importe;
     }
 
+
     public MonthlyDue saveDue(MonthlyDue due) {
-        return monthlyDueRepository.save(due);
+        MonthlyDue savedDue = monthlyDueRepository.save(due);
+        monthlyDueRepository.flush();
+        return savedDue;
     }
 
     public Collection<Object> findAllPropperLaborBills() {
         // TODO Auto-generated method stub
         return billingRepository.findAllPropperLaborBills();
     }
+
     public Collection<Object> findAllPropperServiceBills() {
         // TODO Auto-generated method stub
         return billingRepository.findAllPropperServiceBills();
@@ -340,6 +363,45 @@ public class BillingService {
         Assert.notNull(actor, "msg.not.logged.block");
         Assert.isTrue(actor instanceof Responsible || actor instanceof Manager, "msg.not.owned.block");
         return billingRepository.findPropperByCustomerId(((Responsible) actor).getCustomer().getId());
+    }
+
+
+    public Collection<Object> findOwnedBills() {
+        Actor actor = actorService.findByPrincipal();
+        Assert.notNull(actor, "msg.not.logged.block");
+        Assert.isTrue(actor instanceof Responsible || actor instanceof Manager, "msg.not.owned.block");
+        Collection<Object> result;
+        if(actor instanceof Manager){
+            result =  billingRepository.findAllPropperServiceBills();
+            result.addAll(billingRepository.findAllPropperLaborBills());
+        }else{
+            result =  billingRepository.findPropperByCustomerId(((Responsible) actor).getCustomer().getId());
+            result.addAll(billingRepository.findAllPropperServiceBillsByCustomerId(((Responsible) actor).getCustomer().getId()));
+        }
+        return result;
+    }
+    public Collection<Object> findOwnedServiceBills() {
+        Actor actor = actorService.findByPrincipal();
+        Assert.notNull(actor, "msg.not.logged.block");
+        Assert.isTrue(actor instanceof Responsible || actor instanceof Manager, "msg.not.owned.block");
+        Collection<Object> result;
+        if(actor instanceof Manager){
+            return  billingRepository.findAllPropperServiceBills();
+        }else{
+            return billingRepository.findAllPropperServiceBillsByCustomerId(((Responsible) actor).getCustomer().getId());
+        }
+
+    }
+    public Collection<Object> findOwnedLaborBills() {
+        Actor actor = actorService.findByPrincipal();
+        Assert.notNull(actor, "msg.not.logged.block");
+        Assert.isTrue(actor instanceof Responsible || actor instanceof Manager, "msg.not.owned.block");
+        if(actor instanceof Manager){
+            return billingRepository.findAllPropperLaborBills();
+        }else{
+            return billingRepository.findPropperByCustomerId(((Responsible) actor).getCustomer().getId());
+        }
+
     }
 
     public Collection<Object> findByCustomerId(Integer customerId) {

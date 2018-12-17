@@ -5,8 +5,8 @@
 	* TDG Licence, a copy of which you may download from * http://www.tdg-seville.info/License.html -->
 
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="
 		http://www.springframework.org/schema/beans 
 		http://www.springframework.org/schema/beans/spring-beans.xsd">
 
@@ -15,7 +15,7 @@
 	<bean id="userAccountAdmin" class="security.UserAccount">
 		<property name="username" value="admin" />
 		<property name="password"
-			value="21232f297a57a5a743894a0e4a801fc3" />
+				  value="21232f297a57a5a743894a0e4a801fc3" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -31,7 +31,7 @@
 	<bean id="userAccountUser1" class="security.UserAccount">
 		<property name="username" value="user1" />
 		<property name="password"
-			value="24c9e15e52afc47c225b757e7bee1f9d" />
+				  value="24c9e15e52afc47c225b757e7bee1f9d" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -45,7 +45,7 @@
 	<bean id="userAccountUser2" class="security.UserAccount">
 		<property name="username" value="user2" />
 		<property name="password"
-			value="7e58d63b60197ceb55a1c487989a3720" />
+				  value="7e58d63b60197ceb55a1c487989a3720" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -60,7 +60,7 @@
 	<bean id="userAccountUser3" class="security.UserAccount">
 		<property name="username" value="user3" />
 		<property name="password"
-			value="92877af70a45fd6a2ed7fe81e1236b78" />
+				  value="92877af70a45fd6a2ed7fe81e1236b78" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -77,7 +77,7 @@
 	<bean id="userAccountManager1" class="security.UserAccount">
 		<property name="username" value="manager1" />
 		<property name="password"
-			value="c240642ddef994358c96da82c0361a58" />
+				  value="c240642ddef994358c96da82c0361a58" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -91,7 +91,7 @@
 	<bean id="userAccountManager2" class="security.UserAccount">
 		<property name="username" value="manager2" />
 		<property name="password"
-			value="8df5127cd164b5bc2d2b78410a7eea0c" />
+				  value="8df5127cd164b5bc2d2b78410a7eea0c" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -107,7 +107,7 @@
 	<bean id="userAccountResponsable1" class="security.UserAccount">
 		<property name="username" value="responsable1" />
 		<property name="password"
-			value="d4ab1a6dd73792ba7675b344de9effe2" />
+				  value="d4ab1a6dd73792ba7675b344de9effe2" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -121,7 +121,7 @@
 	<bean id="userAccountResponsable2" class="security.UserAccount">
 		<property name="username" value="responsable2" />
 		<property name="password"
-			value="e56e1cc9b6827f1c1a6ce2fae0f69bb3" />
+				  value="e56e1cc9b6827f1c1a6ce2fae0f69bb3" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -135,7 +135,7 @@
 	<bean id="userAccountResponsable3" class="security.UserAccount">
 		<property name="username" value="responsable3" />
 		<property name="password"
-			value="a38d3201ffa0c0e56e30924bea7de2ea" />
+				  value="a38d3201ffa0c0e56e30924bea7de2ea" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -151,7 +151,7 @@
 	<bean id="userAccountTechnician1" class="security.UserAccount">
 		<property name="username" value="technician1" />
 		<property name="password"
-			value="be03514e16e38740e6fadcd0a9660de2" />
+				  value="be03514e16e38740e6fadcd0a9660de2" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -165,7 +165,7 @@
 	<bean id="userAccountTechnician2" class="security.UserAccount">
 		<property name="username" value="technician2" />
 		<property name="password"
-			value="26037ba55e09692a6d2526b13936080a" />
+				  value="26037ba55e09692a6d2526b13936080a" />
 		<property name="authorities">
 			<list>
 				<bean class="security.Authority">
@@ -302,7 +302,7 @@
 		<property name="name" value="Acme-CRM" />
 		<property name="biller" value="true" />
 		<property name="description"
-			value="Sistemas y Gestión informática" />
+				  value="Sistemas y Gestión informática" />
 		<property name="webSite" value="www.acme-crm.es" />
 		<property name="email" value="sginfo@sginfo.es" />
 		<property name="fechaAlta" value="19/08/2018 14:10" />
@@ -317,7 +317,7 @@
 	<bean id="customer2" class="domain.Customer">
 		<property name="name" value="Ka Sevilla" />
 		<property name="description"
-			value="Franquicias de KA Internacional en Sevilla" />
+				  value="Franquicias de KA Internacional en Sevilla" />
 		<property name="webSite" value="www.kasevilla.es" />
 		<property name="email" value="kasevilla@kasevilla.es" />
 		<property name="fechaAlta" value="19/08/2018 18:10" />
@@ -332,14 +332,14 @@
 	<bean id="customer3" class="domain.Customer">
 		<property name="name" value="ECOTONO" />
 		<property name="description"
-			value="Cooperativa medioambiental" />
+				  value="Cooperativa medioambiental" />
 		<property name="webSite" value="www.ecotono.org" />
 		<property name="email" value="contant@ecotono.org" />
 		<property name="fechaAlta" value="13/04/2017 10:30" />
 		<property name="passKey" value="CUS-130417-16986414" />
 		<property name="address" value="C/ San Jose Obrero s/n" />
 		<property name="billingAddress"
-			value="C/ San Jose Obrero s/n" />
+				  value="C/ San Jose Obrero s/n" />
 		<property name="nif" value="A22623679" />
 		<property name="active" value="true" />
 		<property name="logo" value="https://coop57.coop/sites/default/files/853_256_256_3.jpg" />
@@ -406,6 +406,18 @@
 		<property name="cancelled" value="false" />
 	</bean>
 
+	<bean id="incidence6" class="domain.Incidence">
+		<property name="title" value="Incidencia 6" />
+		<property name="description" value="No me entran correos" />
+		<property name="ticker" value="INC-190718-46986202" />
+		<property name="publicationDate" value="2018/01/22 11:00" />
+		<property name="startingDate" value="2018/02/16 09:15" />
+		<property name="endingDate" value="2018/03/16 18:30" />
+		<property name="user" ref="user2" />
+		<property name="technician" ref="technician2" />
+		<property name="cancelled" value="false" />
+	</bean>
+
 	<!-- Labors -->
 	<bean id="labor1" class="domain.Labor">
 		<property name="title" value="Cambio FA" />
@@ -466,7 +478,7 @@
 	<bean id="labor8" class="domain.Labor">
 		<property name="title" value="Migracion Datos" />
 		<property name="description"
-			value="Se recupera todos los datos necesarios del antiguo HDD" />
+				  value="Se recupera todos los datos necesarios del antiguo HDD" />
 		<property name="time" value="2018/04/15 01:50" />
 		<property name="moment" value="2018/04/15 20:45" />
 		<property name="incidence" ref="incidence2" />
@@ -490,7 +502,7 @@
 	<bean id="labor11" class="domain.Labor">
 		<property name="title" value="Migracion Datos" />
 		<property name="description"
-			value="Se recupera todos los datos necesarios del antiguo HDD" />
+				  value="Se recupera todos los datos necesarios del antiguo HDD" />
 		<property name="time" value="2018/04/15 01:50" />
 		<property name="moment" value="2018/04/15 20:45" />
 		<property name="incidence" ref="incidence4" />
@@ -498,7 +510,7 @@
 	<bean id="labor12" class="domain.Labor">
 		<property name="title" value="Migracion Datos" />
 		<property name="description"
-			value="Se recupera todos los datos necesarios del antiguo HDD" />
+				  value="Se recupera todos los datos necesarios del antiguo HDD" />
 		<property name="time" value="2018/04/15 01:50" />
 		<property name="moment" value="2018/04/15 20:45" />
 		<property name="incidence" ref="incidence4" />
@@ -515,7 +527,7 @@
 	<bean id="labor14" class="domain.Labor">
 		<property name="title" value="Drivers" />
 		<property name="description"
-			value="Se recupera todos los datos necesarios del antiguo HDD" />
+				  value="Se recupera todos los datos necesarios del antiguo HDD" />
 		<property name="time" value="2018/04/15 00:40" />
 		<property name="moment" value="2018/04/15 20:45" />
 		<property name="incidence" ref="incidence4" />
@@ -524,31 +536,31 @@
 	<bean id="valuation1" class="domain.Valuation">
 		<property name="value" value="1" />
 		<property name="comments"
-			value="Mi ordenador no rinde tanto como me gustaría" />
+				  value="Mi ordenador no rinde tanto como me gustaría" />
 		<property name="incidence" ref="incidence1" />
 	</bean>
-	
+
 	<bean id="valuation2" class="domain.Valuation">
 		<property name="value" value="4" />
 		<property name="comments"
-			value="Estoy bastante contenta con el servicio el ordenador vuelve a funcionar" />
+				  value="Estoy bastante contenta con el servicio el ordenador vuelve a funcionar" />
 		<property name="incidence" ref="incidence2" />
 	</bean>
-	
+
 	<bean id="valuation3" class="domain.Valuation">
 		<property name="value" value="3" />
 		<property name="comments"
-			value="El ordenador funciona correctamente" />
+				  value="El ordenador funciona correctamente" />
 		<property name="incidence" ref="incidence3" />
 	</bean>
-	
+
 	<bean id="valuation4" class="domain.Valuation">
 		<property name="value" value="5" />
 		<property name="comments"
-			value="Siempre realizan un servicio rápido y eficaz" />
+				  value="Siempre realizan un servicio rápido y eficaz" />
 		<property name="incidence" ref="incidence4" />
 	</bean>
-	
+
 	<!-- Categories -->
 
 
@@ -630,7 +642,7 @@
 		<property name="actor" ref="user2" />
 	</bean>
 
-	
+
 	<!-- user3 folders -->
 	<bean id="inbox11" class="domain.Folder">
 		<property name="name" value="inbox" />
@@ -1003,9 +1015,9 @@
 		<property name="logo" value="images/logo.png" />
 		<property name="defaultCurrency" value="EUR" />
 		<property name="welcomeMessageEs"
-			value="Pruebalo!" />
+				  value="Pruebalo!" />
 		<property name="welcomeMessageEn"
-			value="Check it out!" />
+				  value="Check it out!" />
 		<property name="iva" value="21" />
 		<property name="hourPrice" value="28" />
 		<property name="folderNames">
@@ -1021,6 +1033,133 @@
 	</bean>
 
 	<!-- Message -->
+
+	<!-- Servant -->
+	<bean id="servant1" class="domain.Servant">
+		<property name="name" value="QuickRepair" />
+		<property name="description" value="Sus incidencias seran atendidas antes del fin del siguiente turno de trabajo. Si se le estropea por la mañana, por la tarde esta solucionado" />
+		<property name="price" value="25.0" />
+		<property name="picture" value="https://i.pinimg.com/564x/fd/72/7d/fd727db859403b1d94373ec4f118cd3f.jpg" />
+		<property name="cancelled" value="false" />
+		<property name="draft" value="false" />
+	</bean>
+	<bean id="servant2" class="domain.Servant">
+		<property name="name" value="Tech Discount" />
+		<property name="description" value="Con este servicio le ofrecemos un 20% de descuento en las sobre el tiempo de las reparaciones" />
+		<property name="price" value="17.90" />
+		<property name="picture" value="https://i.pinimg.com/564x/cb/3b/f8/cb3bf800207529bbca7bd18e356dba9f.jpg" />
+		<property name="cancelled" value="false" />
+		<property name="draft" value="false" />
+	</bean>
+	<bean id="servant3" class="domain.Servant">
+		<property name="name" value="SecureData Service" />
+		<property name="description" value="Sus datos siempre a salvo. Su empresa depende de ello." />
+		<property name="price" value="45.0" />
+		<property name="picture" value="https://i.pinimg.com/564x/1e/0c/84/1e0c8472cb7fe2f47cfac9463680b4a1.jpg" />
+		<property name="cancelled" value="false" />
+		<property name="draft" value="false" />
+	</bean>
+	<bean id="servant4" class="domain.Servant">
+		<property name="name" value="Asistencia de red" />
+		<property name="description" value="Las incidencia seran atendidas remotamente  si en posile" />
+		<property name="price" value="12.0" />
+		<property name="picture" value="https://i.pinimg.com/564x/4f/88/0b/4f880b5bbec5d7cc86248467cc1c4f01.jpg" />
+		<property name="cancelled" value="false" />
+		<property name="draft" value="false" />
+	</bean>
+	<bean id="servant5" class="domain.Servant">
+		<property name="name" value="Mantenimiento Páginas web" />
+		<property name="description" value="Vigilamos por que siempre este a maximo rendimienyo" />
+		<property name="price" value="15.0" />
+		<property name="picture" value="https://i.pinimg.com/564x/35/54/21/3554210cc630998d6b189a19929e9875.jpg" />
+		<property name="cancelled" value="false" />
+		<property name="draft" value="false" />
+	</bean>
+	<bean id="servant6" class="domain.Servant">
+		<property name="name" value="Mantenimiento aires acondicionados" />
+		<property name="description" value="Cuidamos de la calefacción de su oficina" />
+		<property name="price" value="5.50" />
+		<property name="picture" value="https://i.pinimg.com/564x/b5/d5/d9/b5d5d9ccf9e00469db7ea946a0c62a9e.jpg" />
+		<property name="cancelled" value="false" />
+		<property name="draft" value="true" />
+	</bean>
+
+	<!-- Request -->
+	<bean id="request1" class="domain.Request">
+		<property name="status" value="ACCEPTED" />
+		<property name="comments" value="Me viene bien este servicio" />
+		<property name="servant" ref="servant1" />
+		<property name="responsible" ref="responsable1" />
+		<property name="creationMoment" value="2018/04/15 01:50" />
+		<property name="startingDay" value="2018/04/16 01:50" />
+		<property name="endingDay" value="2018/04/18 01:50" />
+	</bean>
+
+	<bean id="request2" class="domain.Request">
+		<property name="status" value="PENDING" />
+		<property name="comments" value="Me viene bien este servicio" />
+		<property name="servant" ref="servant3" />
+		<property name="responsible" ref="responsable1" />
+		<property name="creationMoment" value="2018/04/15 01:50" />
+	</bean>
+
+	<bean id="request3" class="domain.Request">
+		<property name="status" value="REJECTED" />
+		<property name="rejectionReason" value="No me gusta hacer este trabajo" />
+		<property name="comments" value="Me viene bien este servicio" />
+		<property name="servant" ref="servant5" />
+		<property name="responsible" ref="responsable1" />
+		<property name="creationMoment" value="2018/04/15 01:50" />
+		<property name="startingDay" value="2018/04/16 01:50" />
+		<property name="endingDay" value="2018/04/16 01:50" />
+	</bean>
+
+
+	<!-- Request -->
+	<bean id="request4" class="domain.Request">
+		<property name="status" value="ACCEPTED" />
+		<property name="comments" value="Me viene bien este servicio" />
+		<property name="servant" ref="servant2" />
+		<property name="responsible" ref="responsable2" />
+		<property name="creationMoment" value="2018/04/15 01:50" />
+		<property name="startingDay" value="2017/14/05 01:50" />
+		<property name="endingDay" value="2018/04/18 01:50" />
+	</bean>
+
+	<bean id="request5" class="domain.Request">
+		<property name="status" value="PENDING" />
+		<property name="comments" value="Me viene bien este servicio" />
+		<property name="servant" ref="servant5" />
+		<property name="responsible" ref="responsable2" />
+		<property name="creationMoment" value="2018/04/15 01:50" />
+	</bean>
+
+	<bean id="request6" class="domain.Request">
+		<property name="status" value="REJECTED" />
+		<property name="rejectionReason" value="No me gusta hacer este trabajo" />
+		<property name="comments" value="Me viene bien este servicio" />
+		<property name="servant" ref="servant4" />
+		<property name="responsible" ref="responsable2" />
+		<property name="creationMoment" value="2018/04/15 01:50" />
+		<property name="startingDay" value="2018/03/25 01:50" />
+	</bean>
+	<bean id="request7" class="domain.Request">
+		<property name="status" value="ACCEPTED" />
+		<property name="comments" value="Me viene bien este servicio" />
+		<property name="servant" ref="servant1" />
+		<property name="responsible" ref="responsable3" />
+		<property name="creationMoment" value="2018/04/15 01:50" />
+		<property name="startingDay" value="2016/06/19 01:50" />
+	</bean>
+	<bean id="request8" class="domain.Request">
+		<property name="status" value="ACCEPTED" />
+		<property name="comments" value="Me viene bien este servicio" />
+		<property name="servant" ref="servant4" />
+		<property name="responsible" ref="responsable3" />
+		<property name="creationMoment" value="2018/04/15 01:50" />
+		<property name="startingDay" value="2018/01/16 01:50" />
+		<property name="endingDay" value="2018/010/18 01:50" />
+	</bean>
 
 
 </beans>
