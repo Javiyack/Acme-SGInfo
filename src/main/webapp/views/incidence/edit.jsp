@@ -49,8 +49,7 @@
                                   readonly="true" disabled="${disabled}"/>
                     <acme:textbox code="incidencia.name" path="title"
                                   readonly="${readonly}" disabled="${disabled}"/>
-                    <acme:textbox code="incidencia.service" path="servant"
-                                  readonly="${ readonly}" disabled="${disabled}"/>
+
                     <jstl:if test="${rol == 'user' || readonly}">
 
                         <form:hidden path="user"/>

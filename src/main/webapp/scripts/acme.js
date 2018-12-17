@@ -2,6 +2,7 @@ $(document).ready(function () {
     $(function () {
         $(document).tooltip();
     });
+    markOpenLink();
     // Get the Sidebar
     var mySidebar = document.getElementById("mySidebar");
 
@@ -12,7 +13,6 @@ $(document).ready(function () {
 
     var slideIndex = 1;
     showSlides(1);
-    markOpenLink();
 
 });
 
@@ -84,20 +84,22 @@ function markOpenLink() {
     unselectAll();
     var pathname = '';
     pathname += window.location.pathname;
-    if (pathname.includes('showroom')) {
-        select(document.getElementById('showrooms'));
-    } else if (pathname.includes('item')) {
-        select(document.getElementById('items'));
-    } else if (pathname.includes('chirp')) {
-        select(document.getElementById('chirpsAcc'));
-    } else if (pathname.includes('request')) {
-        select(document.getElementById('requestsAcc'));
-    } else if (pathname.includes('subscription')) {
-        select(document.getElementById('subscriptions'));
-    } else if (pathname.includes('actor/actor')) {
-        select(document.getElementById('actors'));
+    if (pathname.includes('servant')) {
+        select(document.getElementById('servant'));
+    } else if (pathname.includes('customer')) {
+        select(document.getElementById('customer'));
+    } else if (pathname.includes('incidence')) {
+        select(document.getElementById('incidence'));
+    }else if (pathname.includes('request')) {
+        select(document.getElementById('request'));
+    } else if (pathname.includes('bill')) {
+        select(document.getElementById('bill'));
+    } else if (pathname.includes('actor')) {
+        select(document.getElementById('actor'));
     } else if (pathname.includes('dashboard')) {
         select(document.getElementById('dashboard'));
+    } else if (pathname.includes('configuration')) {
+        select(document.getElementById('configuration'));
     }
 }
 

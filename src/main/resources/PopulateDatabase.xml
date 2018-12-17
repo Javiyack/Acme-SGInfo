@@ -1090,7 +1090,6 @@
 		<property name="responsible" ref="responsable1" />
 		<property name="creationMoment" value="2018/04/15 01:50" />
 		<property name="startingDay" value="2018/04/16 01:50" />
-		<property name="endingDay" value="2018/04/18 01:50" />
 	</bean>
 
 	<bean id="request2" class="domain.Request">
@@ -1108,8 +1107,6 @@
 		<property name="servant" ref="servant5" />
 		<property name="responsible" ref="responsable1" />
 		<property name="creationMoment" value="2018/04/15 01:50" />
-		<property name="startingDay" value="2018/04/16 01:50" />
-		<property name="endingDay" value="2018/04/16 01:50" />
 	</bean>
 
 
@@ -1121,7 +1118,6 @@
 		<property name="responsible" ref="responsable2" />
 		<property name="creationMoment" value="2018/04/15 01:50" />
 		<property name="startingDay" value="2017/14/05 01:50" />
-		<property name="endingDay" value="2018/04/18 01:50" />
 	</bean>
 
 	<bean id="request5" class="domain.Request">
@@ -1139,7 +1135,6 @@
 		<property name="servant" ref="servant4" />
 		<property name="responsible" ref="responsable2" />
 		<property name="creationMoment" value="2018/04/15 01:50" />
-		<property name="startingDay" value="2018/03/25 01:50" />
 	</bean>
 	<bean id="request7" class="domain.Request">
 		<property name="status" value="ACCEPTED" />
@@ -1156,7 +1151,7 @@
 		<property name="responsible" ref="responsable3" />
 		<property name="creationMoment" value="2018/04/15 01:50" />
 		<property name="startingDay" value="2018/01/16 01:50" />
-		<property name="endingDay" value="2018/010/18 01:50" />
+		<property name="endingDay" value="2018/10/18 01:50" />
 	</bean>
 
 

@@ -6,6 +6,7 @@ import forms.LaborForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -14,6 +15,7 @@ import org.springframework.validation.Validator;
 import repositories.BillingRepository;
 import repositories.MonthlyDueRepository;
 
+import javax.persistence.criteria.Order;
 import java.util.*;
 
 @Service
@@ -226,14 +228,12 @@ public class BillingService {
                             newDue.setRequest(request);
                             // Conprobamos que no exista ya la deuda (ahora no hace falta esto porque usamos un set.
                             // TODO Comprobar que sigue funcionando si quitamos este check pues monthly Due es un Set
-                            if (!monthlyDues.contains(newDue)) {
-                                // añadimos la nueva deuda
-                                newDues.add(newDue);
-                            }
+                            newDues.add(newDue);
                         }
 
                     }
                 }
+                newDues.removeAll(monthlyDues);
 
                 // En este punto tenemos todas la nuevas deudas para ese request
 
@@ -384,7 +384,6 @@ public class BillingService {
         Actor actor = actorService.findByPrincipal();
         Assert.notNull(actor, "msg.not.logged.block");
         Assert.isTrue(actor instanceof Responsible || actor instanceof Manager, "msg.not.owned.block");
-        Collection<Object> result;
         if(actor instanceof Manager){
             return  billingRepository.findAllPropperServiceBills();
         }else{

@@ -4,6 +4,7 @@ package services;
 import domain.Actor;
 import domain.Administrator;
 import domain.Configuration;
+import domain.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,7 +52,7 @@ public class ConfigurationService {
 		Assert.notNull(actor, "msg.not.logged.block");
 		Assert.notNull(actor instanceof Administrator, "msg.not.owned.block");
 		Configuration saved;
-
+		configuration.setDefaultCurrency(Constant.currency.EUR.toString());
 		saved = this.configurationRepository.save(configuration);
 
 		Assert.notNull(saved, "Configuration haven`t been saved.");

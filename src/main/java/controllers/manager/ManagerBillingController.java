@@ -3,6 +3,7 @@ package controllers.manager;
 import controllers.AbstractController;
 import domain.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,6 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import services.*;
 
 import javax.validation.Valid;
+import java.awt.print.Pageable;
 import java.util.*;
 
 @Controller
@@ -33,6 +35,71 @@ public class ManagerBillingController extends AbstractController {
 		super();
 	}
 
+
+	// List all incidences Bill
+	// ---------------------------------------------------------------
+	@RequestMapping("/labor/list")
+	public ModelAndView listIncidenceBills() {
+		ModelAndView result;
+		try {
+			Actor actor = actorService.findByPrincipal();
+			Assert.notNull(actor, "msg.not.logged.block");
+
+			final Collection<Object> bills = this.billingService.findOwnedLaborBills();
+			Map<Customer, List<Bill>> billsByCustomer = new HashMap<Customer, List<Bill>>();
+			if (!bills.isEmpty()) {
+				for (Object object : bills) {
+					final Object[] entryCustomerBill = (Object[]) object;
+					Bill bill = (Bill) entryCustomerBill[0];
+					Customer customer = (Customer) entryCustomerBill[1];
+					List<Bill> customerBills = ((billsByCustomer.get(customer) != null) ? billsByCustomer.get(customer)
+							: new ArrayList<Bill>());
+					customerBills.add(bill);
+					billsByCustomer.put(customer, customerBills);
+				}
+			}
+			result = new ModelAndView("billing/list");
+			result.addObject("facturas", billsByCustomer);
+		} catch (final Throwable oops) {
+			if (oops.getMessage().startsWith("msg."))
+				result = this.createMessageModelAndView(oops.getLocalizedMessage(), "/");
+			else
+				result = this.createMessageModelAndView("msg.commit.error", "/");
+		}
+		return result;
+	}
+	// List All incidences
+	// ---------------------------------------------------------------
+	@RequestMapping("/service/list")
+	public ModelAndView listServantBills( ) {
+		ModelAndView result;
+		try {
+			Actor actor = actorService.findByPrincipal();
+			Assert.notNull(actor, "msg.not.logged.block");
+			final Collection<Object> bills = this.billingService.findOwnedServiceBills();
+			Map<Customer, List<Bill>> billsByCustomer = new HashMap<Customer, List<Bill>>();
+			if (!bills.isEmpty()) {
+				for (Object object : bills) {
+					final Object[] entryCustomerBill = (Object[]) object;
+					Bill bill = (Bill) entryCustomerBill[0];
+					Customer customer = (Customer) entryCustomerBill[1];
+					List<Bill> customerBills = ((billsByCustomer.get(customer) != null) ? billsByCustomer.get(customer)
+							: new ArrayList<Bill>());
+					customerBills.add(bill);
+					billsByCustomer.put(customer, customerBills);
+				}
+			}
+			result = new ModelAndView("billing/list");
+			result.addObject("facturas", billsByCustomer);
+		} catch (final Throwable oops) {
+			if (oops.getMessage().startsWith("msg."))
+				result = this.createMessageModelAndView(oops.getLocalizedMessage(), "/");
+			else
+				result = this.createMessageModelAndView("msg.commit.error", "/");
+		}
+		return result;
+	}
+
 	// List All incidences
 	// ---------------------------------------------------------------
 	@RequestMapping("/list")
@@ -42,8 +109,8 @@ public class ManagerBillingController extends AbstractController {
 			Actor actor = actorService.findByPrincipal();
 			Assert.notNull(actor, "msg.not.logged.block");
 
-            final Collection<Object> bills = this.billingService.findOwnedBills();
-            Map<Customer, List<Bill>> billsByCustomer = new HashMap<Customer, List<Bill>>();
+			final Collection<Object> bills = this.billingService.findOwnedBills();
+			Map<Customer, List<Bill>> billsByCustomer = new HashMap<Customer, List<Bill>>();
 			if (!bills.isEmpty()) {
 				for (Object object : bills) {
 					final Object[] entryCustomerBill = (Object[]) object;

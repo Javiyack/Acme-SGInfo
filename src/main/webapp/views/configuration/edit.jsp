@@ -26,6 +26,7 @@
 
 		<form:hidden path="id" />
 		<form:hidden path="version" />
+		<form:hidden path="defaultCurrency" />
 
 		<div class="row">
 			<div class="w3-col m5 w3-padding">
@@ -62,11 +63,7 @@
 
 					</div>
 					<div class="w3-col m4 w3-padding">
-						<label for="defaultCurrency"><spring:message
-								code="label.currency" /></label>
-						<form:select path="defaultCurrency" class="w3-text-black">
-							<form:options items="${currencies}" />
-						</form:select>
+						<acme:textbox code="label.currency" path="defaultCurrency" disabled="true" readonly="true"/>
 
 					</div>
 				</div>

@@ -61,24 +61,17 @@ public class MonthlyDue extends DomainEntity {
 
     @Override
     public boolean equals(final Object other) {
-        boolean result;
-
-        if (this == other)
-            result = true;
-        else if (other == null)
-            result = false;
-        else if (other instanceof Integer)
-            result = (this.getId() == (Integer) other);
-        else if (!this.getClass().isInstance(other))
-            result = false;
-        else
-            result = (this.getYear() == ((MonthlyDue) other).getYear()
+      boolean result = (other instanceof  MonthlyDue && this.getYear() == ((MonthlyDue) other).getYear()
                     && this.getMonth() == ((MonthlyDue) other).getMonth())
                     && this.getRequest() == ((MonthlyDue) other).getRequest();
 
         return result;
     }
 
+    @Override
+	public int hashCode() {
+		return getYear()+getMonth()+getRequest().getId();
+	}
 
 
 }

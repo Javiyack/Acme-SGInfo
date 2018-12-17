@@ -69,25 +69,25 @@
     <hr>
     <div class="w3-bar-block" style="padding-bottom: 60px">
         <a href="servant/list.do"
-           class="w3-bar-item w3-button w3-padding w3-xlarge"><i
+           class="w3-bar-item w3-button w3-padding w3-xlarge" id="servant"><i
                 class="fas fa-shield-alt fa-fw w3-margin-right"></i><spring:message
                 code="label.services"/>
         </a>
         <security:authorize access="isAnonymous()">
             <a href="customer/list.do"
-               class="w3-bar-item w3-button w3-padding w3-xlarge"><i
+               class="w3-bar-item w3-button w3-padding w3-xlarge" id="customer"><i
                     class="fa fa-diamond fa-fw w3-margin-right"></i><spring:message
                     code="label.customers"/>
             </a>
         </security:authorize>
         <security:authorize access="hasAnyRole('USER', 'RESPONSIBLE')">
             <a href="customer/list.do"
-               class="w3-bar-item w3-button w3-padding w3-xlarge"><i
+               class="w3-bar-item w3-button w3-padding w3-xlarge"  id="customer"><i
                     class="fa fa-diamond fa-fw w3-margin-right"></i><spring:message
                     code="label.customers"/>
             </a>
             <a href="actor/responsible/list.do" name="menuItem"
-               class="w3-bar-item w3-button w3-padding w3-xlarge" id="actors"><i
+               class="w3-bar-item w3-button w3-padding w3-xlarge" id="actor"><i
                     class="fa fa-users fa-fw w3-margin-right w3-margin-right"></i><spring:message code="label.users"/>
             </a>
         </security:authorize>
@@ -96,33 +96,48 @@
         </security:authorize>
         <security:authorize access="hasRole('TECHNICIAN')">
         <a href="customer/internal/list.do"
-           class="w3-bar-item w3-button w3-padding w3-xlarge"><i
+           class="w3-bar-item w3-button w3-padding w3-xlarge" id="customer"><i
                 class="fa fa-diamond fa-fw w3-margin-right"></i><spring:message
                 code="label.customers"/>
         </security:authorize>
         <security:authorize access="hasRole('MANAGER')">
             <a href="customer/internal/list.do"
-               class="w3-bar-item w3-button w3-padding w3-xlarge"><i
+               class="w3-bar-item w3-button w3-padding w3-xlarge" id="customer"><i
                     class="fa fa-diamond fa-fw w3-margin-right"></i><spring:message
                     code="label.customers"/>
             </a>
-        <a href="request/manager/list.do" class="w3-bar-item w3-button w3-padding w3-xlarge"><i
+            <a href="request/manager/list.do" class="w3-bar-item w3-button w3-padding w3-xlarge" id="request"><i
                     class="fas fa-tasks fa-fw w3-margin-right"></i><spring:message
                     code="label.requests"/>
             </a>
-            <a href="billing/manager/list.do" class="w3-bar-item w3-button w3-padding w3-xlarge"><i
-                    class="fas fa-money-bill-alt fa-fw w3-margin-right"></i><spring:message
-                    code="label.billing"/>
+
+            <a id="bill" class="w3-bar-item w3-button w3-padding w3-xlarge" onclick="myAccordionFunc('billingAcc')"
+               name="menuItem">
+                <i class="fa fa fa-bank fa-fw w3-margin-right"></i><spring:message code="label.billing"/>
             </a>
+            <div id="billingAcc" class="w3-hide w3-card sombra" name="accordion">
+
+                <a href="billing/manager/incidence/list.do"
+                   class="w3-bar-item w3-button w3-padding w3-large w3-light-gray"
+                   style="padding-left: 2em !important;"><i
+                        class="far fa-money-bill-alt fa-fw w3-margin-right"></i><spring:message code="label.incidence"/>
+                </a>
+                <a href="billing/manager/service/list.do"
+                   class="w3-bar-item w3-button w3-padding w3-large w3-light-gray"
+                   style="padding-left: 2em !important;"><i
+                        class="fas fa-money-bill-alt fa-fw w3-margin-right"></i><spring:message code="label.service"/>
+                </a>
+            </div>
+
             <a href="actor/manager/list.do" name="menuItem"
-               class="w3-bar-item w3-button w3-padding w3-xlarge" id="actors"><i
+               class="w3-bar-item w3-button w3-padding w3-xlarge" id="actor"><i
                     class="fa fa-users fa-fw w3-margin-right"></i><spring:message code="label.users"/>
             </a>
 
         </security:authorize>
         <security:authorize access="isAuthenticated()">
             <a href="incidence/${accesscontrol}/list.do"
-               class="w3-bar-item w3-button w3-padding w3-xlarge"><i
+               class="w3-bar-item w3-button w3-padding w3-xlarge"  id="incidence"><i
                     class="fa fa-ambulance fa-fw w3-margin-right"></i><spring:message
                     code="label.incidences"/>
             </a>
@@ -130,25 +145,38 @@
 
 
         <security:authorize access="hasRole('RESPONSIBLE')">
-            <a href="request/responsible/list.do" class="w3-bar-item w3-button w3-padding w3-xlarge"><i
+            <a href="request/responsible/list.do" class="w3-bar-item w3-button w3-padding w3-xlarge" id="request"><i
                     class="fas fa-tasks fa-fw w3-margin-right"></i><spring:message
                     code="label.requests"/>
             </a>
-            <a href="billing/responsible/list.do" class="w3-bar-item w3-button w3-padding w3-xlarge"><i
-                    class="fa fa-users fa-fw w3-margin-right"></i><spring:message
-                    code="label.billing"/>
+            <a id="bill" class="w3-bar-item w3-button w3-padding w3-xlarge" onclick="myAccordionFunc('billingAcc')"
+               name="menuItem">
+                <i class="fa fa fa-bank fa-fw w3-margin-right"></i><spring:message code="label.billing"/>
             </a>
+            <div id="billingAcc" class="w3-hide w3-card sombra" name="accordion">
+
+                <a href="billing/responsible/labor/list.do"
+                   class="w3-bar-item w3-button w3-padding w3-large w3-light-gray"
+                   style="padding-left: 2em !important;"><i
+                        class="far fa-money-bill-alt fa-fw w3-margin-right"></i><spring:message code="label.incidence"/>
+                </a>
+                <a href="billing/responsible/service/list.do"
+                   class="w3-bar-item w3-button w3-padding w3-large w3-light-gray"
+                   style="padding-left: 2em !important;"><i
+                        class="fas fa-money-bill-alt fa-fw w3-margin-right"></i><spring:message code="label.service"/>
+                </a>
+            </div>
 
         </security:authorize>
 
         <security:authorize access="hasRole('ADMINISTRATOR')">
 
             <a href="customer/administrator/list.do"
-               class="w3-bar-item w3-button w3-padding w3-xlarge"><i
+               class="w3-bar-item w3-button w3-padding w3-xlarge" id="customer"><i
                     class="fa fa-diamond fa-fw w3-margin-right"></i><spring:message
                     code="label.customers"/>
-            </a> <a href="actor/administrator/list.do" name="menuItem"
-               class="w3-bar-item w3-button w3-padding w3-xlarge" id="actors"><i
+            </a><a href="actor/administrator/list.do" name="menuItem"
+               class="w3-bar-item w3-button w3-padding w3-xlarge" id="actor"><i
                     class="fa fa-users fa-fw w3-margin-right w3-margin-right"></i><spring:message code="label.users"/>
             </a>
             <a href="administrator/dashboard.do" id="dashboard"
@@ -157,7 +185,7 @@
                     code="master.page.dashboard"/>
             </a>
             <a href="configuration/administrator/edit.do"
-               class="w3-bar-item w3-button w3-padding w3-xlarge">
+               class="w3-bar-item w3-button w3-padding w3-xlarge" id="configuration">
                 <i class="fa fa-cog fa-fw w3-margin-right"></i>Settings </a>
         </security:authorize>
 
@@ -175,7 +203,6 @@
 <div class="w3-overlay w3-hide-large w3-animate-opacity"
      onclick="w3_close()" style="cursor: pointer" title="close side menu"
      id="myOverlay"></div>
-
 <script>
     var mySidebar = document.getElementById("mySidebar");
 
@@ -212,4 +239,32 @@
             this.className += " active";
         });
     }
+
+
+    // Get the modal
+    var modal = document.getElementById('myModal');
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("close")[0];
+
+    // When the user clicks the button, open the modal
+    btn.onclick = function () {
+        modal.style.display = "block";
+    };
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function () {
+        modal.style.display = "none";
+    };
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function (event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    };
+
 </script>
