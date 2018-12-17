@@ -45,7 +45,7 @@
 	            <div class="col-100" style="padding-bottom: 0px!important;">
 	                <a href="" class="iButton" style="padding-bottom: 0px!important;"><i class="fa fa-home font-awesome"></i></a> >
 	                <a href="incidence/${accesscontrol }/list.do" class="iButton" style="padding-bottom: 0px!important;">
-	                    <i class="fas fa-shield-alt fa-fw"></i></a> >
+	                    <i class="fas fa-ambulance fa-fw"></i></a> >
 	                <a href="valuation/display.do?id=${valuationForm.incidence.id}" class="iButton"
 	                   style="padding-bottom: 0px!important;">
 	                    <jstl:out value="${valuationText}"/></a> >
