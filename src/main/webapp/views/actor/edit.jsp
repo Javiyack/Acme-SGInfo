@@ -23,7 +23,7 @@
 	            <div class="col-100" style="padding-bottom: 0px!important;">
 	                <a href="" class="iButton" style="padding-bottom: 0px!important;"><i class="fa fa-home font-awesome"></i></a> >
 	                <a href="actor/responsible/list.do" class="iButton" style="padding-bottom: 0px!important;">
-	                    <i class="fas fa-shield-alt fa-fw"></i></a> >
+	                    <i class="fa fa-users fa-fw"></i></a> >
 	                <a href="actor/display.do?actorId=${actorForm.id}" class="iButton"
 	                   style="padding-bottom: 0px!important;">
 	                    <jstl:out value="${actorForm.name}"/></a> >
