@@ -119,16 +119,14 @@
 
                 </jstl:if>
 
+                <jstl:if test="${owns or rol eq 'manager'}">
+                    <acme:button url="billing/${rol}/customer/list.do?customerId=${customerForm.id}"
+                                 text="label.billing.bills" css="formButton toLeft"/>
+                </jstl:if>
+
             </div>
 
         </div>
-        <security:authorize access="hasRole('MANAGER')">
-            <div class="titulo" style="padding-left: 0.5em; padding-top: 0px;">
-                <strong><spring:message code="label.invoices"/></strong>
-            </div>
-
-            <%@ include file="/views/billing/list.jsp" %>
-        </security:authorize>
     </form:form>
 
 </div>

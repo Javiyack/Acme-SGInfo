@@ -62,8 +62,8 @@
             <security:authorize access="isAuthenticated()">
                 <a href="actor/edit.do"><i
                         class="fa fa-user w3-bar-item w3-large"></i></a>
+                <a href="customer/displayOwn.do"><i class="fa fa-cog w3-bar-item w3-large"></i></a>
             </security:authorize>
-            <a href="#"><i class="fa fa-cog w3-bar-item w3-large"></i></a>
         </div>
     </div>
     <hr>

@@ -39,7 +39,7 @@ public class ManagerBillingController extends AbstractController {
 	// List all incidences Bill
 	// ---------------------------------------------------------------
 	@RequestMapping("/labor/list")
-	public ModelAndView listIncidenceBills() {
+	public ModelAndView listIncidenceBills(Integer pageSize) {
 		ModelAndView result;
 		try {
 			Actor actor = actorService.findByPrincipal();
@@ -60,6 +60,9 @@ public class ManagerBillingController extends AbstractController {
 			}
 			result = new ModelAndView("billing/list");
 			result.addObject("facturas", billsByCustomer);
+			result.addObject("requestUri", "billing/manager/service/list.do");
+			result.addObject("pageSize", (pageSize != null) ? pageSize : 20);
+            result.addObject("backUrl", "/billing/responsible/manager/list.do");
 		} catch (final Throwable oops) {
 			if (oops.getMessage().startsWith("msg."))
 				result = this.createMessageModelAndView(oops.getLocalizedMessage(), "/");
@@ -71,7 +74,7 @@ public class ManagerBillingController extends AbstractController {
 	// List All incidences
 	// ---------------------------------------------------------------
 	@RequestMapping("/service/list")
-	public ModelAndView listServantBills( ) {
+	public ModelAndView listServantBills(Integer pageSize ) {
 		ModelAndView result;
 		try {
 			Actor actor = actorService.findByPrincipal();
@@ -91,6 +94,34 @@ public class ManagerBillingController extends AbstractController {
 			}
 			result = new ModelAndView("billing/list");
 			result.addObject("facturas", billsByCustomer);
+			result.addObject("requestUri", "billing/manager/service/list.do");
+			result.addObject("pageSize", (pageSize != null) ? pageSize : 20);
+            result.addObject("backUrl", "/billing/responsible/manager/list.do");
+		} catch (final Throwable oops) {
+			if (oops.getMessage().startsWith("msg."))
+				result = this.createMessageModelAndView(oops.getLocalizedMessage(), "/");
+			else
+				result = this.createMessageModelAndView("msg.commit.error", "/");
+		}
+		return result;
+	}
+	// List incidences by customer
+	// ---------------------------------------------------------------
+	@RequestMapping("/customer/list")
+	public ModelAndView listCuntomerBills(int customerId, Integer pageSize ) {
+		ModelAndView result;
+		try {
+			Actor actor = actorService.findByPrincipal();
+			Assert.notNull(actor, "msg.not.logged.block");
+			final Set<Bill> bills = this.billingService.findBillsByCustomerId( customerId);
+
+			result = new ModelAndView("billing/list");
+			result.addObject("facturas", bills);
+			result.addObject("oneCustomerOnly", true);
+			result.addObject("requestUri", "billing/manager/customer/list.do");
+			result.addObject("pageSize", (pageSize != null) ? pageSize : 20);
+			result.addObject("customerId", customerId);
+            result.addObject("backUrl", "/billing/responsible/manager/list.do?customerId=" + customerId);
 		} catch (final Throwable oops) {
 			if (oops.getMessage().startsWith("msg."))
 				result = this.createMessageModelAndView(oops.getLocalizedMessage(), "/");
@@ -103,7 +134,7 @@ public class ManagerBillingController extends AbstractController {
 	// List All incidences
 	// ---------------------------------------------------------------
 	@RequestMapping("/list")
-	public ModelAndView list() {
+	public ModelAndView list(Integer pageSize) {
 		ModelAndView result;
 		try {
 			Actor actor = actorService.findByPrincipal();
@@ -124,6 +155,8 @@ public class ManagerBillingController extends AbstractController {
 			}
 			result = new ModelAndView("billing/list");
 			result.addObject("facturas", billsByCustomer);
+			result.addObject("requestUri", "billing/manager/service/list.do");
+			result.addObject("pageSize", (pageSize != null) ? pageSize : 20);
 		} catch (final Throwable oops) {
 			if (oops.getMessage().startsWith("msg."))
 				result = this.createMessageModelAndView(oops.getLocalizedMessage(), "/");
@@ -151,7 +184,7 @@ public class ManagerBillingController extends AbstractController {
 			}
 		}
 
-		result =  this.list();
+		result =  this.list(20);
 		result.addObject("info", message);
 		return result;
 	}
@@ -159,7 +192,7 @@ public class ManagerBillingController extends AbstractController {
 	// Edit billing
 	// ---------------------------------------------------------------
 	@RequestMapping("/display")
-	public ModelAndView edit(@Valid final int id) {
+	public ModelAndView edit(@Valid final int id, String backUrl) {
 		ModelAndView result = new ModelAndView("billing/display");
 		Bill bill = billingService.findOne(id);
 		Collection<Labor> labors = this.laborService.findByBill(bill);
@@ -176,7 +209,7 @@ public class ManagerBillingController extends AbstractController {
 			Double precioHora = configurationService.findHourPrice();
 			result.addObject("precioHora", precioHora);
 			result.addObject("iva", iva);
-			result.addObject("backUrl", "/billing/manager/list.do");
+			result.addObject("backUrl", (backUrl!=null)? backUrl:"/billing/manager/list.do");
 			try {
 				Actor actor = actorService.findByPrincipal();
 				Assert.notNull(actor, "msg.not.logged.block");
